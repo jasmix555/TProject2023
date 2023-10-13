@@ -1,3 +1,4 @@
+import { Button } from "@chakra-ui/react";
 import Head from "next/head";
 import Image from "next/image";
 import Link from "next/link";
@@ -13,7 +14,9 @@ export default function Home() {
       </Head>
       <main>
         <h1>hello</h1>
+        <Button colorScheme="blue">
         <Link href="/sample01">sample01</Link>
+        </Button>
       </main>
     </>
   );
