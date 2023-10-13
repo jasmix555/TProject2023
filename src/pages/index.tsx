@@ -1,5 +1,6 @@
 import Head from "next/head";
 import Image from "next/image";
+import Link from "next/link";
 
 export default function Home() {
   return (
@@ -12,7 +13,7 @@ export default function Home() {
       </Head>
       <main>
         <h1>hello</h1>
-        asdasd
+        <Link href="/sample01">sample01</Link>
       </main>
     </>
   );
