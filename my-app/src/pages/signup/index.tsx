@@ -19,6 +19,8 @@ import {
   sendEmailVerification,
 } from 'firebase/auth'
 import { FirebaseError } from '@firebase/util'
+import { useRouter } from '@/hooks/useRouter/useRouter'
+import { Navigate } from '@/component/Navigate/Navigate'
 
 export const Page = () => {
   const [email, setEmail] = useState<string>('')
@@ -94,6 +96,14 @@ export const Page = () => {
           <Button type={'submit'} isLoading={isLoading}>
             アカウントを作成
           </Button>
+        </Center>
+        <Spacer height={4} aria-hidden />
+        <Center>
+          <Navigate href={(path) => path.signin.$url()}>
+            <Button as={'a'} colorScheme="blue">
+              すでにアカウント持ってる方
+            </Button>
+          </Navigate>
         </Center>
       </chakra.form>
     </Container>

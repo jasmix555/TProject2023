@@ -10,6 +10,7 @@ import {
   MenuItem,
   MenuList,
   Spacer,
+  Text,
   useToast,
 } from '@chakra-ui/react'
 import { useAuthContext } from '@/feature/auth/provider/AuthProvider'
@@ -50,7 +51,7 @@ export const Header = () => {
                 opacity: 0.8,
               }}
             >
-              <Heading color={'white'}>Firebase Realtime Chat</Heading>
+              <Heading color={'white'}>SpaceLang</Heading>
             </chakra.a>
           </Navigate>
           <Spacer aria-hidden />
@@ -60,6 +61,16 @@ export const Header = () => {
                 <Avatar flexShrink={0} width={10} height={10} />
               </MenuButton>
               <MenuList py={0}>
+                <MenuItem>
+                  <Navigate href={(path) => path.home.$url()}>
+                    <Text as={'a'}>ホーム</Text>
+                  </Navigate>
+                </MenuItem>
+                <MenuItem>
+                  <Navigate href={(path) => path.chat.$url()}>
+                    <Text as={'a'}>チャット</Text>
+                  </Navigate>
+                </MenuItem>
                 <MenuItem onClick={handleSignOut}>サインアウト</MenuItem>
               </MenuList>
             </Menu>
