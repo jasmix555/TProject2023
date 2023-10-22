@@ -1,15 +1,12 @@
-import { Box, Text, Heading } from '@chakra-ui/layout'
-import { AuthGuard } from '@/feature/auth/component/AuthGuard/AuthGuard'
-import Head from 'next/head'
+import type { NextPage } from 'next'
+import { Heading } from '@chakra-ui/react'
 
-export default function Home() {
+const Page: NextPage = () => {
   return (
     <>
-      <Box>
-        <AuthGuard>
-          <Heading>Team Project</Heading>
-        </AuthGuard>
-      </Box>
+      <Heading>Chakra UI</Heading>
     </>
   )
 }
+
+export default Page

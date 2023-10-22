@@ -16,7 +16,7 @@ import { FormEvent, useState } from 'react'
 import { getAuth, signInWithEmailAndPassword } from 'firebase/auth'
 import { FirebaseError } from '@firebase/util'
 
-export default function Page() {
+export const Page = () => {
   const [email, setEmail] = useState<string>('')
   const [password, setPassword] = useState<string>('')
   const [isLoading, setIsLoading] = useState<boolean>(false)
@@ -52,7 +52,7 @@ export default function Page() {
 
   return (
     <Container py={14}>
-      <Heading>Sign In</Heading>
+      <Heading>サインイン</Heading>
       <chakra.form onSubmit={handleSubmit}>
         <Spacer height={8} aria-hidden />
         <Grid gap={4}>
@@ -91,3 +91,5 @@ export default function Page() {
     </Container>
   )
 }
+
+export default Page
