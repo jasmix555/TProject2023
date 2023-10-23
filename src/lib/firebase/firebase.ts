@@ -1,5 +1,5 @@
 // Import the functions you need from the SDKs you need
-import { initializeApp, getApp, getApps } from 'firebase/app'
+import { initializeApp, getApp, getApps } from "firebase/app";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -11,8 +11,9 @@ import {
   FIREBASE_PROJECT_ID,
   FIREBASE_STORAGE_BUCKET,
   FIREBASE_DATABASE_URL,
-} from '@/constant/env'
-import firebase from 'firebase/compat/app'
+} from "@/constant/env";
+
+import firebase from "firebase/compat/app";
 // Your web app's Firebase configuration
 const firebaseConfig = {
   apiKey: FIREBASE_API_KEY,
@@ -22,10 +23,10 @@ const firebaseConfig = {
   messagingSenderId: FIREBASE_MESSAGING_SENDER_ID,
   appId: FIREBASE_APP_ID,
   databaseURL: FIREBASE_DATABASE_URL,
-}
+};
 
 // Initialize Firebase
-const app = initializeApp(firebaseConfig)
+const app = initializeApp(firebaseConfig);
 
 export const initializeFirebaseApp = () => {
   // if (!firebase.apps.length) {
@@ -33,5 +34,5 @@ export const initializeFirebaseApp = () => {
   // } else {
   //   firebase.app()
   // }
-  !getApps().length ? initializeApp(firebaseConfig) : getApp()
-}
+  !getApps().length ? initializeApp(firebaseConfig) : getApp();
+};

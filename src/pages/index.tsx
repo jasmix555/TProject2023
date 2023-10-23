@@ -3,7 +3,8 @@ import Image from "next/image";
 import { Inter } from "next/font/google";
 import styles from "@/styles/Home.module.css";
 import { getApp } from "firebase/app";
-import { Heading, Wrap } from "@chakra-ui/react";
+import { Button, Heading, Wrap } from "@chakra-ui/react";
+import Link from "next/link";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -20,6 +21,9 @@ export default function Home() {
       <main>
         <Wrap>
           <Heading>Hello World</Heading>
+          <Button>
+            <Link href={"/signup"}>Signup</Link>
+          </Button>
         </Wrap>
       </main>
     </>
