@@ -6,13 +6,16 @@ import Link from "next/link";
 
 type Props = {
   icon?: ReactElement;
+  link: string;
 };
 
-export default function OptionBox({ icon }: Props) {
+export default function LinkBox({ icon, link }: Props) {
   return (
     <>
       <div className={style.wrapper}>
-        <button className={style.icon}>{icon}</button>
+        <Link href={link} className={style.icon}>
+          {icon}
+        </Link>
       </div>
     </>
   );

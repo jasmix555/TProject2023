@@ -1,4 +1,4 @@
-import MenuBar from "@/component/menuButton";
+import MenuBar from "@/component/MenuBar";
 import {
   Box,
   Button,

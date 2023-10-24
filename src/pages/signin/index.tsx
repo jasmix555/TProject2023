@@ -20,7 +20,7 @@ import { FormEvent, useState } from "react";
 import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import { FirebaseError } from "@firebase/util";
-import MenuBar from "@/component/menuButton";
+import MenuBar from "@/component/MenuBar";
 import { push } from "firebase/database";
 
 export default function Signin() {
