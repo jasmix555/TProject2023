@@ -1,3 +1,54 @@
+.menu {
+  width: 4rem;
+  height: 4rem;
+  flex-wrap: wrap;
+  overflow: hidden;
+  transition: height 0.3s;
+  display: flex;
+  flex-direction: column;
+
+  &.active {
+    height: auto;
+  }
+
+  .btnWrapper {
+    transition: transform 0.3s, opacity 0.3s;
+    transform: translateY(0);
+    opacity: 1;
+
+    &:nth-child(5) {
+      i {
+        padding-left: 5px;
+      }
+    }
+  }
+}
+
+.mainBtn {
+  border: solid 1px tomato;
+}
+
+@for $i from 0 through 6 {
+  .btnWrapper:nth-child(#{$i}):not(.mainBtn) {
+    transition-delay: 0.1s;
+    transform: translateY(-100%);
+    opacity: 0;
+    animation: appear 0.2s forwards;
+    animation-delay: #{0.1 * $i}s;
+  }
+
+  .menu:not(.active) .btnWrapper:not(.mainBtn) {
+    animation: disappear 0.2s forwards;
+  }
+}
+
+.btnChildWrap {
+  margin-top: 0.8rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
 .btnWrapper {
   width: 4rem;
   height: 4rem;
@@ -7,6 +58,7 @@
   box-shadow: var(--neon-shadow);
   display: inline-flex;
   align-items: center;
+
   .icon {
     display: block;
     margin: 0 auto;
@@ -15,22 +67,16 @@
   }
 }
 
-.flex {
-  width: 4rem;
-  height: 4rem;
-  flex-wrap: wrap;
-  transition: 2s;
-  overflow: hidden;
-  &.active {
-    height: 33rem;
+@keyframes appear {
+  to {
+    transform: translateY(0);
+    opacity: 1;
   }
-  .btnWrapper {
-    margin-bottom: 0.6rem;
-  }
+}
 
-  button:nth-child(6) {
-    i {
-      padding-left: 5px;
-    }
+@keyframes disappear {
+  to {
+    transform: translateY(-100%);
+    opacity: 0;
   }
 }

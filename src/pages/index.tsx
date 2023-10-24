@@ -18,12 +18,7 @@ export default function Home() {
   return (
     <>
       <AuthGuard>
-        <Container py={4}>
-          <Header />
-          {/* <Link href={"/signup"} passHref>
-            <Button>Signup</Button>
-          </Link> */}
-        </Container>
+        <Container py={4}></Container>
       </AuthGuard>
     </>
   );

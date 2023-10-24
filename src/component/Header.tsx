@@ -7,7 +7,7 @@ import MenuBar from "@/component/MenuBar";
 export default function Header() {
   return (
     <>
-      <Flex justifyContent={"space-between"}>
+      <Flex justifyContent={"space-between"} padding={4}>
         <LinkBox link={"../"} icon={<FaHome />} />
         <MenuBar />
       </Flex>
