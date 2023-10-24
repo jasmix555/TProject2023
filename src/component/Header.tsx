@@ -2,13 +2,14 @@ import { Flex, MenuButton } from "@chakra-ui/react";
 import React from "react";
 import LinkBox from "./LinkBox";
 import { FaHome } from "react-icons/fa";
+import { AiFillHome } from "react-icons/ai";
 import MenuBar from "@/component/MenuBar";
 
 export default function Header() {
   return (
     <>
-      <Flex justifyContent={"space-between"} padding={4}>
-        <LinkBox link={"../"} icon={<FaHome />} />
+      <Flex justifyContent={"space-between"} padding={6}>
+        <LinkBox link={"../"} icon={<AiFillHome />} />
         <MenuBar />
       </Flex>
     </>

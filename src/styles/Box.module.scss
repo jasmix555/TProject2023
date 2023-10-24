@@ -52,7 +52,9 @@
   box-shadow: var(--neon-shadow);
   display: inline-flex;
   align-items: center;
-
+  a {
+    margin: 0 auto;
+  }
   .icon {
     display: block;
     margin: 0 auto;

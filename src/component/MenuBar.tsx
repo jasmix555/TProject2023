@@ -11,6 +11,7 @@ import {
 import { FaEdit } from "react-icons/fa";
 import { useState } from "react";
 import style from "@/styles/Box.module.scss";
+import Link from "next/link";
 
 type MenuBarProps = {
   text?: string;
@@ -120,7 +121,9 @@ export default function MenuBar({ text }: MenuBarProps) {
                 className={style.btnWrapper}
                 style={{ animationDelay: `${idx * 0.1}s` }}
               >
-                <i className={style.icon}>{icon}</i>
+                <Link href={"#"}>
+                  <i className={style.icon}>{icon}</i>
+                </Link>
               </button>
             ) : null
           )}
