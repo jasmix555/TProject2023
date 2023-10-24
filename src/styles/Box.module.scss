@@ -7,10 +7,10 @@
   box-shadow: var(--neon-shadow);
   display: inline-flex;
   align-items: center;
-}
-
-.icon {
-  margin: 0 auto;
-  color: var(--white);
-  font-size: 2rem;
+  .icon {
+    display: block;
+    margin: 0 auto;
+    color: var(--white);
+    font-size: 2rem;
+  }
 }

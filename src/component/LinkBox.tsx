@@ -1,7 +1,5 @@
 import { ReactElement, useState } from "react";
-import style from "@/styles/OptionBox.module.scss";
-import { IconButton } from "@chakra-ui/react";
-import { IconType } from "react-icons";
+import style from "@/styles/Box.module.scss";
 import Link from "next/link";
 
 type Props = {
