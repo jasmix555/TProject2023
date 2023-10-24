@@ -11,6 +11,8 @@ import {
 import { FaEdit } from "react-icons/fa";
 import OptionBox from "@/component/OptionBox";
 import { useState } from "react";
+import style from "@/styles/Box.module.scss";
+import { log } from "console";
 
 type MenuBarProps = {
   text?: string;
@@ -19,41 +21,32 @@ type MenuBarProps = {
 export default function MenuBar({ text }: MenuBarProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-  const menus = [
-    {
-      icon: <RiMenu3Line />,
-      options: [
-        {
-          icon: <OptionBox icon={<FaRegCircleXmark />} />,
-          label: "Option 1",
-        },
-        {
-          icon: <OptionBox icon={<FaBell />} />,
-          label: "Option 2",
-        },
-        {
-          icon: <OptionBox icon={<FaUserAstronaut />} />,
-          label: "Option 3",
-        },
-        {
-          icon: <OptionBox icon={<FaUsers />} />,
-          label: "Option 4",
-        },
-        {
-          icon: <OptionBox icon={<FaBook />} />,
-          label: "Option 5",
-        },
-        {
-          icon: <OptionBox icon={<FaEdit />} />,
-          label: "Option 6",
-        },
-        {
-          icon: <OptionBox icon={<FaGear />} />,
-          label: "Option 7",
-        },
-      ],
-    },
-  ];
+  const menus = {
+    icon: <RiMenu3Line />,
+    options: [
+      {
+        icon: <FaRegCircleXmark />,
+      },
+      {
+        icon: <FaBell />,
+      },
+      {
+        icon: <FaUserAstronaut />,
+      },
+      {
+        icon: <FaUsers />,
+      },
+      {
+        icon: <FaBook />,
+      },
+      {
+        icon: <FaEdit />,
+      },
+      {
+        icon: <FaGear />,
+      },
+    ],
+  };
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -61,26 +54,29 @@ export default function MenuBar({ text }: MenuBarProps) {
 
   return (
     <>
-      <Wrap>
-        {menus.map((menu) => (
-          <div key={menu.icon.props.children}>
-            <OptionBox icon={menu.icon} onClick={toggleMenu} />
-            {isMenuOpen && (
-              <Wrap
-                bg="white"
-                boxShadow="md"
-                p={2}
-                position="absolute"
-                zIndex={1}
-              >
-                {menu.options.map((option) => (
-                  <OptionBox key={option.label} icon={option.icon} />
-                ))}
-              </Wrap>
-            )}
-          </div>
-        ))}
-      </Wrap>
+      <div
+        className={isMenuOpen ? style.flex + " " + style.active : style.flex}
+      >
+        <button
+          className={style.btnWrapper}
+          onClick={() => {
+            toggleMenu();
+            console.log(isMenuOpen);
+          }}
+        >
+          <i className={style.icon}>
+            {isMenuOpen ? menus.options[0].icon : menus.icon}
+          </i>
+        </button>
+        {isMenuOpen &&
+          menus.options.map((icon, idx) =>
+            idx !== 0 ? (
+              <button key={idx} className={style.btnWrapper}>
+                <i className={style.icon}>{icon.icon}</i>
+              </button>
+            ) : null
+          )}
+      </div>
     </>
   );
 }
