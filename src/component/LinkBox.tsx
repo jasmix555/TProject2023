@@ -10,7 +10,7 @@ type Props = {
 export default function LinkBox({ icon, link }: Props) {
   return (
     <>
-      <button className={style.btnWrapper}>
+      <button className={style.btnWrapper + " " + style.mainBtn}>
         <Link href={link} className={style.icon}>
           {icon}
         </Link>

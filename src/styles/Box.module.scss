@@ -1,6 +1,4 @@
 .menu {
-  width: 4rem;
-  height: 4rem;
   flex-wrap: wrap;
   overflow: hidden;
   transition: height 0.3s;
@@ -22,10 +20,6 @@
       }
     }
   }
-}
-
-.mainBtn {
-  border: solid 1px tomato;
 }
 
 @for $i from 0 through 6 {
@@ -50,8 +44,8 @@
 }
 
 .btnWrapper {
-  width: 4rem;
-  height: 4rem;
+  width: 6rem;
+  height: 6rem;
   border-radius: 1rem;
   border: var(--border-stroke);
   background: var(--radial-gradient);
@@ -63,7 +57,7 @@
     display: block;
     margin: 0 auto;
     color: var(--white);
-    font-size: 2rem;
+    font-size: 3rem;
   }
 }
 

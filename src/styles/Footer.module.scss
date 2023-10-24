@@ -1,0 +1,18 @@
+.footerWrap {
+  position: fixed;
+  left: 50%;
+  bottom: 8%;
+  transform: translate(-50%, 50%);
+  display: flex;
+  border: solid 1px tomato;
+  width: 360px;
+  height: 80px;
+  justify-content: space-around;
+  align-items: center;
+  color: var(--white);
+  background: var(--footer-color);
+  border: var(--border-stroke);
+  box-shadow: var(--neon-shadow);
+  border-radius: 1rem;
+  font-size: 2.6rem;
+}
