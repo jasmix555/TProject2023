@@ -1,4 +1,3 @@
-import MenuBar from "@/component/menuButton";
 import {
   Box,
   Button,
@@ -9,25 +8,22 @@ import {
   FormLabel,
   Grid,
   Heading,
-  Icon,
   Input,
   InputGroup,
-  InputRightElement,
+  Icon,
   Spacer,
-  TagLeftIcon,
   useToast,
+  InputRightElement,
+  Link,
 } from "@chakra-ui/react";
-import { FirebaseError } from "firebase/app";
-import {
-  createUserWithEmailAndPassword,
-  getAuth,
-  sendEmailVerification,
-} from "firebase/auth";
-import Link from "next/link";
 import { FormEvent, useState } from "react";
 import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import { FirebaseError } from "@firebase/util";
+import MenuBar from "@/component/menuButton";
+import { push } from "firebase/database";
 
-export default function Signup() {
+export default function Signin() {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [show, setShow] = useState(false);
@@ -40,19 +36,15 @@ export default function Signup() {
     e.preventDefault();
     try {
       const auth = getAuth();
-      const userCredential = await createUserWithEmailAndPassword(
-        auth,
-        email,
-        password
-      );
-      await sendEmailVerification(userCredential.user);
+      await signInWithEmailAndPassword(auth, email, password);
       setEmail("");
       setPassword("");
       toast({
-        title: "確認メールを送信しました。",
+        title: "ログインしました。",
         status: "success",
         position: "top",
       });
+      //TODO: ログイン後のページに遷移の処理を書く
     } catch (e) {
       toast({
         title: "エラーが発生しました。",
@@ -71,29 +63,31 @@ export default function Signup() {
     <>
       <MenuBar />
       <Container py={4}>
-        <Heading>Sign Up</Heading>
+        <Heading>Sign In</Heading>
         <chakra.form onSubmit={handleSubmit}>
           <Spacer height={8} aria-hidden />
           <Grid gap={4}>
             <Box display={"contents"}>
               <FormControl>
-                <FormLabel>E-Mail</FormLabel>
+                <FormLabel color={"white"}>E-Mail</FormLabel>
                 <Input
                   type={"email"}
                   name={"email"}
                   value={email}
+                  color={"white"}
                   onChange={(e) => {
                     setEmail(e.target.value);
                   }}
                 />
               </FormControl>
               <FormControl>
-                <FormLabel>Password</FormLabel>
+                <FormLabel color={"white"}>Password</FormLabel>
                 <InputGroup>
                   <Input
                     type={show ? "text" : "password"}
                     name={"password"}
                     value={password}
+                    color={"white"}
                     onChange={(e) => {
                       setPassword(e.target.value);
                     }}
@@ -112,13 +106,10 @@ export default function Signup() {
             </Box>
           </Grid>
           <Spacer height={4} aria-hidden />
-          <Center flexDir={"column"} gap={3}>
-            <Button type={"submit"} isLoading={isLoading}>
-              Register
-            </Button>
-            {/* <Button as={"a"} colorScheme="blue" type="submit">
+          <Center>
+            <Button isLoading={isLoading} colorScheme="blue" type="submit">
               Login
-            </Button> */}
+            </Button>
           </Center>
         </chakra.form>
       </Container>
