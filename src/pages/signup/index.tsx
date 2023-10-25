@@ -116,9 +116,6 @@ export default function Signup() {
             <Button type={"submit"} isLoading={isLoading}>
               Register
             </Button>
-            {/* <Button as={"a"} colorScheme="blue" type="submit">
-              Login
-            </Button> */}
           </Center>
         </chakra.form>
       </Container>

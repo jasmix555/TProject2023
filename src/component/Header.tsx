@@ -8,7 +8,13 @@ import MenuBar from "@/component/MenuBar";
 export default function Header() {
   return (
     <>
-      <Flex justifyContent={"space-between"} padding={6}>
+      <Flex
+        justifyContent={"space-between"}
+        padding={6}
+        position={"fixed"}
+        w={"100%"}
+        zIndex={10}
+      >
         <LinkBox link={"../"} icon={<AiFillHome />} />
         <MenuBar />
       </Flex>

@@ -61,7 +61,6 @@ export default function Signin() {
 
   return (
     <>
-      <MenuBar />
       <Container py={4}>
         <Heading>Sign In</Heading>
         <chakra.form onSubmit={handleSubmit}>

@@ -1,0 +1,15 @@
+.wrapper {
+  color: var(--white);
+  position: relative;
+  top: 10rem;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: 40rem;
+  text-align: center;
+  .catchphrase {
+    font-size: 3rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+  }
+}

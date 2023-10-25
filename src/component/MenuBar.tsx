@@ -24,13 +24,13 @@ export default function MenuBar({ text }: MenuBarProps) {
   const menus = {
     icon: <RiMenu3Line />,
     options: [
-      <FaRegCircleXmark />,
-      <FaBell />,
-      <FaUserAstronaut />,
-      <FaUsers />,
-      <FaBook />,
-      <FaEdit />,
-      <FaGear />,
+      { icon: <FaRegCircleXmark />, link: "/#" },
+      { icon: <FaBell />, link: "/#" },
+      { icon: <FaUserAstronaut />, link: "/#" },
+      { icon: <FaUsers />, link: "/#" },
+      { icon: <FaBook />, link: "/#" },
+      { icon: <FaEdit />, link: "/#" },
+      { icon: <FaGear />, link: "/../settings" },
     ],
   };
 
@@ -45,7 +45,7 @@ export default function MenuBar({ text }: MenuBarProps) {
         onClick={toggleMenu}
       >
         <i className={style.icon}>
-          {isMenuOpen ? menus.options[0] : menus.icon}
+          {isMenuOpen ? menus.options[0].icon : menus.icon}
         </i>
       </button>
       <div className={style.btnChildWrap}>
@@ -57,8 +57,8 @@ export default function MenuBar({ text }: MenuBarProps) {
                 className={style.btnWrapper}
                 style={{ animationDelay: `${idx * 0.1}s` }}
               >
-                <Link href={"#"}>
-                  <i className={style.icon}>{icon}</i>
+                <Link href={icon.link}>
+                  <i className={style.icon}>{icon.icon}</i>
                 </Link>
               </button>
             ) : null
