@@ -14,7 +14,6 @@ import Header from "@/component/Header";
 import Footer from "@/component/Footer";
 
 export default function Home() {
-  const try = "hi";
   console.log(getApp());
 
   return (
@@ -27,4 +26,3 @@ export default function Home() {
     </>
   );
 }
-
