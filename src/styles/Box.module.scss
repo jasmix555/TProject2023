@@ -1,4 +1,8 @@
 .menu {
+  width: fit-content;
+  position: fixed;
+  top: 2rem;
+  right: 2rem;
   flex-wrap: wrap;
   overflow: hidden;
   transition: height 0.3s;
@@ -28,7 +32,7 @@
     transition-delay: 0.1s;
     transform: translateY(-100%);
     opacity: 0;
-    animation: appear 0.2s forwards;
+    animation: appear 0.1s forwards;
     animation-delay: #{0.1 * $i}s;
   }
 

@@ -1,16 +1,6 @@
+import { Container } from "@chakra-ui/react";
 import { getApp } from "firebase/app";
-import {
-  Button,
-  Center,
-  Container,
-  Flex,
-  Heading,
-  Wrap,
-} from "@chakra-ui/react";
-import Image from "next/image";
-import Link from "next/link";
 import { AuthGuard } from "@/feature/auth/component/AuthGuard/AuthGuard";
-import Header from "@/component/Header";
 import Footer from "@/component/Footer";
 
 export default function Home() {

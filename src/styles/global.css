@@ -29,4 +29,6 @@ body {
   overflow: hidden;
   background-color: var(--background-color) !important;
   background-image: url(../../public/25.svg) !important;
+  background-repeat: no-repeat !important;
+  background-position: center !important;
 }
