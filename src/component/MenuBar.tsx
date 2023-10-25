@@ -19,6 +19,7 @@ type MenuBarProps = {
 
 export default function MenuBar({ text }: MenuBarProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isClosing, setIsClosing] = useState(false); // Track if the menu is closing
 
   const menus = {
     icon: <RiMenu3Line />,
