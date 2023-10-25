@@ -10,6 +10,7 @@
   }
 
   .btnWrapper {
+    @extend %btnStyle;
     transition: transform 0.3s, opacity 0.3s;
     transform: translateY(0);
     opacity: 1;
@@ -36,6 +37,13 @@
   }
 }
 
+.homeBtn {
+  @extend %btnStyle;
+  position: fixed;
+  top: 2rem;
+  left: 2rem;
+}
+
 .btnChildWrap {
   margin-top: 0.8rem;
   display: flex;
@@ -43,7 +51,7 @@
   gap: 0.8rem;
 }
 
-.btnWrapper {
+%btnStyle {
   width: 6rem;
   height: 6rem;
   border-radius: 1rem;

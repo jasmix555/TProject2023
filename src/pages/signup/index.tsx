@@ -1,4 +1,3 @@
-import MenuBar from "@/component/MenuBar";
 import {
   Box,
   Button,
@@ -69,8 +68,7 @@ export default function Signup() {
 
   return (
     <>
-      <MenuBar />
-      <Container py={4}>
+      <Container py={4} marginTop={100} color={"white"}>
         <Heading>Sign Up</Heading>
         <chakra.form onSubmit={handleSubmit}>
           <Spacer height={8} aria-hidden />

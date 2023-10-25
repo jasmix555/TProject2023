@@ -34,7 +34,7 @@ export default function Settings() {
 
   return (
     <>
-      <Wrap position={"relative"} top={40}>
+      <Wrap w={"100%"} position={"relative"} top={40} justifyContent={"center"}>
         {user ? (
           <Button
             colorScheme={"teal"}

@@ -22,6 +22,7 @@ import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import { FirebaseError } from "@firebase/util";
 import MenuBar from "@/component/MenuBar";
 import { push } from "firebase/database";
+import { useRouter } from "next/router";
 
 export default function Signin() {
   const [email, setEmail] = useState<string>("");
@@ -30,6 +31,7 @@ export default function Signin() {
   const handleClick = () => setShow(!show);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const toast = useToast();
+  const { push } = useRouter();
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     setIsLoading(true);
@@ -44,6 +46,7 @@ export default function Signin() {
         status: "success",
         position: "top",
       });
+      push("../");
       //TODO: ログイン後のページに遷移の処理を書く
     } catch (e) {
       toast({
@@ -61,8 +64,8 @@ export default function Signin() {
 
   return (
     <>
-      <Container py={4}>
-        <Heading>Sign In</Heading>
+      <Container py={4} paddingTop={100}>
+        <Heading color={"white"}>Sign In</Heading>
         <chakra.form onSubmit={handleSubmit}>
           <Spacer height={8} aria-hidden />
           <Grid gap={4}>
