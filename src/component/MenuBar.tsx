@@ -15,24 +15,31 @@ import Link from "next/link";
 
 type MenuBarProps = {
   text?: string;
+  contents: {
+    icon: any;
+    options: {
+      icon: any;
+      link: string;
+    }[];
+  };
 };
 
-export default function MenuBar({ text }: MenuBarProps) {
+export default function MenuBar({ text, contents }: MenuBarProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isClosing, setIsClosing] = useState(false); // Track if the menu is closing
 
-  const menus = {
-    icon: <RiMenu3Line />,
-    options: [
-      { icon: <FaRegCircleXmark />, link: "/#" },
-      { icon: <FaBell />, link: "/#" },
-      { icon: <FaUserAstronaut />, link: "/#" },
-      { icon: <FaUsers />, link: "/#" },
-      // { icon: <FaBook />, link: "/#" },
-      { icon: <FaEdit />, link: "/#" },
-      { icon: <FaGear />, link: "/../settings" },
-    ],
-  };
+  // const menus = {
+  //   icon: <RiMenu3Line />,
+  //   options: [
+  //     { icon: <FaRegCircleXmark />, link: "/#" },
+  //     { icon: <FaBell />, link: "/#" },
+  //     { icon: <FaUserAstronaut />, link: "/#" },
+  //     { icon: <FaUsers />, link: "/#" },
+  //     { icon: <FaEdit />, link: "/#" },
+  //     { icon: <FaBook />, link: "/#" },
+  //     { icon: <FaGear />, link: "/../settings" },
+  //   ],
+  // };
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -45,12 +52,12 @@ export default function MenuBar({ text }: MenuBarProps) {
         onClick={toggleMenu}
       >
         <i className={style.icon}>
-          {isMenuOpen ? menus.options[0].icon : menus.icon}
+          {isMenuOpen ? contents.options[0].icon : contents.icon}
         </i>
       </button>
       <div className={style.btnChildWrap}>
         {isMenuOpen &&
-          menus.options.map((icon, idx) =>
+          contents.options.map((icon, idx) =>
             idx !== 0 ? (
               <button
                 key={idx}

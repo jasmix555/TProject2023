@@ -17,7 +17,7 @@ export default function Footer() {
           </Link>
         </div>
         <div className={style.chatWrap}>
-          <Link href={"#"}>
+          <Link href={"/chat"}>
             <FaRocketchat />
           </Link>
         </div>

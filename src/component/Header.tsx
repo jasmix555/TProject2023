@@ -3,9 +3,18 @@ import LinkBox from "./LinkBox";
 import { AiFillHome } from "react-icons/ai";
 import MenuBar from "@/component/MenuBar";
 import { useAuthContext } from "@/feature/provider/AuthProvider";
-import { useRouter } from "next/router";
 
-export default function Header() {
+type HeaderProps = {
+  contents: {
+    icon: any;
+    options: {
+      icon: any;
+      link: string;
+    }[];
+  };
+};
+
+export default function Header({ contents }: HeaderProps) {
   const { user } = useAuthContext();
 
   return (
@@ -13,7 +22,7 @@ export default function Header() {
       {user ? (
         <>
           <LinkBox link={"../"} icon={<AiFillHome />} />
-          <MenuBar />
+          <MenuBar contents={contents} />
         </>
       ) : (
         <></>
