@@ -28,19 +28,6 @@ export default function MenuBar({ text, contents }: MenuBarProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isClosing, setIsClosing] = useState(false); // Track if the menu is closing
 
-  // const menus = {
-  //   icon: <RiMenu3Line />,
-  //   options: [
-  //     { icon: <FaRegCircleXmark />, link: "/#" },
-  //     { icon: <FaBell />, link: "/#" },
-  //     { icon: <FaUserAstronaut />, link: "/#" },
-  //     { icon: <FaUsers />, link: "/#" },
-  //     { icon: <FaEdit />, link: "/#" },
-  //     { icon: <FaBook />, link: "/#" },
-  //     { icon: <FaGear />, link: "/../settings" },
-  //   ],
-  // };
-
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
@@ -62,7 +49,7 @@ export default function MenuBar({ text, contents }: MenuBarProps) {
               <button
                 key={idx}
                 className={style.btnWrapper}
-                style={{ animationDelay: `${idx * 0.1}s` }}
+                style={{ animationDelay: `${idx * 0.05}s` }}
               >
                 <Link href={icon.link}>
                   <i className={style.icon}>{icon.icon}</i>
