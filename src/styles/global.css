@@ -37,7 +37,7 @@ body {
   -webkit-text-size-adjust: 100%; /* iOS 8+ */
   font-size: 62.5%;
   max-width: 600px;
-  height: 100vh;
+  height: 100%;
   overflow: hidden;
   background-color: var(--background-color) !important;
   background-image: url(../../public/25.svg) !important;

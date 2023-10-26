@@ -25,7 +25,6 @@ export default function Home() {
       { icon: <FaUserAstronaut />, link: "/#" },
       { icon: <FaUsers />, link: "/#" },
       { icon: <FaEdit />, link: "/#" },
-      { icon: <FaBook />, link: "/#" },
       { icon: <FaGear />, link: "/../settings" },
     ],
   };

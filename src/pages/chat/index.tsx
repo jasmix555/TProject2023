@@ -37,10 +37,16 @@ const menus = {
 
 const Message = ({ message }: MessageProps) => {
   return (
-    <Flex alignItems={"start"}>
-      <Avatar />
-      <Box ml={2}>
-        <Text bgColor={"gray.200"} rounded={"md"} px={2} py={1}>
+    <Flex alignItems={"start"} justifyContent={"space-between"}>
+      <Avatar size={"lg"} />
+      <Box ml={2} w={"80%"}>
+        <Text
+          bgColor={"gray.200"}
+          rounded={"lg"}
+          px={2}
+          py={1}
+          fontSize={"1.6rem"}
+        >
           {message}
         </Text>
       </Box>
@@ -126,9 +132,10 @@ export const Page = () => {
               padding: "0.8rem 1rem",
               color: "#020202",
               fontSize: "1.5rem",
-              backgroundColor: "#fff",
+              backgroundColor: "var(--white)",
               boxShadow: "0px 4px 4px 0px rgba(0, 0, 0, 0.25) inset",
               borderRadius: "1rem",
+              outline: "none",
             }}
             placeholder="入力してください。"
           />
