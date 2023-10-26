@@ -4,6 +4,7 @@ import { FirebaseError } from "@firebase/util";
 import { getAuth, signOut } from "firebase/auth";
 import { useState } from "react";
 import { useRouter } from "next/router";
+import Footer from "@/component/Footer";
 
 export default function Settings() {
   const { user } = useAuthContext();
@@ -46,6 +47,7 @@ export default function Settings() {
           "ログアウト中"
         )}
       </Wrap>
+      <Footer />
     </>
   );
 }
