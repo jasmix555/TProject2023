@@ -1,5 +1,5 @@
 import { ReactElement, useState } from "react";
-import style from "@/styles/Box.module.scss";
+import style from "@/styles/_Box.module.scss";
 import Link from "next/link";
 
 type Props = {

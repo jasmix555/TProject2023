@@ -10,7 +10,7 @@ import {
 } from "react-icons/fa6";
 import { FaEdit } from "react-icons/fa";
 import { useState } from "react";
-import style from "@/styles/Box.module.scss";
+import style from "@/styles/_Box.module.scss";
 import Link from "next/link";
 
 type MenuBarProps = {
@@ -28,7 +28,7 @@ export default function MenuBar({ text }: MenuBarProps) {
       { icon: <FaBell />, link: "/#" },
       { icon: <FaUserAstronaut />, link: "/#" },
       { icon: <FaUsers />, link: "/#" },
-      { icon: <FaBook />, link: "/#" },
+      // { icon: <FaBook />, link: "/#" },
       { icon: <FaEdit />, link: "/#" },
       { icon: <FaGear />, link: "/../settings" },
     ],

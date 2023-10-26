@@ -4,7 +4,6 @@ import { FirebaseError } from "@firebase/util";
 import { getAuth, signOut } from "firebase/auth";
 import { useState } from "react";
 import { useRouter } from "next/router";
-import Header from "@/component/Header";
 
 export default function Settings() {
   const { user } = useAuthContext();

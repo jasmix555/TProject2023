@@ -19,7 +19,7 @@
     transform: translateY(0);
     opacity: 1;
 
-    &:nth-child(5) {
+    &:nth-child(4) {
       i {
         padding-left: 5px;
       }
@@ -61,7 +61,7 @@
   border-radius: 1rem;
   border: var(--border-stroke);
   background: var(--radial-gradient);
-  box-shadow: var(--neon-shadow);
+  box-shadow: var(--border-shadow);
   display: inline-flex;
   align-items: center;
   a {
@@ -72,6 +72,39 @@
     margin: 0 auto;
     color: var(--white);
     font-size: 3rem;
+  }
+}
+
+@mixin btnStyle(
+  $bg-color: var(--radial-gradient),
+  $text-color: var(--white),
+  $w: 6rem,
+  $h: 6rem,
+  $shadow: var(--border-shadow),
+  $border: var(--border-stroke),
+  $color: var(--white),
+  $fontS: 3rem
+) {
+  width: $w;
+  height: $h;
+  border-radius: 1rem;
+  border: $border;
+  background: $bg-color;
+  box-shadow: $shadow;
+  display: inline-flex;
+  align-items: center;
+  a {
+    font-size: $fontS;
+    text-align: center;
+    margin: 0 auto;
+    display: block;
+    width: $w;
+  }
+  .icon {
+    display: block;
+    margin: 0 auto;
+    color: $color;
+    font-size: $fontS;
   }
 }
 
