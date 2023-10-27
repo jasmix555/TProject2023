@@ -1,5 +1,6 @@
 import { useState } from "react";
 import style from "@/styles/_Box.module.scss";
+import Link from "next/link";
 
 type MenuBarProps = {
   text?: string;
@@ -8,6 +9,7 @@ type MenuBarProps = {
     options: {
       icon: any;
       page?: any;
+      link?: any;
     }[];
   };
 };
@@ -39,7 +41,9 @@ export default function MenuBar({ text, contents }: MenuBarProps) {
                 className={style.btnWrapper}
                 style={{ animationDelay: `${idx * 0.05}s` }}
               >
-                <i className={style.icon}>{icon.icon}</i>
+                <Link href={icon.link}>
+                  <i className={style.icon}>{icon.icon}</i>
+                </Link>
               </button>
             ) : null
           )}

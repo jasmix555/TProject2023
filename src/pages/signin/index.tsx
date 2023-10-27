@@ -23,6 +23,7 @@ import { FirebaseError } from "@firebase/util";
 import MenuBar from "@/component/MenuBar";
 import { push } from "firebase/database";
 import { useRouter } from "next/router";
+import style from "@/styles/form.module.scss";
 
 export default function Signin() {
   const [email, setEmail] = useState<string>("");
@@ -64,57 +65,44 @@ export default function Signin() {
 
   return (
     <>
-      <Container py={4} paddingTop={100}>
-        <Heading color={"white"}>Sign In</Heading>
-        <chakra.form onSubmit={handleSubmit}>
-          <Spacer height={8} aria-hidden />
-          <Grid gap={4}>
-            <Box display={"contents"}>
-              <FormControl>
-                <FormLabel color={"white"}>E-Mail</FormLabel>
-                <Input
-                  type={"email"}
-                  name={"email"}
-                  value={email}
-                  color={"white"}
+      <div className={style.bodyWrap}>
+        <form onSubmit={handleSubmit}>
+          <div className={style.contentWrap}>
+            <div className={style.inputWrap}>
+              <p>E-Mail</p>
+              <input
+                className={style.input}
+                type={"email"}
+                name={"email"}
+                value={email}
+                onChange={(e) => {
+                  setEmail(e.target.value);
+                }}
+              />
+            </div>
+            <div className={style.inputWrap}>
+              <p>Password</p>
+              <div className={style.iconVis}>
+                <input
+                  className={style.input}
+                  type={show ? "text" : "password"}
+                  name={"password"}
+                  value={password}
                   onChange={(e) => {
-                    setEmail(e.target.value);
+                    setPassword(e.target.value);
                   }}
                 />
-              </FormControl>
-              <FormControl>
-                <FormLabel color={"white"}>Password</FormLabel>
-                <InputGroup>
-                  <Input
-                    type={show ? "text" : "password"}
-                    name={"password"}
-                    value={password}
-                    color={"white"}
-                    onChange={(e) => {
-                      setPassword(e.target.value);
-                    }}
-                  />
-                  <InputRightElement width="4rem">
-                    <Icon
-                      cursor={"pointer"}
-                      onClick={handleClick}
-                      fontSize={"1.6rem"}
-                    >
-                      {show ? <AiFillEyeInvisible /> : <AiFillEye />}
-                    </Icon>
-                  </InputRightElement>
-                </InputGroup>
-              </FormControl>
-            </Box>
-          </Grid>
-          <Spacer height={4} aria-hidden />
-          <Center>
-            <Button isLoading={isLoading} colorScheme="blue" type="submit">
-              Login
-            </Button>
-          </Center>
-        </chakra.form>
-      </Container>
+                <i onClick={handleClick}>
+                  {show ? <AiFillEyeInvisible /> : <AiFillEye />}
+                </i>
+              </div>
+            </div>
+          </div>
+          <div>
+            <button type="submit">ログイン</button>
+          </div>
+        </form>
+      </div>
     </>
   );
 }

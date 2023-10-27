@@ -27,12 +27,12 @@ export default function Home() {
   const menus = {
     icon: <RiMenu3Line />,
     options: [
-      { icon: <FaRegCircleXmark /> },
-      { icon: <FaBell /> },
-      { icon: <FaUserAstronaut /> },
-      { icon: <FaUsers /> },
-      { icon: <FaEdit /> },
-      { icon: <FaGear /> },
+      { icon: <FaRegCircleXmark />, link: "/#" },
+      { icon: <FaBell />, link: "/#" },
+      { icon: <FaUserAstronaut />, link: "/#" },
+      { icon: <FaUsers />, link: "/#" },
+      { icon: <FaEdit />, link: "/#" },
+      { icon: <FaGear />, link: "/settings" },
     ],
   };
 

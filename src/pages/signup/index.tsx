@@ -25,6 +25,7 @@ import {
 import Link from "next/link";
 import { FormEvent, useState } from "react";
 import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
+import style from "@/styles/form.module.scss";
 
 export default function Signup() {
   const [email, setEmail] = useState<string>("");
@@ -68,55 +69,44 @@ export default function Signup() {
 
   return (
     <>
-      <Container py={4} marginTop={100} color={"white"}>
-        <Heading>Sign Up</Heading>
-        <chakra.form onSubmit={handleSubmit}>
-          <Spacer height={8} aria-hidden />
-          <Grid gap={4}>
-            <Box display={"contents"}>
-              <FormControl>
-                <FormLabel>E-Mail</FormLabel>
-                <Input
-                  type={"email"}
-                  name={"email"}
-                  value={email}
+      <div className={style.bodyWrap}>
+        <form onSubmit={handleSubmit}>
+          <div className={style.contentWrap}>
+            <div className={style.inputWrap}>
+              <p>E-Mail</p>
+              <input
+                className={style.input}
+                type={"email"}
+                name={"email"}
+                value={email}
+                onChange={(e) => {
+                  setEmail(e.target.value);
+                }}
+              />
+            </div>
+            <div className={style.inputWrap}>
+              <p>Password</p>
+              <div className={style.iconVis}>
+                <input
+                  className={style.input}
+                  type={show ? "text" : "password"}
+                  name={"password"}
+                  value={password}
                   onChange={(e) => {
-                    setEmail(e.target.value);
+                    setPassword(e.target.value);
                   }}
                 />
-              </FormControl>
-              <FormControl>
-                <FormLabel>Password</FormLabel>
-                <InputGroup>
-                  <Input
-                    type={show ? "text" : "password"}
-                    name={"password"}
-                    value={password}
-                    onChange={(e) => {
-                      setPassword(e.target.value);
-                    }}
-                  />
-                  <InputRightElement width="4rem">
-                    <Icon
-                      cursor={"pointer"}
-                      onClick={handleClick}
-                      fontSize={"1.6rem"}
-                    >
-                      {show ? <AiFillEyeInvisible /> : <AiFillEye />}
-                    </Icon>
-                  </InputRightElement>
-                </InputGroup>
-              </FormControl>
-            </Box>
-          </Grid>
-          <Spacer height={4} aria-hidden />
-          <Center flexDir={"column"} gap={3}>
-            <Button type={"submit"} isLoading={isLoading}>
-              Register
-            </Button>
-          </Center>
-        </chakra.form>
-      </Container>
+                <i onClick={handleClick}>
+                  {show ? <AiFillEyeInvisible /> : <AiFillEye />}
+                </i>
+              </div>
+            </div>
+          </div>
+          <div>
+            <button type="submit">新規登録</button>
+          </div>
+        </form>
+      </div>
     </>
   );
 }

@@ -7,7 +7,9 @@ export default function Welcome() {
     <>
       <div className={style.wrapper}>
         <div className={style.logo}></div>
-        <button>Start</button>
+        <button>
+          <Link href="/login">Start</Link>
+        </button>
       </div>
     </>
   );
