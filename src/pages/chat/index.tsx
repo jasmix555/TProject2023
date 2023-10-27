@@ -54,7 +54,7 @@ const Message = ({ message }: MessageProps) => {
   );
 };
 
-export const Page = () => {
+export default function ChatPage() {
   const [message, setMessage] = useState<string>("");
 
   const handleSendMessage = async (e: FormEvent<HTMLFormElement>) => {
@@ -156,6 +156,4 @@ export const Page = () => {
       </form>
     </div>
   );
-};
-
-export default Page;
+}

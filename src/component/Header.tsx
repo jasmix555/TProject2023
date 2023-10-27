@@ -9,7 +9,6 @@ type HeaderProps = {
     icon: any;
     options: {
       icon: any;
-      link: string;
     }[];
   };
 };

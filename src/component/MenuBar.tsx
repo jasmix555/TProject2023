@@ -1,17 +1,5 @@
-import { Flex, Wrap } from "@chakra-ui/react";
-import { RiMenu3Line } from "react-icons/ri";
-import {
-  FaRegCircleXmark,
-  FaBell,
-  FaUserAstronaut,
-  FaBook,
-  FaGear,
-  FaUsers,
-} from "react-icons/fa6";
-import { FaEdit } from "react-icons/fa";
 import { useState } from "react";
 import style from "@/styles/_Box.module.scss";
-import Link from "next/link";
 
 type MenuBarProps = {
   text?: string;
@@ -19,7 +7,7 @@ type MenuBarProps = {
     icon: any;
     options: {
       icon: any;
-      link: string;
+      page?: any;
     }[];
   };
 };
@@ -51,9 +39,7 @@ export default function MenuBar({ text, contents }: MenuBarProps) {
                 className={style.btnWrapper}
                 style={{ animationDelay: `${idx * 0.05}s` }}
               >
-                <Link href={icon.link}>
-                  <i className={style.icon}>{icon.icon}</i>
-                </Link>
+                <i className={style.icon}>{icon.icon}</i>
               </button>
             ) : null
           )}
