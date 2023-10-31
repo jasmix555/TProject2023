@@ -17,6 +17,7 @@ import { useState } from "react";
 import { useAuthContext } from "@/feature/provider/AuthProvider";
 import Welcome from "./welcome";
 import Layout from "@/component/Layout";
+import MenuBar from "@/component/MenuBar";
 
 export default function Home() {
   const { user } = useAuthContext();
@@ -49,14 +50,14 @@ export default function Home() {
         <Layout>
           {user ? (
             <>
-              <Header contents={menus} />
+              <MenuBar contents={menus} />
             </>
           ) : (
             <>
               <Welcome />
             </>
           )}
-          <div className={style.bodyWrap}>{state === "welcome"}</div>
+          {/* <div className={style.bodyWrap}>{state === "welcome"}</div> */}
         </Layout>
       </AuthGuard>
     </>
