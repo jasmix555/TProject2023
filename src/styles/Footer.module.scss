@@ -38,9 +38,21 @@
       padding-right: 0.3rem;
     }
 
+    &:nth-child(1) a {
+      padding-right: 0.3rem;
+    }
+
     .active {
-      color: var(--footer-color);
-      background: var(--white);
+      position: relative;
+      top: -4rem;
+      a {
+        padding-top: 1rem;
+        width: 7rem;
+        height: 7rem;
+        color: var(--footer-color);
+        background: var(--white);
+        font-size: 4rem;
+      }
     }
   }
 }

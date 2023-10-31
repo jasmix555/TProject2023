@@ -41,11 +41,8 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             // console.log("success");
             return (
               <div className={style.footerItem} key={idx}>
-                <button>
-                  <Link
-                    href={e.path}
-                    className={style.button + " " + style.active}
-                  >
+                <button className={style.active}>
+                  <Link href={e.path} className={style.button}>
                     <Icon as={e.icon} />
                   </Link>
                 </button>
