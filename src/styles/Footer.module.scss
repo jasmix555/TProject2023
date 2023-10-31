@@ -30,7 +30,8 @@
       width: 5rem;
       height: 5rem;
       display: inline-block;
-      padding-top: 0.5rem;
+      padding-top: 0.6rem;
+      transition: 100ms ease-in-out;
     }
 
     &:nth-child(2) a {
