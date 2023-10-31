@@ -3,9 +3,7 @@ export default function HomePage() {
     <>
       <div className="homeWrapper">
         <div className="homeContent">
-          <div className="homeTitle">Welcome to</div>
-          <div className="homeTitle">The</div>
-          <div className="homeTitle">Project</div>
+          <h1>This is adventure page</h1>
         </div>
       </div>
     </>

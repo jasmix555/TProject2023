@@ -1,4 +1,5 @@
 import style from "@/styles/Footer.module.scss";
+import Link from "next/link";
 import { FaRocketchat, FaBook, FaRocket } from "react-icons/fa";
 
 export default function Footer() {
@@ -17,7 +18,9 @@ export default function Footer() {
         </div>
         <div className={style.chatWrap}>
           <button>
-            <FaRocketchat />
+            <Link href="/chat">
+              <FaRocketchat />
+            </Link>
           </button>
         </div>
       </div>
