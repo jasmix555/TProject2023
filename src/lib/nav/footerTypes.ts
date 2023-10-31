@@ -2,18 +2,18 @@ import { FaRocketchat, FaBook, FaRocket } from "react-icons/fa";
 
 export const footerArray = [
   {
-    id: "Book",
+    id: "book",
     icon: FaBook,
-    path: "../pages/book",
+    path: "/book",
   },
   {
-    id: "Rocket",
+    id: "home",
     icon: FaRocket,
-    path: "../pages/home",
+    path: "/home",
   },
   {
-    id: "Chat",
+    id: "chat",
     icon: FaRocketchat,
-    path: "../pages/chat",
+    path: "/chat",
   },
 ];

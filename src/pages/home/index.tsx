@@ -1,11 +1,41 @@
+import Layout from "@/component/Layout";
+import MenuBar from "@/component/MenuBar";
+import { RiMenu3Line } from "react-icons/ri";
+import {
+  FaRegCircleXmark,
+  FaBell,
+  FaUserAstronaut,
+  FaBook,
+  FaGear,
+  FaUsers,
+} from "react-icons/fa6";
+import { FaEdit } from "react-icons/fa";
+import Header from "@/component/Header";
+
+const menus = {
+  icon: <RiMenu3Line />,
+  options: [
+    { icon: <FaRegCircleXmark />, link: "/#" },
+    { icon: <FaBell />, link: "/#" },
+    { icon: <FaUserAstronaut />, link: "/#" },
+    { icon: <FaUsers />, link: "/#" },
+    { icon: <FaEdit />, link: "/#" },
+    { icon: <FaBook />, link: "/#" },
+    { icon: <FaGear />, link: "/../settings" },
+  ],
+};
+
 export default function HomePage() {
   return (
     <>
-      <div className="homeWrapper">
-        <div className="homeContent">
-          <h1>This is adventure page</h1>
+      <Layout>
+        <Header contents={menus} />
+        <div className="homeWrapper">
+          <div className="homeContent">
+            <h1>This is adventure page</h1>
+          </div>
         </div>
-      </div>
+      </Layout>
     </>
   );
 }

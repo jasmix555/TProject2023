@@ -3,15 +3,43 @@
   left: 50%;
   bottom: 8%;
   transform: translate(-50%, 50%);
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 1rem;
   width: 360px;
   height: 80px;
   justify-content: space-around;
   align-items: center;
-  color: var(--white);
   background: var(--radial-gradient);
   border: var(--border-stroke);
-  box-shadow: var(--neon-shadow);
   border-radius: 1rem;
+  box-shadow: var(--border-shadow);
   font-size: 3rem;
+  color: var(--white);
+
+  .footerItem {
+    text-align: center;
+    display: flex;
+    width: 100%;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+
+    a {
+      border-radius: 50%;
+      width: 5rem;
+      height: 5rem;
+      display: inline-block;
+      padding-top: 0.5rem;
+    }
+
+    &:nth-child(2) a {
+      padding-right: 0.3rem;
+    }
+
+    .active {
+      color: var(--footer-color);
+      background: var(--white);
+    }
+  }
 }

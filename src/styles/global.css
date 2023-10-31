@@ -8,7 +8,6 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   -webkit-text-size-adjust: 100%;
-
   --main-color: #536b99;
   --accent-color: #f5f067;
   --white: #fbfbfb;
@@ -44,6 +43,7 @@ body {
   background-repeat: no-repeat !important;
   background-position: center !important;
   background-size: cover !important;
+  color: var(--white) !important;
 }
 
 *,

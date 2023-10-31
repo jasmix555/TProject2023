@@ -1,6 +1,6 @@
 import { getApp } from "firebase/app";
 import { AuthGuard } from "@/feature/auth/component/AuthGuard/AuthGuard";
-import Footer from "@/component/Footer";
+import Footer from "@/component/Layout";
 import Header from "@/component/Header";
 import { RiMenu3Line } from "react-icons/ri";
 import {
@@ -16,6 +16,7 @@ import style from "../styles/index.module.scss";
 import { useState } from "react";
 import { useAuthContext } from "@/feature/provider/AuthProvider";
 import Welcome from "./welcome";
+import Layout from "@/component/Layout";
 
 export default function Home() {
   const { user } = useAuthContext();
@@ -45,17 +46,18 @@ export default function Home() {
   return (
     <>
       <AuthGuard>
-        {user ? (
-          <>
-            <Header contents={menus} />
-            <Footer />
-          </>
-        ) : (
-          <>
-            <Welcome />
-          </>
-        )}
-        <div className={style.bodyWrap}>{state === "welcome"}</div>
+        <Layout>
+          {user ? (
+            <>
+              <Header contents={menus} />
+            </>
+          ) : (
+            <>
+              <Welcome />
+            </>
+          )}
+          <div className={style.bodyWrap}>{state === "welcome"}</div>
+        </Layout>
       </AuthGuard>
     </>
   );
