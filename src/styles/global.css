@@ -20,6 +20,7 @@
   --footer-color: #0e244e;
   --border-stroke: 2px solid #2745e1;
   --border-shadow: 0px 0px 4px 0px #4070cb; /* box-shadow */
+  --glass-background: rgba(255, 255, 255, 0.5);
   --glass-effect: 0px 0px 4px 4px rgba(255, 255, 255, 0.2); /* box-shadow */
   --glass-filter: blur(3px); /* backdrop-filter */
   --radial-gradient-two: radial-gradient(

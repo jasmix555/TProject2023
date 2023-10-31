@@ -18,6 +18,7 @@ import { useAuthContext } from "@/feature/provider/AuthProvider";
 import Welcome from "./welcome";
 import Layout from "@/component/Layout";
 import MenuBar from "@/component/MenuBar";
+import UserName from "@/component/UserName";
 
 export default function Home() {
   const { user } = useAuthContext();
@@ -38,10 +39,6 @@ export default function Home() {
     ],
   };
 
-  // const changeState = (page: pages) => {
-  //   setState(page);
-  // };
-
   const [contents, setContents] = useState(menus);
 
   return (
@@ -50,6 +47,7 @@ export default function Home() {
         <Layout>
           {user ? (
             <>
+              <UserName />
               <MenuBar contents={menus} />
             </>
           ) : (
