@@ -102,7 +102,7 @@ export default function Signup() {
               </div>
             </div>
           </div>
-          <div>
+          <div className={style.submitWrap}>
             <button type="submit">新規登録</button>
           </div>
         </form>

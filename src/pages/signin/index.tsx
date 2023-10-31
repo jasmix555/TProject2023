@@ -1,27 +1,8 @@
-import {
-  Box,
-  Button,
-  Center,
-  chakra,
-  Container,
-  FormControl,
-  FormLabel,
-  Grid,
-  Heading,
-  Input,
-  InputGroup,
-  Icon,
-  Spacer,
-  useToast,
-  InputRightElement,
-  Link,
-} from "@chakra-ui/react";
+import { useToast } from "@chakra-ui/react";
 import { FormEvent, useState } from "react";
 import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import { FirebaseError } from "@firebase/util";
-import MenuBar from "@/component/MenuBar";
-import { push } from "firebase/database";
 import { useRouter } from "next/router";
 import style from "@/styles/form.module.scss";
 
@@ -98,7 +79,7 @@ export default function Signin() {
               </div>
             </div>
           </div>
-          <div>
+          <div className={style.submitWrap}>
             <button type="submit">ログイン</button>
           </div>
         </form>

@@ -36,12 +36,16 @@
       cursor: pointer;
     }
   }
-  button {
-    position: absolute;
-    bottom: 13.4rem;
-    left: 50%;
-    transform: translateX(-50%);
-    @include Box.btnStyle($w: 20rem);
-    font-weight: 700;
+
+  .submitWrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 10rem;
+
+    button {
+      @include Box.btnStyle($w: 20rem);
+      font-weight: 700;
+    }
   }
 }
