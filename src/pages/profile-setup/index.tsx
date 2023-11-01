@@ -44,6 +44,11 @@ export default function ProfileSetup() {
           language,
           // Add other user profile data here
         };
+        toast({
+          title: "Successfully changed",
+          status: "success",
+          position: "top",
+        });
 
         await setDoc(userDocRef, userData);
 
