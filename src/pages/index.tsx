@@ -1,7 +1,5 @@
 import { getApp } from "firebase/app";
 import { AuthGuard } from "@/feature/auth/component/AuthGuard/AuthGuard";
-import Footer from "@/component/Layout";
-import Header from "@/component/Header";
 import { RiMenu3Line } from "react-icons/ri";
 import {
   FaRegCircleXmark,
@@ -12,7 +10,6 @@ import {
   FaUsers,
 } from "react-icons/fa6";
 import { FaEdit } from "react-icons/fa";
-import style from "../styles/index.module.scss";
 import { useState } from "react";
 import { useAuthContext } from "@/feature/provider/AuthProvider";
 import Welcome from "./welcome";

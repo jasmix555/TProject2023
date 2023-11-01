@@ -28,7 +28,7 @@ export default function ChatPage() {
   return (
     <Layout>
       <Header contents={menus} />
-      <h1>SANPO NI IKASERU PAGE</h1>
+      <h1>Chat</h1>
     </Layout>
   );
 }

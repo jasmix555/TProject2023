@@ -1,13 +1,15 @@
 .wrapper {
   height: 6rem;
-  width: 24rem;
+  width: 26rem;
   border: 2px solid var(--white);
   border-radius: 1rem;
   position: relative;
   top: 2rem;
   left: 2rem;
   box-shadow: var(--glass-shadow);
-  padding: 1rem;
+  padding: 0.6rem 1rem;
+  font-weight: 600;
+  font-size: 1.4rem;
 
   .background {
     position: absolute;

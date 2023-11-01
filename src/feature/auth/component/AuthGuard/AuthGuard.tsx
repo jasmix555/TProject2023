@@ -16,7 +16,7 @@ export const AuthGuard = ({ children }: Props) => {
   }
 
   if (user === null) {
-    push("/signin");
+    push("/welcome");
     return null;
   }
 

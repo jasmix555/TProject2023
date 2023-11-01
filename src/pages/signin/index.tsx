@@ -1,10 +1,11 @@
 import { useToast } from "@chakra-ui/react";
-import { FormEvent, useState } from "react";
+import { FormEvent, useState, useEffect } from "react";
 import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import { FirebaseError } from "@firebase/util";
 import { useRouter } from "next/router";
 import style from "@/styles/form.module.scss";
+import { Firestore, getDoc, doc, getFirestore } from "firebase/firestore/lite";
 
 export default function Signin() {
   const [email, setEmail] = useState<string>("");
@@ -14,12 +15,41 @@ export default function Signin() {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const toast = useToast();
   const { push } = useRouter();
+  const auth = getAuth();
+
+  // Check if the user's profile setup is complete
+  const checkProfileSetup = async () => {
+    const user = auth.currentUser;
+    if (user) {
+      const db = getFirestore();
+
+      // Replace 'users' with the actual collection name where user data is stored
+      const userDocRef = doc(db, "users", user.uid);
+
+      try {
+        const userDocSnapshot = await getDoc(userDocRef);
+        if (userDocSnapshot.exists()) {
+          // Profile setup is complete, redirect to the index page
+          push("/");
+        } else {
+          // Profile setup is not complete, send them to the profile setup page
+          push("/profile-setup");
+        }
+      } catch (error) {
+        console.error("Error checking profile setup:", error);
+      }
+    }
+  };
+
+  useEffect(() => {
+    // Check the profile setup when the component loads
+    checkProfileSetup();
+  }, []);
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     setIsLoading(true);
     e.preventDefault();
     try {
-      const auth = getAuth();
       await signInWithEmailAndPassword(auth, email, password);
       setEmail("");
       setPassword("");
@@ -28,8 +58,7 @@ export default function Signin() {
         status: "success",
         position: "top",
       });
-      push("../");
-      //TODO: ログイン後のページに遷移の処理を書く
+      checkProfileSetup(); // Check the profile setup after a successful login
     } catch (e) {
       toast({
         title: "エラーが発生しました。",
@@ -80,7 +109,9 @@ export default function Signin() {
             </div>
           </div>
           <div className={style.submitWrap}>
-            <button type="submit">ログイン</button>
+            <button type="submit">
+              {isLoading ? "ログイン中" : "ログイン"}
+            </button>
           </div>
         </form>
       </div>

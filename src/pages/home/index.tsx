@@ -32,7 +32,7 @@ export default function HomePage() {
         <Header contents={menus} />
         <div className="homeWrapper">
           <div className="homeContent">
-            <h1>This is adventure page</h1>
+            <h1>Adventure</h1>
           </div>
         </div>
       </Layout>
