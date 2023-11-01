@@ -36,7 +36,7 @@ export default function UserName() {
     <>
       <div className={style.wrapper}>
         <div className={style.background}></div>
-        <h1>{nickname ? `Hello, ${nickname}!` : "Welcome!"}</h1>
+        <h1>{nickname ? `${nickname}` : "No Internet"}</h1>
       </div>
     </>
   );
