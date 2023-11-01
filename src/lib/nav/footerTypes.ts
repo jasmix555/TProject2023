@@ -7,9 +7,9 @@ export const footerArray = [
     path: "/book",
   },
   {
-    id: "home",
+    id: "adventure",
     icon: FaRocket,
-    path: "/home",
+    path: "/adventure",
   },
   {
     id: "chat",

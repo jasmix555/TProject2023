@@ -29,7 +29,7 @@ export default function Home() {
     options: [
       { icon: <FaRegCircleXmark />, link: "/#" },
       { icon: <FaBell />, link: "/#" },
-      { icon: <FaUserAstronaut />, link: "/#" },
+      { icon: <FaUserAstronaut />, link: "/profile-setup" },
       { icon: <FaUsers />, link: "/#" },
       { icon: <FaEdit />, link: "/#" },
       { icon: <FaGear />, link: "/settings" },
@@ -52,7 +52,6 @@ export default function Home() {
               <Welcome />
             </>
           )}
-          {/* <div className={style.bodyWrap}>{state === "welcome"}</div> */}
         </Layout>
       </AuthGuard>
     </>

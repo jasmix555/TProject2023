@@ -11,15 +11,21 @@ import {
   collection,
   Firestore,
 } from "firebase/firestore/lite";
+import LanguageSelect from "@/component/LanguageSelect";
 
 export default function ProfileSetup() {
   const [name, setName] = useState<string>("");
   const [nickname, setNickname] = useState<string>("");
-  const [language, setLanguage] = useState<string>("");
+  const [language, setLanguage] = useState<string>(""); // State to store the selected language
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const toast = useToast();
   const router = useRouter();
+
+  const handleLanguageChange = (newLanguage: string) => {
+    // Update the selected language in the state
+    setLanguage(newLanguage);
+  };
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -44,13 +50,14 @@ export default function ProfileSetup() {
           language,
           // Add other user profile data here
         };
+
+        await setDoc(userDocRef, userData);
+
         toast({
           title: "Successfully changed",
           status: "success",
           position: "top",
         });
-
-        await setDoc(userDocRef, userData);
 
         // User profile data setup successful, redirect to the home page
         router.push("../");
@@ -103,15 +110,11 @@ export default function ProfileSetup() {
               required
             />
           </div>
-          <div className={style.inputWrap}>
+          <div className={style.inputWrap + " " + style.languageSelect}>
             <p>Language Preference</p>
-            <input
-              className={style.input}
-              type="text"
-              name="language"
-              value={language}
-              onChange={(e) => setLanguage(e.target.value)}
-              // Add more fields for additional user profile data as needed
+            <LanguageSelect
+              selectedLanguage={language}
+              onLanguageChange={handleLanguageChange}
             />
           </div>
         </div>
