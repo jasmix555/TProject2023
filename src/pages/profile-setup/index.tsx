@@ -3,7 +3,6 @@ import { useToast } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import style from "@/styles/form.module.scss";
 import { getAuth, User } from "firebase/auth";
-import { FirebaseError } from "@firebase/util";
 import {
   doc,
   setDoc,
@@ -11,21 +10,16 @@ import {
   collection,
   Firestore,
 } from "firebase/firestore/lite";
-import LanguageSelect from "@/component/LanguageSelect";
+import { FirebaseError } from "@firebase/util";
 
 export default function ProfileSetup() {
   const [name, setName] = useState<string>("");
   const [nickname, setNickname] = useState<string>("");
-  const [language, setLanguage] = useState<string>(""); // State to store the selected language
+  const [language, setLanguage] = useState<string>("");
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const toast = useToast();
   const router = useRouter();
-
-  const handleLanguageChange = (newLanguage: string) => {
-    // Update the selected language in the state
-    setLanguage(newLanguage);
-  };
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -53,14 +47,8 @@ export default function ProfileSetup() {
 
         await setDoc(userDocRef, userData);
 
-        toast({
-          title: "Successfully changed",
-          status: "success",
-          position: "top",
-        });
-
         // User profile data setup successful, redirect to the home page
-        router.push("../");
+        router.push("/");
       } else {
         // Handle the case when there's no authenticated user
         toast({
@@ -110,11 +98,15 @@ export default function ProfileSetup() {
               required
             />
           </div>
-          <div className={style.inputWrap + " " + style.languageSelect}>
+          <div className={style.inputWrap}>
             <p>Language Preference</p>
-            <LanguageSelect
-              selectedLanguage={language}
-              onLanguageChange={handleLanguageChange}
+            <input
+              className={style.input}
+              type="text"
+              name="language"
+              value={language}
+              onChange={(e) => setLanguage(e.target.value)}
+              // Add more fields for additional user profile data as needed
             />
           </div>
         </div>

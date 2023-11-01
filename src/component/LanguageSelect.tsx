@@ -3,19 +3,23 @@ import { CircleFlag } from "react-circle-flags";
 import style from "@/styles/languageSelect.module.scss";
 import { Flags } from "@/lib/flags/flagConstants";
 
-const LanguageSelect = () => {
-  const [selectedCountries, setSelectedCountries] = useState<string[]>([]);
+interface LanguageSelectProps {
+  selectedLanguages: string[];
+  onLanguagesChange: (newLanguages: string[]) => void;
+}
 
-  const handleCountryToggle = (countryCode: string) => {
-    setSelectedCountries((prevSelected) => {
-      if (prevSelected.includes(countryCode)) {
-        // Deselect the country
-        return prevSelected.filter((code) => code !== countryCode);
-      } else {
-        // Select the country
-        return [...prevSelected, countryCode];
-      }
-    });
+const LanguageSelect = ({
+  selectedLanguages,
+  onLanguagesChange,
+}: LanguageSelectProps) => {
+  const handleLanguageToggle = (languageCode: string) => {
+    if (selectedLanguages.includes(languageCode)) {
+      onLanguagesChange(
+        selectedLanguages.filter((code) => code !== languageCode)
+      );
+    } else {
+      onLanguagesChange([...selectedLanguages, languageCode]);
+    }
   };
 
   return (
@@ -26,8 +30,8 @@ const LanguageSelect = () => {
             <input
               type="checkbox"
               value={country.code}
-              checked={selectedCountries.includes(country.code)}
-              onChange={() => handleCountryToggle(country.code)}
+              checked={selectedLanguages.includes(country.code)}
+              onChange={() => handleLanguageToggle(country.code)}
             />
             {country.name}
           </label>
@@ -35,10 +39,10 @@ const LanguageSelect = () => {
       </div>
       <div>
         <ul className={style.flagWrap}>
-          {selectedCountries.map((countryCode) => (
-            <li key={countryCode}>
-              <CircleFlag countryCode={countryCode} height="20" />
-              <button onClick={() => handleCountryToggle(countryCode)}>
+          {selectedLanguages.map((languageCode) => (
+            <li key={languageCode}>
+              <CircleFlag countryCode={languageCode} height="20" />
+              <button onClick={() => handleLanguageToggle(languageCode)}>
                 X
               </button>
             </li>
