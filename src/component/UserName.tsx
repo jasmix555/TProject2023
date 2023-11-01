@@ -42,7 +42,7 @@ export default function UserName() {
         <div>
           <h1>{nickname ? `${nickname}` : "No Internet"}</h1>
         </div>
-        <div>
+        <div className={style.languages}>
           <h1>勉強中： {language ? `${language}` : " "}</h1>
         </div>
       </div>

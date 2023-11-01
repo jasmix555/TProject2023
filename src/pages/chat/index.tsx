@@ -10,6 +10,7 @@ import {
 import { FaEdit } from "react-icons/fa";
 import Layout from "@/component/Layout";
 import Header from "@/component/Header";
+import Link from "next/link";
 
 const menus = {
   icon: <RiMenu3Line />,
@@ -29,6 +30,9 @@ export default function ChatPage() {
     <Layout>
       <Header contents={menus} />
       <h1>Chat</h1>
+      <button>
+        <Link href="/groupChat">Group Chat</Link>
+      </button>
     </Layout>
   );
 }
