@@ -13,7 +13,6 @@ import {
 } from "react-icons/fa6";
 import { FaEdit } from "react-icons/fa";
 import { useRouter } from "next/router";
-import Footer from "@/component/Layout";
 import Header from "@/component/Header";
 import Layout from "@/component/Layout";
 

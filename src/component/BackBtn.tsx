@@ -1,4 +1,3 @@
-import React from "react";
 import { useRouter } from "next/router";
 import { FaRocket } from "react-icons/fa6";
 

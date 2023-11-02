@@ -1,5 +1,4 @@
 import Layout from "@/component/Layout";
-import MenuBar from "@/component/MenuBar";
 import { RiMenu3Line } from "react-icons/ri";
 import {
   FaRegCircleXmark,

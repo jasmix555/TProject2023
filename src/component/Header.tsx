@@ -1,4 +1,3 @@
-import React from "react";
 import LinkBox from "./LinkBox";
 import { AiFillHome } from "react-icons/ai";
 import MenuBar from "@/component/MenuBar";

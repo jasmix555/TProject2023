@@ -4,8 +4,6 @@ import { useState, useEffect } from "react";
 import { footerArray } from "@/lib/nav/footerTypes";
 import { Icon } from "@chakra-ui/react";
 import { motion } from "framer-motion";
-import Header from "./Header";
-import MenuBar from "./MenuBar";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   const [pathStat, setPathStat] = useState("/");
