@@ -8,6 +8,7 @@ import Header from "@/component/Header";
 import { RiMenu3Line } from "react-icons/ri";
 import {
   FaXmark,
+  FaRegCircleXmark,
   FaBell,
   FaUserAstronaut,
   FaBook,
@@ -22,7 +23,7 @@ import style from "@/styles/groupChat.module.scss";
 const menus = {
   icon: <RiMenu3Line />,
   options: [
-    { icon: <FaXmark />, link: "/#" },
+    { icon: <FaRegCircleXmark />, link: "/#" },
     { icon: <FaBell />, link: "/#" },
     { icon: <FaUserAstronaut />, link: "/#" },
     { icon: <FaUsers />, link: "/#" },
