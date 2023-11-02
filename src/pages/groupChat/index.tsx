@@ -7,12 +7,13 @@ import { getAuth, User } from "firebase/auth";
 import Header from "@/component/Header";
 import { RiMenu3Line } from "react-icons/ri";
 import {
-  FaRegCircleXmark,
+  FaXmark,
   FaBell,
   FaUserAstronaut,
   FaBook,
   FaGear,
   FaUsers,
+  FaComments,
 } from "react-icons/fa6";
 import { FaEdit } from "react-icons/fa";
 import { BsSend } from "react-icons/bs";
@@ -21,7 +22,7 @@ import style from "@/styles/groupChat.module.scss";
 const menus = {
   icon: <RiMenu3Line />,
   options: [
-    { icon: <FaRegCircleXmark />, link: "/#" },
+    { icon: <FaXmark />, link: "/#" },
     { icon: <FaBell />, link: "/#" },
     { icon: <FaUserAstronaut />, link: "/#" },
     { icon: <FaUsers />, link: "/#" },
@@ -33,8 +34,8 @@ const menus = {
 
 type MessageProps = {
   message: string;
-  userId: string; // Include the user's ID
-  userNickname: string; // Include the user's nickname
+  userId: string;
+  userNickname: string;
 };
 
 const Message = ({ message, userId, userNickname }: MessageProps) => {
@@ -55,6 +56,7 @@ export const Page = () => {
   const [nickname, setNickname] = useState<string>("");
   const auth = getAuth();
   const user: User | null = auth.currentUser;
+  const [showGroupChat, setShowGroupChat] = useState(false);
 
   useEffect(() => {
     const fetchUserNickname = async () => {
@@ -87,8 +89,8 @@ export const Page = () => {
       const dbRef = ref(db, "chat");
       await push(dbRef, {
         message,
-        userId: user ? user.uid : "", // Include the user's ID
-        userNickname: user ? nickname : "", // Include the user's nickname
+        userId: user ? user.uid : "",
+        userNickname: user ? nickname : "",
       });
       setMessage("");
     } catch (e) {
@@ -108,8 +110,8 @@ export const Page = () => {
       const dbRef = ref(db, "chat");
       return onChildAdded(dbRef, (snapshot) => {
         const message = String(snapshot.val()["message"] ?? "");
-        const userId = String(snapshot.val()["userId"] ?? ""); // Get the user's ID
-        const userNickname = String(snapshot.val()["userNickname"] ?? ""); // Get the user's nickname
+        const userId = String(snapshot.val()["userId"] ?? "");
+        const userNickname = String(snapshot.val()["userNickname"] ?? "");
         setChats((prev) => [...prev, { message, userId, userNickname }]);
       });
     } catch (e) {
@@ -126,21 +128,49 @@ export const Page = () => {
     });
   }, [chats]);
 
+  const toggleGroupChat = () => {
+    setShowGroupChat(!showGroupChat);
+  };
+
   return (
     <AuthGuard>
       <div>
         <Header contents={menus} />
-        <div className={style.showMessage}>
-          {chats.map((chat, index) => (
-            <Message
-              message={chat.message}
-              userId={chat.userId}
-              userNickname={chat.userNickname}
-              key={`ChatMessage_${index}`}
-            />
-          ))}
+
+        <div>
+          <button className={style.groupChatButton} onClick={toggleGroupChat}>
+            <FaComments />
+          </button>
         </div>
-        <form onSubmit={handleSendMessage} style={{ display: "flex" }}>
+
+        <div
+          className={`${style.groupChatWrap} ${
+            showGroupChat ? style.showChat : ""
+          }`}
+        >
+          <div className={style.groupChatContent}>
+            <div className={style.header}>
+              <div className={style.groupTitle}>
+                <button className={style.closeBtn} onClick={toggleGroupChat}>
+                  <FaXmark />
+                </button>
+                <h1>関西人集まれ！</h1>
+              </div>
+            </div>
+            <div className={style.showMessage}>
+              {chats.map((chat, index) => (
+                <Message
+                  message={chat.message}
+                  userId={chat.userId}
+                  userNickname={chat.userNickname}
+                  key={`ChatMessage_${index}`}
+                />
+              ))}
+            </div>
+          </div>
+        </div>
+
+        <form onSubmit={handleSendMessage}>
           <div className={style.inputWrap}>
             <input
               value={message}

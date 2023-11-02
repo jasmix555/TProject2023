@@ -83,11 +83,12 @@
   $shadow: var(--border-shadow),
   $border: var(--border-stroke),
   $color: var(--white),
-  $fontS: 3rem
+  $fontS: 3rem,
+  $borderR: 1rem
 ) {
   width: $w;
   height: $h;
-  border-radius: 1rem;
+  border-radius: $borderR;
   border: $border;
   background: $bg-color;
   box-shadow: $shadow;
