@@ -1,6 +1,12 @@
 import { useState } from "react";
-import { getFirestore, doc, setDoc, Timestamp } from "firebase/firestore";
+import {
+  getFirestore,
+  Timestamp,
+  collection,
+  addDoc,
+} from "firebase/firestore";
 import { getAuth } from "firebase/auth";
+import { useRouter } from "next/router";
 import style from "@/styles/createChat.module.scss";
 
 export default function CreateChat() {
@@ -9,6 +15,7 @@ export default function CreateChat() {
   const [expirationTime, setExpirationTime] = useState("2"); // Default to 2 hours
   const auth = getAuth();
   const user = auth.currentUser;
+  const router = useRouter(); // Initialize the useRouter hook
 
   const isSubmitDisabled = !title || !description;
 
@@ -17,22 +24,25 @@ export default function CreateChat() {
 
     if (user) {
       const db = getFirestore();
-      const groupRef = doc(db, "groups", user.uid);
+      const groupsRef = collection(db, "groups");
 
-      // Calculate the expiration timestamp based on the selected option
       const hours = parseInt(expirationTime, 10);
       const expirationTimestamp = Timestamp.fromMillis(
         Date.now() + hours * 60 * 60 * 1000
       );
 
       try {
-        await setDoc(groupRef, {
+        const newGroupRef = await addDoc(groupsRef, {
           title,
           description,
           expirationTime: expirationTimestamp,
         });
 
-        alert("Group created successfully");
+        // After successfully creating the group, get the generated key
+        const groupId = newGroupRef.id;
+
+        // Navigate to the group chat page using the generated group ID
+        router.push(`/groupChat/${groupId}`);
       } catch (error) {
         console.error("Error creating group:", error);
       }
