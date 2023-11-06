@@ -1,0 +1,14 @@
+@use "Box.module" as Box;
+
+.settingsWrap {
+  width: 100%;
+  height: 100vh;
+
+  .signOutBtn {
+    position: absolute;
+    bottom: 14rem;
+    left: 50%;
+    transform: translateX(-50%);
+    @include Box.btnStyle($w: 20rem, $fontS: 2rem);
+  }
+}

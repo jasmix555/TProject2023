@@ -84,6 +84,7 @@
   $border: var(--border-stroke),
   $color: var(--white),
   $fontS: 3rem,
+  $fontW: 700,
   $borderR: 1rem
 ) {
   width: $w;
@@ -95,7 +96,10 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  font-size: $fontS;
+  font-weight: $fontW;
   a {
+    font-weight: $fontW;
     font-size: $fontS;
     text-align: center;
     margin: 0 auto;

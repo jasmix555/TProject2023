@@ -15,6 +15,7 @@ import { FaEdit } from "react-icons/fa";
 import { useRouter } from "next/router";
 import Header from "@/component/Header";
 import Layout from "@/component/Layout";
+import style from "@/styles/settings.module.scss";
 
 export default function Settings() {
   const { user } = useAuthContext();
@@ -58,26 +59,11 @@ export default function Settings() {
     <>
       <Layout>
         <Header contents={menus} />
-        <div
-          style={{
-            width: "100%",
-            display: "flex",
-            justifyContent: "center",
-            position: "absolute",
-            top: "80%",
-            height: "100vh",
-          }}
-        >
+        <div className={style.settingsWrap}>
           {user ? (
-            <Button
-              colorScheme={"red"}
-              fontSize={"x-large"}
-              p={9}
-              onClick={handleSignOut}
-              isLoading={isLoading}
-            >
+            <button className={style.signOutBtn} onClick={handleSignOut}>
               サインアウト
-            </Button>
+            </button>
           ) : (
             "ログアウト中"
           )}
