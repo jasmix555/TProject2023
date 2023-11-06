@@ -22,8 +22,6 @@ export default function Home() {
 
   console.log(getApp());
 
-  const [state, setState] = useState<pages>("welcome");
-
   const menus = {
     icon: <RiMenu3Line />,
     options: [
