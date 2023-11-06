@@ -33,6 +33,7 @@ export default function CreateChat() {
 
       try {
         const newGroupRef = await addDoc(groupsRef, {
+          creatorId: user.uid,
           title,
           description,
           expirationTime: expirationTimestamp,
@@ -42,7 +43,7 @@ export default function CreateChat() {
         const groupId = newGroupRef.id;
 
         // Navigate to the group chat page using the generated group ID
-        router.push(`/groupChat/${groupId}`);
+        router.push(`/createdChatGroup/${groupId}`);
       } catch (error) {
         console.error("Error creating group:", error);
       }
