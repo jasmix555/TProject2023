@@ -25,7 +25,6 @@ import {
 import { FaEdit } from "react-icons/fa";
 import { BsSend } from "react-icons/bs";
 import style from "@/styles/groupChat.module.scss";
-import { Textarea } from "@chakra-ui/react";
 import { format } from "date-fns"; // Import format function
 
 const menus = {

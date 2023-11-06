@@ -10,6 +10,8 @@ import {
 } from "react-icons/fa6";
 import { FaEdit } from "react-icons/fa";
 import Header from "@/component/Header";
+import style from "@/styles/adventure.module.scss";
+import Link from "next/link";
 
 const menus = {
   icon: <RiMenu3Line />,
@@ -29,9 +31,17 @@ export default function HomePage() {
     <>
       <Layout>
         <Header contents={menus} />
-        <div className="homeWrapper">
-          <div className="homeContent">
-            <h1>Adventure</h1>
+        <div className={style.body}>
+          <h1>Adventure</h1>
+          <div className={style.planetWrapper}>
+            <div className={style.planet}>
+              <Link href={"#"}>
+                <div className={style.planetContent}>
+                  <div className={style.planet}></div>
+                  <p>Planet 1 description</p>
+                </div>
+              </Link>
+            </div>
           </div>
         </div>
       </Layout>
