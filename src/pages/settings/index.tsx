@@ -1,4 +1,4 @@
-import { Button, Wrap, useToast } from "@chakra-ui/react";
+import { useToast } from "@chakra-ui/react";
 import { useAuthContext } from "@/feature/provider/AuthProvider";
 import { FirebaseError } from "@firebase/util";
 import { getAuth, signOut } from "firebase/auth";

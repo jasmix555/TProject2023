@@ -1,7 +1,5 @@
-import Layout from "@/component/Layout";
 import style from "@/styles/Welcome.module.scss";
 import Link from "next/link";
-import { useState } from "react";
 
 export default function Welcome() {
   return (

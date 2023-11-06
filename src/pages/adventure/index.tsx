@@ -34,7 +34,7 @@ export default function HomePage() {
         <div className={style.body}>
           <div className={style.worldsWrap}>
             <div className={style.content + " " + style.left}>
-              <Link href={"#"}>
+              <Link href={"/createChat"}>
                 <div className={style.planet}></div>
                 <p>Planet 1</p>
               </Link>
