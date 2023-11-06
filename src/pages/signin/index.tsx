@@ -5,7 +5,7 @@ import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import { FirebaseError } from "@firebase/util";
 import { useRouter } from "next/router";
 import style from "@/styles/form.module.scss";
-import { Firestore, getDoc, doc, getFirestore } from "firebase/firestore/lite";
+import { getDoc, doc, getFirestore } from "firebase/firestore/lite";
 
 export default function Signin() {
   const [email, setEmail] = useState<string>("");
