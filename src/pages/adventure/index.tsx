@@ -32,14 +32,59 @@ export default function HomePage() {
       <Layout>
         <Header contents={menus} />
         <div className={style.body}>
-          <h1>Adventure</h1>
-          <div className={style.planetWrapper}>
-            <div className={style.planet}>
+          <div className={style.worldsWrap}>
+            <div className={style.content + " " + style.left}>
               <Link href={"#"}>
-                <div className={style.planetContent}>
-                  <div className={style.planet}></div>
-                  <p>Planet 1 description</p>
-                </div>
+                <div className={style.planet}></div>
+                <p>Planet 1</p>
+              </Link>
+            </div>
+            <div className={style.content + " " + style.right}>
+              <Link href={"#"}>
+                <div className={style.planet}></div>
+                <p>Planet 2</p>
+              </Link>
+            </div>
+            <div className={style.content + " " + style.left}>
+              <Link href={"#"}>
+                <div className={style.planet}></div>
+                <p>Planet 3</p>
+              </Link>
+            </div>
+            <div className={style.content + " " + style.right}>
+              <Link href={"#"}>
+                <div className={style.planet}></div>
+                <p>Planet 2</p>
+              </Link>
+            </div>
+            <div className={style.content + " " + style.left}>
+              <Link href={"#"}>
+                <div className={style.planet}></div>
+                <p>Planet 3</p>
+              </Link>
+            </div>
+            <div className={style.content + " " + style.right}>
+              <Link href={"#"}>
+                <div className={style.planet}></div>
+                <p>Planet 2</p>
+              </Link>
+            </div>
+            <div className={style.content + " " + style.left}>
+              <Link href={"#"}>
+                <div className={style.planet}></div>
+                <p>Planet 3</p>
+              </Link>
+            </div>
+            <div className={style.content + " " + style.right}>
+              <Link href={"#"}>
+                <div className={style.planet}></div>
+                <p>Planet 2</p>
+              </Link>
+            </div>
+            <div className={style.content + " " + style.left}>
+              <Link href={"#"}>
+                <div className={style.planet}></div>
+                <p>Planet 3</p>
               </Link>
             </div>
           </div>

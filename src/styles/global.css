@@ -29,6 +29,7 @@
     #0e244e 100%
   );
   --chat-bg: #2941bf;
+  --glow-effect: 0px 0px 14px 3px rgba(189, 255, 247, 0.39);
 }
 
 html,
