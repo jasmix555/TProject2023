@@ -21,13 +21,11 @@
       background: var(--footer-color);
 
       .groupTitle {
-        display: flex;
-        justify-content: center;
+        // display: flex;
         font-size: 2rem;
         font-weight: 700;
         color: var(--white);
-        padding: 1rem 2rem;
-        border-radius: 1rem;
+        padding: 1.3rem 2rem;
         margin: 1rem 0;
         text-align: center;
 
@@ -53,31 +51,40 @@
         margin: 1rem 0.8rem;
         padding: 0.4rem 0.8rem;
 
-        .message {
-          font-size: 1.6rem;
-          background: var(--white);
-          width: 100%;
+        .messageWrap {
+          display: flex;
+          flex-direction: column;
+          background: var(--chat-bg);
+          width: 30rem;
+          overflow: hidden;
           border-radius: 1rem;
           padding: 0.6rem 1rem;
+          color: var(--white);
           height: 100%;
-          color: var(--message-color);
-          font-weight: 800;
+
+          .messageHeader {
+            display: flex;
+            justify-content: space-between;
+            font-size: 1.2rem;
+            font-weight: 500;
+          }
+
+          .message {
+            font-size: 1.6rem;
+            font-weight: 800;
+          }
         }
 
         .avatarWrap {
           font-size: 1.2rem;
           height: 7rem;
-          width: 10rem;
-          margin-right: 1rem;
+          width: 7rem;
+          margin-right: 0.4rem;
           display: flex;
           gap: 0.4rem;
           flex-direction: column;
           justify-content: center;
           align-items: center;
-          .username {
-            font-size: 1.2rem;
-            font-weight: 500;
-          }
 
           .avatar {
             width: 5rem;
@@ -115,11 +122,17 @@
   align-items: center;
   width: 100%;
   height: 8rem;
-  outline: none;
   z-index: 100;
+
   .input {
-    width: 85%;
+    word-wrap: break-word;
+    width: 100%;
+    max-width: 30rem;
+    height: 4rem;
+    max-height: 200px;
+    overflow: auto;
     padding: 0.8rem 1rem;
+    resize: none;
     color: #020202;
     font-size: 1.5rem;
     background-color: var(--white);

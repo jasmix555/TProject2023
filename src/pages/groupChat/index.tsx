@@ -1,5 +1,11 @@
 import { FormEvent, useEffect, useRef, useState } from "react";
-import { getDatabase, onChildAdded, push, ref } from "@firebase/database";
+import {
+  getDatabase,
+  onChildAdded,
+  push,
+  ref,
+  serverTimestamp,
+} from "@firebase/database";
 import { FirebaseError } from "@firebase/util";
 import { AuthGuard } from "@/feature/auth/component/AuthGuard/AuthGuard";
 import { Firestore, doc, getDoc, getFirestore } from "firebase/firestore/lite";
@@ -19,6 +25,8 @@ import {
 import { FaEdit } from "react-icons/fa";
 import { BsSend } from "react-icons/bs";
 import style from "@/styles/groupChat.module.scss";
+import { Textarea } from "@chakra-ui/react";
+import { format } from "date-fns"; // Import format function
 
 const menus = {
   icon: <RiMenu3Line />,
@@ -37,16 +45,29 @@ type MessageProps = {
   message: string;
   userId: string;
   userNickname: string;
+  timestamp: string;
 };
 
-const Message = ({ message, userId, userNickname }: MessageProps) => {
+const Message = ({
+  message,
+  userId,
+  userNickname,
+  timestamp,
+}: MessageProps) => {
+  const formattedTimestamp = format(new Date(parseInt(timestamp)), "HH:mm"); // Format the timestamp
+
   return (
     <div className={style.messageWrap}>
       <div className={style.avatarWrap}>
         <div className={style.avatar}></div>
-        <p className={style.username}>{userNickname}</p>
       </div>
-      <div className={style.message}>{message}</div>
+      <div className={style.messageWrap}>
+        <div className={style.messageHeader}>
+          <p>{userNickname}</p>
+          <p>{formattedTimestamp} </p>
+        </div>
+        <div className={style.message}>{message}</div>
+      </div>
     </div>
   );
 };
@@ -92,6 +113,7 @@ export const Page = () => {
         message,
         userId: user ? user.uid : "",
         userNickname: user ? nickname : "",
+        timestamp: serverTimestamp(),
       });
       setMessage("");
     } catch (e) {
@@ -101,9 +123,7 @@ export const Page = () => {
     }
   };
 
-  const [chats, setChats] = useState<
-    { message: string; userId: string; userNickname: string }[]
-  >([]);
+  const [chats, setChats] = useState<MessageProps[]>([]);
 
   useEffect(() => {
     try {
@@ -113,7 +133,11 @@ export const Page = () => {
         const message = String(snapshot.val()["message"] ?? "");
         const userId = String(snapshot.val()["userId"] ?? "");
         const userNickname = String(snapshot.val()["userNickname"] ?? "");
-        setChats((prev) => [...prev, { message, userId, userNickname }]);
+        const timestamp = String(snapshot.val()["timestamp"] ?? "");
+        setChats((prev) => [
+          ...prev,
+          { message, userId, userNickname, timestamp },
+        ]);
       });
     } catch (e) {
       if (e instanceof FirebaseError) {
@@ -158,12 +182,13 @@ export const Page = () => {
                 <h1>関西人集まれ！</h1>
               </div>
             </div>
-            <div className={style.showMessage}>
+            <div className={style.showMessage} ref={messagesElementRef}>
               {chats.map((chat, index) => (
                 <Message
                   message={chat.message}
                   userId={chat.userId}
                   userNickname={chat.userNickname}
+                  timestamp={chat.timestamp}
                   key={`ChatMessage_${index}`}
                 />
               ))}
@@ -173,7 +198,7 @@ export const Page = () => {
 
         <form onSubmit={handleSendMessage}>
           <div className={style.inputWrap}>
-            <input
+            <textarea
               value={message}
               onChange={(e) => setMessage(e.target.value)}
               className={style.input}
