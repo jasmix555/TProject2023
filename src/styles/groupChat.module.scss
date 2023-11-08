@@ -1,5 +1,9 @@
 @use "Box.module" as Box;
 
+.body {
+  height: 100vh;
+}
+
 .title {
   font-size: 1.6rem;
   text-align: center;
@@ -7,13 +11,19 @@
   box-shadow: var(--glass-effect);
   backdrop-filter: var(--glass-filter);
   border: solid 1px #fff;
-  padding: 1rem 2rem;
+  padding: 0.4rem;
   border-radius: 1rem;
   position: relative;
   height: 6rem;
   top: 2rem;
   width: 16rem;
   margin: 0 auto;
+  h1 {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    font-size: 1.6rem;
+  }
 }
 
 .groupChatWrap {

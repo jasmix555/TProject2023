@@ -90,7 +90,7 @@ export default function Register() {
           </div>
           <div className={style.submitWrap}>
             <button type="submit" disabled={isLoading}>
-              {isLoading ? "Signing Up..." : "Sign Up"}
+              {isLoading ? "作成中" : "新規登録"}
             </button>
           </div>
         </form>

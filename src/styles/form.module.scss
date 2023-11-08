@@ -46,7 +46,7 @@
     margin-top: 10rem;
 
     button {
-      @include Box.btnStyle($w: 20rem);
+      @include Box.btnStyle($w: 20rem, $fontS: 2rem);
       font-weight: 700;
     }
   }

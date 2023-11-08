@@ -24,9 +24,9 @@ import {
 } from "react-icons/fa6";
 import { FaEdit } from "react-icons/fa";
 import { BsSend } from "react-icons/bs";
-import style from "@/styles/groupChat.module.scss";
 import { format } from "date-fns"; // Import format function
 import { useRouter } from "next/router";
+import style from "@/styles/groupChat.module.scss";
 import LayoutPage from "@/component/LayoutPage";
 
 const menus = {
@@ -185,9 +185,9 @@ export const Page = () => {
     : { hours: 0, minutes: 0 };
 
   return (
-    <AuthGuard>
-      <LayoutPage>
-        <div>
+    <LayoutPage>
+      <AuthGuard>
+        <div className={style.body}>
           <Header contents={menus} />
 
           <div className={style.title}>
@@ -257,8 +257,8 @@ export const Page = () => {
             </div>
           </form>
         </div>
-      </LayoutPage>
-    </AuthGuard>
+      </AuthGuard>
+    </LayoutPage>
   );
 };
 

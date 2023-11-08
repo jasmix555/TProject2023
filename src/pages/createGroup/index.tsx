@@ -9,6 +9,7 @@ import { getAuth } from "firebase/auth";
 import { useRouter } from "next/router";
 import style from "@/styles/createChat.module.scss";
 import LayoutPage from "@/component/LayoutPage";
+import BackBtn from "@/component/BackBtn";
 
 export default function CreateGroup() {
   const [title, setTitle] = useState("");
@@ -44,7 +45,7 @@ export default function CreateGroup() {
         const groupId = newGroupRef.id;
 
         // Navigate to the group chat page using the generated group ID
-        router.push(`/createdChatGroup/${groupId}`);
+        router.push(`/groupChat`);
       } catch (error) {
         console.error("Error creating group:", error);
       }
@@ -55,29 +56,31 @@ export default function CreateGroup() {
     <>
       <LayoutPage>
         <form onSubmit={handleSubmit} className={style.form}>
-          <div>
-            <p>Group Title:</p>
+          <div className={style.contentWrap}>
+            <p>あなただけの小惑星の名前を決めてね！</p>
             <input
+              className={style.input + " " + style.title}
               type="text"
-              placeholder="Enter the group title"
+              placeholder="タイトル"
               value={title}
               onChange={(e) => setTitle(e.target.value)}
             />
           </div>
-          <div>
-            <p>Group Description:</p>
+          <div className={style.contentWrap}>
+            <p>どんな小惑星か詳しく教えてね！</p>
             <textarea
-              placeholder="Enter the group description"
+              className={style.input + " " + style.textarea}
+              placeholder="例）新しく覚えた単語をみんなに披露したい！！単語の意味やスラングがわからないから教えて欲しい！コミュニケーションをしたい！"
               value={description}
               onChange={(e) => setDescription(e.target.value)}
             />
           </div>
-          <div>
+          <div className={style.contentWrap}>
             <p>Group Expiration Time:</p>
             <select
               value={expirationTime}
               onChange={(e) => setExpirationTime(e.target.value)}
-              className={style.select}
+              className={style.input + " " + style.select}
             >
               <optgroup>
                 <option value="2">2 hours</option>
@@ -89,9 +92,16 @@ export default function CreateGroup() {
               </optgroup>
             </select>
           </div>
-          <button type="submit" disabled={isSubmitDisabled}>
-            Create Group
-          </button>
+          <div className={style.buttons}>
+            <button
+              type="submit"
+              disabled={isSubmitDisabled}
+              className={style.create}
+            >
+              惑星をつくる
+            </button>
+            <BackBtn />
+          </div>
         </form>
       </LayoutPage>
     </>

@@ -1,3 +1,47 @@
+@use "Box.module" as Box;
+
 .form {
-  font-size: 2rem;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
+  height: 100vh;
+  text-align: center;
+  .contentWrap {
+    p {
+      font-size: 1.6rem;
+      margin-bottom: 0.8rem;
+    }
+
+    .textarea {
+      height: 20rem;
+      resize: none;
+    }
+
+    .input {
+      width: 30rem;
+      font-size: 1.6rem;
+      border: solid 1px #ccc;
+      padding: 0.8rem 1.2rem;
+      margin-bottom: 1.6rem;
+      border-radius: 1rem;
+      background: var(--glass-background);
+      box-shadow: var(--glass-effect);
+      &:focus {
+        outline: none;
+      }
+      &::placeholder {
+        color: #b9b9b9;
+      }
+    }
+  }
+
+  .buttons {
+    position: relative;
+    bottom: -6rem;
+    .create {
+      @include Box.btnStyle($w: 18rem, $fontS: 1.8rem);
+    }
+  }
 }

@@ -114,6 +114,14 @@
   }
 }
 
+@mixin glassBox() {
+  background: var(--radial-gradient);
+  border-radius: 1rem;
+  padding: 0.6rem 1rem;
+  color: var(--white);
+  height: 100%;
+}
+
 @keyframes appear {
   to {
     transform: translateY(0);

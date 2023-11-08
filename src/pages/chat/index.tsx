@@ -10,9 +10,7 @@ import {
 import { FaEdit } from "react-icons/fa";
 import Layout from "@/component/Layout";
 import Header from "@/component/Header";
-import Link from "next/link";
 import style from "@/styles/chat.module.scss";
-import BackBtn from "@/component/BackBtn";
 
 const menus = {
   icon: <RiMenu3Line />,
@@ -32,12 +30,6 @@ export default function ChatPage() {
     <Layout>
       <Header contents={menus} />
       <h1>Chat</h1>
-      <div className={style.buttons}>
-        <button className={style.groupChat}>
-          <Link href="/groupChat">着陸する！</Link>
-        </button>
-        <BackBtn />
-      </div>
     </Layout>
   );
 }
