@@ -9,7 +9,7 @@ import { getAuth } from "firebase/auth";
 import { useRouter } from "next/router";
 import style from "@/styles/createChat.module.scss";
 
-export default function CreateChat() {
+export default function CreateGroup() {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [expirationTime, setExpirationTime] = useState("2"); // Default to 2 hours

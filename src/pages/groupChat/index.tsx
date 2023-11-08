@@ -8,7 +8,7 @@ import {
 } from "@firebase/database";
 import { FirebaseError } from "@firebase/util";
 import { AuthGuard } from "@/feature/auth/component/AuthGuard/AuthGuard";
-import { Firestore, doc, getDoc, getFirestore } from "firebase/firestore/lite";
+import { Firestore, doc, getDoc, getFirestore } from "firebase/firestore";
 import { getAuth, User } from "firebase/auth";
 import Header from "@/component/Header";
 import { RiMenu3Line } from "react-icons/ri";
@@ -26,6 +26,7 @@ import { FaEdit } from "react-icons/fa";
 import { BsSend } from "react-icons/bs";
 import style from "@/styles/groupChat.module.scss";
 import { format } from "date-fns"; // Import format function
+import { useRouter } from "next/router";
 
 const menus = {
   icon: <RiMenu3Line />,
@@ -70,6 +71,7 @@ const Message = ({
     </div>
   );
 };
+// Your existing imports...
 
 export const Page = () => {
   const messagesElementRef = useRef<HTMLDivElement | null>(null);
@@ -78,6 +80,8 @@ export const Page = () => {
   const auth = getAuth();
   const user: User | null = auth.currentUser;
   const [showGroupChat, setShowGroupChat] = useState(false);
+  const router = useRouter();
+  const { groupId, title } = router.query;
 
   useEffect(() => {
     const fetchUserNickname = async () => {
@@ -107,7 +111,7 @@ export const Page = () => {
     e.preventDefault();
     try {
       const db = getDatabase();
-      const dbRef = ref(db, "chat");
+      const dbRef = ref(db, `groupChatMessages/${groupId}`); // Reference the specific group's chat messages
       await push(dbRef, {
         message,
         userId: user ? user.uid : "",
@@ -127,7 +131,7 @@ export const Page = () => {
   useEffect(() => {
     try {
       const db = getDatabase();
-      const dbRef = ref(db, "chat");
+      const dbRef = ref(db, `groupChatMessages/${groupId}`); // Reference the specific group's chat messages
       return onChildAdded(dbRef, (snapshot) => {
         const message = String(snapshot.val()["message"] ?? "");
         const userId = String(snapshot.val()["userId"] ?? "");
@@ -144,7 +148,7 @@ export const Page = () => {
       }
       return;
     }
-  }, []);
+  }, [groupId]); // Trigger a new query when the groupId changes
 
   useEffect(() => {
     messagesElementRef.current?.scrollTo({
@@ -160,6 +164,8 @@ export const Page = () => {
     <AuthGuard>
       <div>
         <Header contents={menus} />
+
+        <h1 className={style.title}>{title}</h1>
 
         <div>
           <button className={style.groupChatButton} onClick={toggleGroupChat}>
@@ -178,7 +184,7 @@ export const Page = () => {
                 <button className={style.closeBtn} onClick={toggleGroupChat}>
                   <FaXmark />
                 </button>
-                <h1>関西人集まれ！</h1>
+                <h1>{title}</h1>
               </div>
             </div>
             <div className={style.showMessage} ref={messagesElementRef}>
