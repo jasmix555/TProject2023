@@ -11,6 +11,7 @@ import {
   Firestore,
 } from "firebase/firestore/lite";
 import { FirebaseError } from "@firebase/util";
+import LayoutPage from "@/component/LayoutPage";
 
 export default function ProfileSetup() {
   const [name, setName] = useState<string>("");
@@ -73,49 +74,51 @@ export default function ProfileSetup() {
   };
 
   return (
-    <div className={style.bodyWrap}>
-      <form onSubmit={handleSubmit}>
-        <div className={style.contentWrap}>
-          <div className={style.inputWrap}>
-            <p>Name</p>
-            <input
-              className={style.input}
-              type="text"
-              name="name"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              required
-            />
+    <LayoutPage>
+      <div className={style.bodyWrap}>
+        <form onSubmit={handleSubmit}>
+          <div className={style.contentWrap}>
+            <div className={style.inputWrap}>
+              <p>Name</p>
+              <input
+                className={style.input}
+                type="text"
+                name="name"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                required
+              />
+            </div>
+            <div className={style.inputWrap}>
+              <p>Nickname</p>
+              <input
+                className={style.input}
+                type="text"
+                name="nickname"
+                value={nickname}
+                onChange={(e) => setNickname(e.target.value)}
+                required
+              />
+            </div>
+            <div className={style.inputWrap}>
+              <p>Language Preference</p>
+              <input
+                className={style.input}
+                type="text"
+                name="language"
+                value={language}
+                onChange={(e) => setLanguage(e.target.value)}
+                // Add more fields for additional user profile data as needed
+              />
+            </div>
           </div>
-          <div className={style.inputWrap}>
-            <p>Nickname</p>
-            <input
-              className={style.input}
-              type="text"
-              name="nickname"
-              value={nickname}
-              onChange={(e) => setNickname(e.target.value)}
-              required
-            />
+          <div className={style.submitWrap}>
+            <button type="submit" disabled={isLoading}>
+              {isLoading ? "Setting Up..." : "Save User Info"}
+            </button>
           </div>
-          <div className={style.inputWrap}>
-            <p>Language Preference</p>
-            <input
-              className={style.input}
-              type="text"
-              name="language"
-              value={language}
-              onChange={(e) => setLanguage(e.target.value)}
-              // Add more fields for additional user profile data as needed
-            />
-          </div>
-        </div>
-        <div className={style.submitWrap}>
-          <button type="submit" disabled={isLoading}>
-            {isLoading ? "Setting Up..." : "Save User Info"}
-          </button>
-        </div>
-      </form>
-    </div>
+        </form>
+      </div>
+    </LayoutPage>
   );
 }

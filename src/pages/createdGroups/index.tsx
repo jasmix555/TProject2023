@@ -3,12 +3,10 @@ import {
   collection,
   getDocs,
   query,
-  where,
   getFirestore,
   Firestore,
 } from "firebase/firestore";
 import { getAuth, User } from "firebase/auth";
-import Layout from "@/component/Layout";
 import Header from "@/component/Header";
 import {
   FaRegCircleXmark,
@@ -17,6 +15,7 @@ import {
   FaBook,
   FaGear,
   FaUsers,
+  FaPlus,
 } from "react-icons/fa6";
 import { FaEdit } from "react-icons/fa";
 import { RiMenu3Line } from "react-icons/ri";
@@ -24,6 +23,8 @@ import Link from "next/link";
 import { useRouter } from "next/router"; // Add this import
 
 import style from "@/styles/createdGroups.module.scss";
+import BackBtn from "@/component/BackBtn";
+import LayoutPage from "@/component/LayoutPage";
 
 const menus = {
   icon: <RiMenu3Line />,
@@ -74,25 +75,35 @@ export default function CreatedGroups() {
   }, [auth]);
 
   return (
-    <Layout>
-      <Header contents={menus} />
-      <h1>Created Groups</h1>
-      <div className={style.body}>
-        <ul>
-          {groups.map((group) => (
-            <li key={group.id}>
-              <Link
-                href={{
-                  pathname: `/groupChat`,
-                  query: { groupId: group.id, title: group.title }, // Change query parameter to groupId
-                }}
-              >
-                <p>{group.title}</p>
-              </Link>
-            </li>
-          ))}
-        </ul>
-      </div>
-    </Layout>
+    <>
+      <LayoutPage>
+        <Header contents={menus} />
+        <h1>Created Groups</h1>
+        <div className={style.body}>
+          <ul>
+            {groups.map((group) => (
+              <li key={group.id}>
+                <Link
+                  href={{
+                    pathname: `/groupChat`,
+                    query: { groupId: group.id, title: group.title }, // Change query parameter to groupId
+                  }}
+                >
+                  <p>{group.title}</p>
+                </Link>
+              </li>
+            ))}
+          </ul>
+          <div className={style.createGroup}>
+            <Link href={"/createGroup"}>
+              <button className={style.create}>
+                <FaPlus />
+              </button>
+            </Link>
+            <BackBtn />
+          </div>
+        </div>
+      </LayoutPage>
+    </>
   );
 }

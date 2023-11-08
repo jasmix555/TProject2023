@@ -27,6 +27,7 @@ import { BsSend } from "react-icons/bs";
 import style from "@/styles/groupChat.module.scss";
 import { format } from "date-fns"; // Import format function
 import { useRouter } from "next/router";
+import LayoutPage from "@/component/LayoutPage";
 
 const menus = {
   icon: <RiMenu3Line />,
@@ -160,65 +161,103 @@ export const Page = () => {
     setShowGroupChat(!showGroupChat);
   };
 
+  const expirationTime = "2023-11-08T12:00:00"; // Replace with the actual expiration timestamp
+
+  // Calculate the remaining time in hours
+  const calculateRemainingTime = (expirationTimestamp: string) => {
+    const currentTime = new Date().getTime();
+    const expirationTime = new Date(expirationTimestamp).getTime();
+    const remainingMilliseconds = expirationTime - currentTime;
+
+    if (remainingMilliseconds <= 0) {
+      return { hours: 0, minutes: 0 };
+    }
+
+    const remainingHours = Math.floor(remainingMilliseconds / (1000 * 60 * 60));
+    const remainingMinutes = Math.floor(
+      (remainingMilliseconds % (1000 * 60 * 60)) / (1000 * 60)
+    );
+    return { hours: remainingHours, minutes: remainingMinutes };
+  };
+
+  const remainingTime = expirationTime
+    ? calculateRemainingTime(expirationTime)
+    : { hours: 0, minutes: 0 };
+
   return (
     <AuthGuard>
-      <div>
-        <Header contents={menus} />
-
-        <h1 className={style.title}>{title}</h1>
-
+      <LayoutPage>
         <div>
-          <button className={style.groupChatButton} onClick={toggleGroupChat}>
-            <FaComments />
-          </button>
-        </div>
+          <Header contents={menus} />
 
-        <div
-          className={`${style.groupChatWrap} ${
-            showGroupChat ? style.showChat : ""
-          }`}
-        >
-          <div className={style.groupChatContent}>
-            <div className={style.header}>
-              <div className={style.groupTitle}>
-                <button className={style.closeBtn} onClick={toggleGroupChat}>
-                  <FaXmark />
-                </button>
-                <h1>{title}</h1>
-              </div>
-            </div>
-            <div className={style.showMessage} ref={messagesElementRef}>
-              {chats.map((chat, index) => (
-                <Message
-                  message={chat.message}
-                  userId={chat.userId}
-                  userNickname={chat.userNickname}
-                  timestamp={chat.timestamp}
-                  key={`ChatMessage_${index}`}
-                />
-              ))}
-            </div>
+          <div className={style.title}>
+            <h1>{title}</h1>
+            {expirationTime && (
+              <>
+                <p>{`${remainingTime.hours
+                  .toString()
+                  .padStart(2, "0")}:${remainingTime.minutes
+                  .toString()
+                  .padStart(2, "0")}`}</p>
+              </>
+            )}
           </div>
-        </div>
 
-        <form onSubmit={handleSendMessage}>
-          <div className={style.inputWrap}>
-            <textarea
-              value={message}
-              onChange={(e) => setMessage(e.target.value)}
-              className={style.input}
-              placeholder="入力してください。"
-            />
-            <button
-              type={"submit"}
-              disabled={message === ""}
-              className={style.sendButton}
-            >
-              <BsSend />
+          <div className={style.remainingTime}></div>
+
+          <div>
+            <button className={style.groupChatButton} onClick={toggleGroupChat}>
+              <FaComments />
             </button>
           </div>
-        </form>
-      </div>
+
+          <div
+            className={`${style.groupChatWrap} ${
+              showGroupChat ? style.showChat : ""
+            }`}
+          >
+            <div className={style.groupChatContent}>
+              <div className={style.header}>
+                <div className={style.groupTitle}>
+                  <button className={style.closeBtn} onClick={toggleGroupChat}>
+                    <FaXmark />
+                  </button>
+                  <h1>{title}</h1>
+                </div>
+              </div>
+              <div className={style.showMessage} ref={messagesElementRef}>
+                {chats.map((chat, index) => (
+                  <Message
+                    message={chat.message}
+                    userId={chat.userId}
+                    userNickname={chat.userNickname}
+                    timestamp={chat.timestamp}
+                    key={`ChatMessage_${index}`}
+                  />
+                ))}
+              </div>
+            </div>
+          </div>
+
+          <form onSubmit={handleSendMessage}>
+            <div className={style.inputWrap}>
+              <textarea
+                value={message}
+                onChange={(e) => setMessage(e.target.value)}
+                className={style.input}
+                placeholder="入力してください。"
+              />
+              <button
+                type={"submit"}
+                disabled={message === ""}
+                className={style.sendButton}
+              >
+                <BsSend />
+              </button>
+            </div>
+          </form>
+        </div>
+      </LayoutPage>
     </AuthGuard>
   );
 };

@@ -10,6 +10,7 @@ import { FirebaseError } from "@firebase/util";
 import { useRouter } from "next/router";
 import style from "@/styles/form.module.scss";
 import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
+import LayoutPage from "@/component/LayoutPage";
 
 export default function Register() {
   const [email, setEmail] = useState<string>("");
@@ -55,43 +56,45 @@ export default function Register() {
   };
 
   return (
-    <div className={style.bodyWrap}>
-      <form onSubmit={handleSubmit}>
-        <div className={style.contentWrap}>
-          <div className={style.inputWrap}>
-            <p>E-Mail</p>
-            <input
-              className={style.input}
-              type="email"
-              name="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-            />
-          </div>
-          <div className={style.inputWrap}>
-            <p>Password</p>
-            <div className={style.iconVis}>
+    <LayoutPage>
+      <div className={style.bodyWrap}>
+        <form onSubmit={handleSubmit}>
+          <div className={style.contentWrap}>
+            <div className={style.inputWrap}>
+              <p>E-Mail</p>
               <input
                 className={style.input}
-                type={show ? "text" : "password"}
-                name="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
+                type="email"
+                name="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
                 required
               />
-              <i onClick={handleClick}>
-                {show ? <AiFillEyeInvisible /> : <AiFillEye />}
-              </i>
+            </div>
+            <div className={style.inputWrap}>
+              <p>Password</p>
+              <div className={style.iconVis}>
+                <input
+                  className={style.input}
+                  type={show ? "text" : "password"}
+                  name="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  required
+                />
+                <i onClick={handleClick}>
+                  {show ? <AiFillEyeInvisible /> : <AiFillEye />}
+                </i>
+              </div>
             </div>
           </div>
-        </div>
-        <div className={style.submitWrap}>
-          <button type="submit" disabled={isLoading}>
-            {isLoading ? "Signing Up..." : "Sign Up"}
-          </button>
-        </div>
-      </form>
-    </div>
+          <div className={style.submitWrap}>
+            <button type="submit" disabled={isLoading}>
+              {isLoading ? "Signing Up..." : "Sign Up"}
+            </button>
+          </div>
+        </form>
+      </div>
+    </LayoutPage>
   );
 }

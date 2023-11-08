@@ -6,6 +6,7 @@ import { FirebaseError } from "@firebase/util";
 import { useRouter } from "next/router";
 import style from "@/styles/form.module.scss";
 import { getDoc, doc, getFirestore } from "firebase/firestore/lite";
+import LayoutPage from "@/component/LayoutPage";
 
 export default function Signin() {
   const [email, setEmail] = useState<string>("");
@@ -74,7 +75,7 @@ export default function Signin() {
   };
 
   return (
-    <>
+    <LayoutPage>
       <div className={style.bodyWrap}>
         <form onSubmit={handleSubmit}>
           <div className={style.contentWrap}>
@@ -115,6 +116,6 @@ export default function Signin() {
           </div>
         </form>
       </div>
-    </>
+    </LayoutPage>
   );
 }

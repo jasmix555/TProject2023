@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { footerArray } from "@/lib/nav/footerTypes";
 import { Icon } from "@chakra-ui/react";
 import { motion } from "framer-motion";
+import Motion from "./Motion";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   const [pathStat, setPathStat] = useState("/");
@@ -24,15 +25,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 
   return (
     <>
-      <motion.div className={style.divWrap}>
-        <motion.main
-          initial={{ opacity: 0, transform: "translateX(100)" }} //初期状態
-          animate={{ opacity: 1, transform: "translateX(0)" }} //マウント
-          exit={{ opacity: 0, transform: "translateX(100)" }} //アンマウント
-        >
-          {children}
-        </motion.main>
-      </motion.div>
+      <Motion>{children}</Motion>
       <div className={style.footerWrap}>
         {footerArray.map((e, idx) => {
           if (pathStat == e.path) {
@@ -63,29 +56,3 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     </>
   );
 }
-
-// export default function Footer() {
-//   return (
-//     <>
-//       <div className={style.footerWrap}>
-//         <div className={style.bookWrap}>
-//           <button>
-//             <FaBook />
-//           </button>
-//         </div>
-//         <div className={style.rocketWrap}>
-//           <button>
-//             <FaRocket />
-//           </button>
-//         </div>
-//         <div className={style.chatWrap}>
-//           <button>
-//             <Link href="/chat">
-//               <FaRocketchat />
-//             </Link>
-//           </button>
-//         </div>
-//       </div>
-//     </>
-//   );
-// }

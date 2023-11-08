@@ -8,6 +8,7 @@ import {
 import { getAuth } from "firebase/auth";
 import { useRouter } from "next/router";
 import style from "@/styles/createChat.module.scss";
+import LayoutPage from "@/component/LayoutPage";
 
 export default function CreateGroup() {
   const [title, setTitle] = useState("");
@@ -52,45 +53,47 @@ export default function CreateGroup() {
 
   return (
     <>
-      <form onSubmit={handleSubmit} className={style.form}>
-        <div>
-          <p>Group Title:</p>
-          <input
-            type="text"
-            placeholder="Enter the group title"
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-          />
-        </div>
-        <div>
-          <p>Group Description:</p>
-          <textarea
-            placeholder="Enter the group description"
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
-          />
-        </div>
-        <div>
-          <p>Group Expiration Time:</p>
-          <select
-            value={expirationTime}
-            onChange={(e) => setExpirationTime(e.target.value)}
-            className={style.select}
-          >
-            <optgroup>
-              <option value="2">2 hours</option>
-              <option value="4">4 hours</option>
-              <option value="6">6 hours</option>
-              <option value="8">8 hours</option>
-              <option value="10">10 hours</option>
-              <option value="24">24 hours</option>
-            </optgroup>
-          </select>
-        </div>
-        <button type="submit" disabled={isSubmitDisabled}>
-          Create Group
-        </button>
-      </form>
+      <LayoutPage>
+        <form onSubmit={handleSubmit} className={style.form}>
+          <div>
+            <p>Group Title:</p>
+            <input
+              type="text"
+              placeholder="Enter the group title"
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+            />
+          </div>
+          <div>
+            <p>Group Description:</p>
+            <textarea
+              placeholder="Enter the group description"
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+            />
+          </div>
+          <div>
+            <p>Group Expiration Time:</p>
+            <select
+              value={expirationTime}
+              onChange={(e) => setExpirationTime(e.target.value)}
+              className={style.select}
+            >
+              <optgroup>
+                <option value="2">2 hours</option>
+                <option value="4">4 hours</option>
+                <option value="6">6 hours</option>
+                <option value="8">8 hours</option>
+                <option value="10">10 hours</option>
+                <option value="24">24 hours</option>
+              </optgroup>
+            </select>
+          </div>
+          <button type="submit" disabled={isSubmitDisabled}>
+            Create Group
+          </button>
+        </form>
+      </LayoutPage>
     </>
   );
 }

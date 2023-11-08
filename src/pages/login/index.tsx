@@ -1,9 +1,10 @@
+import LayoutPage from "@/component/LayoutPage";
 import style from "@/styles/Login.module.scss";
 import Link from "next/link";
 
 export default function Login() {
   return (
-    <>
+    <LayoutPage>
       <div className={style.wrapper}>
         <div className={style.mainVis}>
           <div className={style.logo}></div>
@@ -27,6 +28,6 @@ export default function Login() {
           </div>
         </div>
       </div>
-    </>
+    </LayoutPage>
   );
 }

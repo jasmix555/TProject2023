@@ -18,6 +18,8 @@ export default function BackBtn() {
           display: "flex",
           alignItems: "center",
           fontWeight: "500",
+          margin: "0 auto",
+          padding: "0.8rem 0",
         }}
       >
         <FaRocket style={{ transform: "rotate(225deg)" }} />
