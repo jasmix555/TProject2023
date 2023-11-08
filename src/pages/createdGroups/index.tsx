@@ -21,7 +21,6 @@ import { FaEdit } from "react-icons/fa";
 import { RiMenu3Line } from "react-icons/ri";
 import Link from "next/link";
 import { useRouter } from "next/router"; // Add this import
-
 import style from "@/styles/createdGroups.module.scss";
 import BackBtn from "@/component/BackBtn";
 import LayoutPage from "@/component/LayoutPage";
@@ -100,7 +99,7 @@ export default function CreatedGroups() {
                 <FaPlus />
               </button>
             </Link>
-            <BackBtn />
+            <BackBtn link={"/adventure"} />
           </div>
         </div>
       </LayoutPage>

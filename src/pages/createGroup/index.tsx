@@ -19,7 +19,7 @@ export default function CreateGroup() {
   const user = auth.currentUser;
   const router = useRouter(); // Initialize the useRouter hook
 
-  const isSubmitDisabled = !title || !description;
+  const isSubmitDisabled = !title || title.length < 5 || !description;
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -100,7 +100,7 @@ export default function CreateGroup() {
             >
               惑星をつくる
             </button>
-            <BackBtn />
+            <BackBtn link={"/createdGroups"} />
           </div>
         </form>
       </LayoutPage>

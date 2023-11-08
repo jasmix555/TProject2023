@@ -98,6 +98,7 @@
   justify-content: center;
   font-size: $fontS;
   font-weight: $fontW;
+  transition: 200ms ease-in-out;
   a {
     font-weight: $fontW;
     font-size: $fontS;
@@ -111,6 +112,9 @@
     margin: 0 auto;
     color: $color;
     font-size: $fontS;
+  }
+  &:disabled {
+    color: #000000;
   }
 }
 
