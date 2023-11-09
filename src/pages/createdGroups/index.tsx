@@ -24,6 +24,7 @@ import { useRouter } from "next/router"; // Add this import
 import style from "@/styles/createdGroups.module.scss";
 import BackBtn from "@/component/BackBtn";
 import LayoutPage from "@/component/LayoutPage";
+import Background from "@/component/Background";
 
 const menus = {
   icon: <RiMenu3Line />,
@@ -76,6 +77,7 @@ export default function CreatedGroups() {
   return (
     <>
       <LayoutPage>
+        <Background />
         <Header contents={menus} />
         <h1>Created Groups</h1>
         <div className={style.body}>

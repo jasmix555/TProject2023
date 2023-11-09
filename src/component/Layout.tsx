@@ -32,7 +32,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             // console.log("success");
             return (
               <div className={style.footerItem} key={idx}>
-                <button className={style.active}>
+                <button className={style.active + " " + style.border}>
                   <Link href={e.path} className={style.button}>
                     <Icon as={e.icon} />
                   </Link>
