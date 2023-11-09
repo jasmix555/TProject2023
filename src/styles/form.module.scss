@@ -40,12 +40,15 @@
   }
 
   .submitWrap {
+    position: absolute;
+    bottom: 10rem;
+    left: 50%;
+    transform: translateX(-50%);
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-top: 10rem;
-
-    button {
+    gap: 1rem;
+    button[type="submit"] {
       @include Box.btnStyle($w: 20rem, $fontS: 2rem);
       font-weight: 700;
     }

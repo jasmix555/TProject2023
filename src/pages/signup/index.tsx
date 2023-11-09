@@ -11,6 +11,7 @@ import { useRouter } from "next/router";
 import style from "@/styles/form.module.scss";
 import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
 import LayoutPage from "@/component/LayoutPage";
+import BackBtn from "@/component/BackBtn";
 
 export default function Register() {
   const [email, setEmail] = useState<string>("");
@@ -92,6 +93,7 @@ export default function Register() {
             <button type="submit" disabled={isLoading}>
               {isLoading ? "作成中" : "新規登録"}
             </button>
+            <BackBtn link={"/login"} />
           </div>
         </form>
       </div>

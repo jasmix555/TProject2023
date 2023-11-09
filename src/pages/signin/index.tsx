@@ -7,6 +7,7 @@ import { useRouter } from "next/router";
 import style from "@/styles/form.module.scss";
 import { getDoc, doc, getFirestore } from "firebase/firestore/lite";
 import LayoutPage from "@/component/LayoutPage";
+import BackBtn from "@/component/BackBtn";
 
 export default function Signin() {
   const [email, setEmail] = useState<string>("");
@@ -113,6 +114,7 @@ export default function Signin() {
             <button type="submit">
               {isLoading ? "ログイン中" : "ログイン"}
             </button>
+            <BackBtn link={"/login"} />
           </div>
         </form>
       </div>

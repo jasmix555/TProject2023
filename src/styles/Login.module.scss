@@ -4,11 +4,20 @@
   font-size: 2.6rem;
   width: 100%;
   height: 100vh;
+
+  .mainVis {
+    position: absolute;
+    margin: 0 auto;
+    top: 20rem;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
   .footerWrap {
     width: 100%;
     position: absolute;
     align-items: center;
-    bottom: 9rem;
+    bottom: 12rem;
     display: flex;
     flex-direction: column;
     gap: 2rem;
