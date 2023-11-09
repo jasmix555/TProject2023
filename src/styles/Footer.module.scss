@@ -31,15 +31,6 @@
       height: 7rem;
     }
 
-    a {
-      border-radius: 50%;
-      width: 5rem;
-      height: 5rem;
-      display: inline-block;
-      padding-top: 0.6rem;
-      transition: 100ms ease-in-out;
-    }
-
     &:nth-child(2) a {
       padding-right: 0.3rem;
     }
@@ -49,9 +40,20 @@
     }
 
     .border {
-      background: var(--footer-color);
+      background: linear-gradient(180deg, #0e244e 0%, #245bc3 100%);
       height: 9rem;
       width: 9rem;
+      border: var(--border-stroke);
+      box-shadow: var(--border-shadow);
+    }
+
+    a {
+      padding: 1.8rem 0;
+      border-radius: 50%;
+      width: 5rem;
+      height: 5rem;
+      display: inline-block;
+      transition: 100ms ease-in-out;
     }
 
     .active {
@@ -68,9 +70,9 @@
     }
 
     button:not(.active) {
+      margin-bottom: 3rem;
       a {
         display: inline-block;
-        margin-bottom: 1.4rem;
         transition: none;
       }
     }
