@@ -42,10 +42,6 @@ body {
   height: 100%;
   overflow: hidden;
   background-color: var(--background-color) !important;
-  background-image: url(../../public/25.svg) !important;
-  background-repeat: no-repeat !important;
-  background-position: center !important;
-  background-size: cover !important;
   color: var(--white) !important;
 }
 

@@ -12,6 +12,7 @@ import style from "@/styles/form.module.scss";
 import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
 import LayoutPage from "@/component/LayoutPage";
 import BackBtn from "@/component/BackBtn";
+import Background from "@/component/Background";
 
 export default function Register() {
   const [email, setEmail] = useState<string>("");
@@ -58,6 +59,7 @@ export default function Register() {
 
   return (
     <LayoutPage>
+      <Background />
       <div className={style.bodyWrap}>
         <form onSubmit={handleSubmit}>
           <div className={style.contentWrap}>

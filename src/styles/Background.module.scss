@@ -1,0 +1,11 @@
+.background {
+  background-image: url(../../public/25.svg) !important;
+  background-repeat: no-repeat !important;
+  background-position: center !important;
+  background-size: cover !important;
+  width: 100%;
+  height: 100vh;
+  z-index: -99;
+  pointer-events: none;
+  position: fixed;
+}

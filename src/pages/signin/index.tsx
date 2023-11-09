@@ -8,6 +8,7 @@ import style from "@/styles/form.module.scss";
 import { getDoc, doc, getFirestore } from "firebase/firestore/lite";
 import LayoutPage from "@/component/LayoutPage";
 import BackBtn from "@/component/BackBtn";
+import Background from "@/component/Background";
 
 export default function Signin() {
   const [email, setEmail] = useState<string>("");
@@ -77,6 +78,7 @@ export default function Signin() {
 
   return (
     <LayoutPage>
+      <Background />
       <div className={style.bodyWrap}>
         <form onSubmit={handleSubmit}>
           <div className={style.contentWrap}>
