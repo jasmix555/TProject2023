@@ -88,12 +88,12 @@ export default function Register() {
                 </i>
               </div>
             </div>
-          </div>
-          <div className={style.submitWrap}>
-            <button type="submit" disabled={isLoading}>
-              {isLoading ? "作成中" : "新規登録"}
-            </button>
-            <BackBtn link={"/login"} />
+            <div className={style.submitWrap}>
+              <button type="submit" disabled={isLoading}>
+                {isLoading ? "作成中" : "新規登録"}
+              </button>
+              <BackBtn link={"/login"} />
+            </div>
           </div>
         </form>
       </div>

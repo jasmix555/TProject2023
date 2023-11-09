@@ -109,12 +109,12 @@ export default function Signin() {
                 </i>
               </div>
             </div>
-          </div>
-          <div className={style.submitWrap}>
-            <button type="submit">
-              {isLoading ? "ログイン中" : "ログイン"}
-            </button>
-            <BackBtn link={"/login"} />
+            <div className={style.submitWrap}>
+              <button type="submit">
+                {isLoading ? "ログイン中" : "ログイン"}
+              </button>
+              <BackBtn link={"/login"} />
+            </div>
           </div>
         </form>
       </div>
