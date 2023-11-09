@@ -118,12 +118,28 @@
   }
 }
 
-@mixin glassBox() {
-  background: var(--radial-gradient);
-  border-radius: 1rem;
-  padding: 0.6rem 1rem;
-  color: var(--white);
-  height: 100%;
+@mixin glassBox(
+  $w: auto,
+  $h: auto,
+  $bR: 1rem,
+  $b: 1px solid #ccc,
+  $p: 0.8rem 1.2rem,
+  $fS: 1.6rem
+) {
+  font-size: $fS;
+  width: $w;
+  height: $h;
+  border-radius: $bR;
+  border: $b;
+  padding: $p;
+  background: var(--glass-background);
+  box-shadow: var(--glass-effect);
+  &:focus {
+    outline: none;
+  }
+  &::placeholder {
+    color: #b9b9b9;
+  }
 }
 
 @keyframes appear {

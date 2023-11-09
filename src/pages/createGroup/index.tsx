@@ -7,7 +7,7 @@ import {
 } from "firebase/firestore";
 import { getAuth } from "firebase/auth";
 import { useRouter } from "next/router";
-import style from "@/styles/createChat.module.scss";
+import style from "@/styles/createGroup.module.scss";
 import LayoutPage from "@/component/LayoutPage";
 import BackBtn from "@/component/BackBtn";
 
@@ -75,24 +75,10 @@ export default function CreateGroup() {
               onChange={(e) => setDescription(e.target.value)}
             />
           </div>
-          <div className={style.contentWrap}>
-            <p>Group Expiration Time:</p>
-            <select
-              value={expirationTime}
-              onChange={(e) => setExpirationTime(e.target.value)}
-              className={style.input + " " + style.select}
-            >
-              <optgroup>
-                <option value="2">2 hours</option>
-                <option value="4">4 hours</option>
-                <option value="6">6 hours</option>
-                <option value="8">8 hours</option>
-                <option value="10">10 hours</option>
-                <option value="24">24 hours</option>
-              </optgroup>
-            </select>
-          </div>
           <div className={style.buttons}>
+            <div className={style.expirationTag}>
+              <p>※惑星は6時間経つと消滅してしまうよ!</p>
+            </div>
             <button
               type="submit"
               disabled={isSubmitDisabled}
