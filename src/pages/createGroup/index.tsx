@@ -45,7 +45,7 @@ export default function CreateGroup() {
         const groupId = newGroupRef.id;
 
         // Navigate to the group chat page using the generated group ID
-        router.push(`/groupChat`);
+        router.push(`/createdGroups`);
       } catch (error) {
         console.error("Error creating group:", error);
       }

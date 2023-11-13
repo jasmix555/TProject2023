@@ -20,7 +20,7 @@ import {
 import { FaEdit } from "react-icons/fa";
 import { RiMenu3Line } from "react-icons/ri";
 import Link from "next/link";
-import { useRouter } from "next/router"; // Add this import
+import { useRouter } from "next/router";
 import style from "@/styles/createdGroups.module.scss";
 import BackBtn from "@/component/BackBtn";
 import LayoutPage from "@/component/LayoutPage";
@@ -39,10 +39,10 @@ const menus = {
   ],
 };
 
-export default function CreatedGroups() {
+const CreatedGroups = () => {
   const [groups, setGroups] = useState<{ id: string; title: string }[]>([]);
   const auth = getAuth();
-  const router = useRouter(); // Add the useRouter hook
+  const router = useRouter();
 
   useEffect(() => {
     if (auth.currentUser) {
@@ -82,12 +82,20 @@ export default function CreatedGroups() {
         <h1>Created Groups</h1>
         <div className={style.body}>
           <ul>
-            {groups.map((group) => (
-              <li key={group.id}>
+            {groups.map((group, index) => (
+              <li
+                key={group.id}
+                style={{
+                  border: `1px solid hsl(${Math.random() * 360}, 100%, 50%)`,
+                  top: `${Math.random() * 50}vh`, // Adjust the range as needed
+                  left: `${Math.random() * 80}vw`, // Adjust the range as needed
+                  zIndex: index, // Ensure a proper stacking order
+                }}
+              >
                 <Link
                   href={{
                     pathname: `/groupChat`,
-                    query: { groupId: group.id, title: group.title }, // Change query parameter to groupId
+                    query: { groupId: group.id, title: group.title },
                   }}
                 >
                   <p>{group.title}</p>
@@ -107,4 +115,6 @@ export default function CreatedGroups() {
       </LayoutPage>
     </>
   );
-}
+};
+
+export default CreatedGroups;
