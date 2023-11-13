@@ -20,11 +20,13 @@
       }
 
       .planet {
-        width: 14rem;
-        height: 14rem;
+        width: 16rem;
+        height: 16rem;
         border-radius: 50%;
-        background: #c3c3c350;
-        box-shadow: var(--glow-effect);
+        object-fit: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
       }
     }
   }

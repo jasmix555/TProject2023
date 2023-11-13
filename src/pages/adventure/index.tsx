@@ -27,6 +27,33 @@ const menus = {
   ],
 };
 
+const worlds = [
+  {
+    title: "日本語",
+    link: "/createdGroups",
+  },
+  {
+    title: "English",
+    link: "/createdGroups",
+  },
+  {
+    title: "한국어",
+    link: "/createdGroups",
+  },
+  {
+    title: "中文",
+    link: "/createdGroups",
+  },
+  {
+    title: "Bahasa Indonesia",
+    link: "/createdGroups",
+  },
+  {
+    title: "español",
+    link: "/createdGroups",
+  },
+];
+
 export default function HomePage() {
   return (
     <>
@@ -35,42 +62,26 @@ export default function HomePage() {
         <Header contents={menus} />
         <div className={style.body}>
           <div className={style.worldsWrap}>
-            <div className={style.content + " " + style.left}>
-              <Link href={"/createdGroups"}>
-                <div className={style.planet}></div>
-                <p>日本語</p>
-              </Link>
-            </div>
-            <div className={style.content + " " + style.right}>
-              <Link href={"#"}>
-                <div className={style.planet}></div>
-                <p>English</p>
-              </Link>
-            </div>
-            <div className={style.content + " " + style.left}>
-              <Link href={"#"}>
-                <div className={style.planet}></div>
-                <p>한국어</p>
-              </Link>
-            </div>
-            <div className={style.content + " " + style.right}>
-              <Link href={"#"}>
-                <div className={style.planet}></div>
-                <p>中文</p>
-              </Link>
-            </div>
-            <div className={style.content + " " + style.left}>
-              <Link href={"#"}>
-                <div className={style.planet}></div>
-                <p>Bahasa Indonesia</p>
-              </Link>
-            </div>
-            <div className={style.content + " " + style.right}>
-              <Link href={"#"}>
-                <div className={style.planet}></div>
-                <p>español</p>
-              </Link>
-            </div>
+            {worlds.map((e, idx) => (
+              <div
+                key={idx}
+                className={
+                  style.content +
+                  " " +
+                  (idx % 2 === 0 ? style.left : style.right)
+                }
+              >
+                <Link href={e.link}>
+                  <div
+                    className={style.planet}
+                    style={{
+                      backgroundImage: `url(../planets/${idx + 1}.svg)`,
+                    }}
+                  ></div>
+                  <p>{e.title}</p>
+                </Link>
+              </div>
+            ))}
           </div>
         </div>
       </Layout>
