@@ -3,7 +3,6 @@ import Link from "next/link";
 import { useState, useEffect } from "react";
 import { footerArray } from "@/lib/nav/footerTypes";
 import { Icon } from "@chakra-ui/react";
-import { motion } from "framer-motion";
 import Motion from "./Motion";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
