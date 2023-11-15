@@ -3,10 +3,12 @@
   width: 100%;
   padding: 10rem 1.4rem 12rem 1.4rem;
   font-size: 1.6rem;
-  overflow-y: scroll;
 
   .worldsWrap {
     width: 100%;
+    height: 100%;
+    border: solid 1px tomato;
+    overflow-y: scroll;
 
     .content {
       display: flex;
