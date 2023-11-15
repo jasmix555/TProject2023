@@ -16,33 +16,51 @@
     height: 70%;
     font-size: 1.2rem;
     position: relative;
+    padding: 0.8rem 1.8rem;
 
     li {
       overflow: hidden;
-      white-space: nowrap;
       list-style: none;
-      text-align: center;
-      text-transform: uppercase;
 
       .contentWrapper {
         display: flex;
         flex-direction: column;
-        align-items: center;
 
         .contentImg {
           display: flex;
           width: 10rem;
           height: 10rem;
-          object-fit: cover;
-          background-position: center;
-          background-repeat: no-repeat;
-          background-size: contain;
-          border: solid 1px tomato;
+          padding: 0.3rem;
+          align-items: center;
+          justify-content: center;
+
+          .image {
+            object-fit: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            width: 90%;
+            height: 90%;
+            display: inline-block;
+            filter: drop-shadow(0 0 0.3rem rgba(255, 255, 255, 0.5));
+            animation: float 3s linear infinite;
+          }
         }
 
-        p {
+        .contentTitle {
           font-size: 1.8rem;
           width: 10rem;
+          white-space: nowrap;
+          text-transform: uppercase;
+          .marqueeOne {
+            display: inline-block;
+            animation: scrolling-left1 5s linear infinite;
+          }
+          .marqueeTwo {
+            display: inline-block;
+            animation: scrolling-left2 5s linear infinite;
+            animation-delay: 2.5s;
+          }
         }
       }
     }
@@ -57,5 +75,39 @@
     .create {
       @include Box.btnStyle($w: 18rem);
     }
+  }
+}
+
+@keyframes float {
+  0% {
+    transform: translatey(0px);
+  }
+  50% {
+    transform: translatey(-5px);
+  }
+  100% {
+    transform: translatey(0px);
+  }
+}
+
+@keyframes scrolling-left1 {
+  0% {
+    transform: translateX(100%);
+    -webkit-transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(-100%);
+    -webkit-transform: translateX(-100%);
+  }
+}
+
+@keyframes scrolling-left2 {
+  0% {
+    transform: translateX(0%);
+    -webkit-transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-200%);
+    -webkit-transform: translateX(-200%);
   }
 }

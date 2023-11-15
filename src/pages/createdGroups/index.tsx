@@ -87,17 +87,28 @@ const CreatedGroups = () => {
                 <div className={style.contentWrapper}>
                   <Link
                     className={style.contentImg}
-                    style={{
-                      backgroundImage: `url(../planets/${
-                        Math.floor(Math.random() * 6) + 1
-                      }.svg`,
-                    }}
                     href={{
                       pathname: `/groupChat`,
                       query: { groupId: group.id, title: group.title },
                     }}
-                  ></Link>
-                  <p className={style.contentTitle}>{group.title}</p>
+                  >
+                    <div
+                      className={style.image}
+                      style={{
+                        backgroundImage: `url(../planets/${
+                          Math.floor(Math.random() * 6) + 1
+                        }.svg`,
+                      }}
+                    ></div>
+                  </Link>
+                  <p className={style.contentTitle}>
+                    <span className={style.marqueeOne}>
+                      &nbsp;{group.title}
+                    </span>
+                    <span className={style.marqueeTwo}>
+                      &nbsp;{group.title}
+                    </span>
+                  </p>
                 </div>
               </li>
             ))}
