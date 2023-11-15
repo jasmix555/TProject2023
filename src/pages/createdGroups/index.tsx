@@ -82,24 +82,23 @@ const CreatedGroups = () => {
         <h1>Created Groups</h1>
         <div className={style.body}>
           <ul>
-            {groups.map((group, index) => (
-              <li
-                key={group.id}
-                style={{
-                  border: `1px solid hsl(${Math.random() * 360}, 100%, 50%)`,
-                  top: `${Math.random() * 50}vh`, // Adjust the range as needed
-                  left: `${Math.random() * 80}vw`, // Adjust the range as needed
-                  zIndex: index, // Ensure a proper stacking order
-                }}
-              >
-                <Link
-                  href={{
-                    pathname: `/groupChat`,
-                    query: { groupId: group.id, title: group.title },
-                  }}
-                >
-                  <p>{group.title}</p>
-                </Link>
+            {groups.map((group, idx) => (
+              <li key={group.id}>
+                <div className={style.contentWrapper}>
+                  <Link
+                    className={style.contentImg}
+                    style={{
+                      backgroundImage: `url(../planets/${
+                        Math.floor(Math.random() * 6) + 1
+                      }.svg`,
+                    }}
+                    href={{
+                      pathname: `/groupChat`,
+                      query: { groupId: group.id, title: group.title },
+                    }}
+                  ></Link>
+                  <p className={style.contentTitle}>{group.title}</p>
+                </div>
               </li>
             ))}
           </ul>
