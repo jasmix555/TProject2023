@@ -71,7 +71,7 @@ export default function HomePage() {
                   (idx % 2 === 0 ? style.left : style.right)
                 }
               >
-                <Link href={e.link}>
+                <Link href={`${e.link}?planet=${idx + 1}`}>
                   <div
                     className={style.planet}
                     style={{

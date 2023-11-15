@@ -43,6 +43,7 @@ const CreatedGroups = () => {
   const [groups, setGroups] = useState<{ id: string; title: string }[]>([]);
   const auth = getAuth();
   const router = useRouter();
+  const { planet } = router.query;
 
   useEffect(() => {
     if (auth.currentUser) {
@@ -80,6 +81,12 @@ const CreatedGroups = () => {
         <Background />
         <Header contents={menus} />
         <h1>Created Groups</h1>
+        <div
+          className={style.currentPlanet}
+          style={{
+            backgroundImage: `url(../planets/${planet}.svg)`,
+          }}
+        ></div>
         <div className={style.body}>
           <ul>
             {groups.map((group, idx) => (
@@ -93,7 +100,9 @@ const CreatedGroups = () => {
                     }}
                   >
                     <div
-                      className={style.image}
+                      className={`${style.image} ${
+                        style[`image${Math.floor(Math.random() * 3) + 1}`]
+                      }`}
                       style={{
                         backgroundImage: `url(../planets/${
                           Math.floor(Math.random() * 6) + 1
