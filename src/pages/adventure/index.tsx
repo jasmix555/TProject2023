@@ -85,7 +85,7 @@ export default function HomePage() {
           <div className={style.worldsWrap}>
             {worlds.map((e, idx) => {
               const [ref, inView] = useInView({
-                triggerOnce: true,
+                triggerOnce: false,
               });
 
               return (

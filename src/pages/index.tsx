@@ -5,7 +5,6 @@ import {
   FaRegCircleXmark,
   FaBell,
   FaUserAstronaut,
-  FaBook,
   FaGear,
   FaUsers,
 } from "react-icons/fa6";

@@ -1,4 +1,4 @@
-import { ReactElement, useState } from "react";
+import { ReactElement } from "react";
 import style from "@/styles/_Box.module.scss";
 import Link from "next/link";
 
