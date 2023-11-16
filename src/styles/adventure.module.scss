@@ -6,7 +6,7 @@
 
   .worldsWrap {
     width: 100%;
-    height: 100%;
+    height: 98%;
     border: solid 1px tomato;
     overflow-y: scroll;
 
@@ -29,6 +29,7 @@
         background-position: center;
         background-repeat: no-repeat;
         background-size: cover;
+        border: solid 1px tomato;
       }
     }
   }
