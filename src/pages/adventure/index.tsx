@@ -73,7 +73,9 @@ export default function HomePage() {
               >
                 <Link href={`${e.link}?planet=${idx + 1}`}>
                   <div
-                    className={style.planet}
+                    className={`${style.planet} ${
+                      style[`image${Math.floor(Math.random() * 3) + 1}`]
+                    }`}
                     style={{
                       backgroundImage: `url(../planets/${idx + 1}.svg)`,
                     }}
