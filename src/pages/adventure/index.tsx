@@ -13,6 +13,8 @@ import Header from "@/component/Header";
 import style from "@/styles/adventure.module.scss";
 import Link from "next/link";
 import Background from "@/component/Background";
+import { motion } from "framer-motion";
+import { useInView } from "react-intersection-observer";
 
 const menus = {
   icon: <RiMenu3Line />,
@@ -54,6 +56,18 @@ const worlds = [
   },
 ];
 
+const variants = {
+  hidden: { opacity: 0, y: 100 },
+  show: {
+    opacity: 1,
+    transition: {
+      duration: 0.3,
+      delay: 0.1,
+    },
+    y: 0,
+  },
+};
+
 export default function HomePage() {
   return (
     <>
@@ -62,28 +76,38 @@ export default function HomePage() {
         <Header contents={menus} />
         <div className={style.body}>
           <div className={style.worldsWrap}>
-            {worlds.map((e, idx) => (
-              <div
-                key={idx}
-                className={
-                  style.content +
-                  " " +
-                  (idx % 2 === 0 ? style.left : style.right)
-                }
-              >
-                <Link href={`${e.link}?planet=${idx + 1}`}>
-                  <div
-                    className={`${style.planet} ${
-                      style[`image${Math.floor(Math.random() * 3) + 1}`]
-                    }`}
-                    style={{
-                      backgroundImage: `url(../planets/${idx + 1}.svg)`,
-                    }}
-                  ></div>
-                  <p>{e.title}</p>
-                </Link>
-              </div>
-            ))}
+            {worlds.map((e, idx) => {
+              const [ref, inView] = useInView({
+                triggerOnce: true,
+              });
+
+              return (
+                <motion.div
+                  ref={ref}
+                  variants={variants}
+                  initial="hidden"
+                  animate={inView ? "show" : "hidden"}
+                  key={idx}
+                  className={
+                    style.content +
+                    " " +
+                    (idx % 2 === 0 ? style.left : style.right)
+                  }
+                >
+                  <Link href={`${e.link}?planet=${idx + 1}`}>
+                    <div
+                      className={`${style.planet} ${
+                        style[`image${Math.floor(Math.random() * 3) + 1}`]
+                      }`}
+                      style={{
+                        backgroundImage: `url(../planets/${idx + 1}.svg)`,
+                      }}
+                    ></div>
+                    <p>{e.title}</p>
+                  </Link>
+                </motion.div>
+              );
+            })}
           </div>
         </div>
       </Layout>
