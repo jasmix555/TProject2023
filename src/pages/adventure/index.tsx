@@ -13,6 +13,7 @@ import Header from "@/component/Header";
 import style from "@/styles/adventure.module.scss";
 import Link from "next/link";
 import Background from "@/component/Background";
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
 
@@ -69,6 +70,12 @@ const variants = {
 };
 
 export default function HomePage() {
+  const [randomNumbers, setRandomNumbers] = useState<number[]>([]);
+
+  useEffect(() => {
+    setRandomNumbers(worlds.map(() => Math.floor(Math.random() * 3) + 1));
+  }, []);
+
   return (
     <>
       <Layout>
@@ -97,7 +104,7 @@ export default function HomePage() {
                   <Link href={`${e.link}?planet=${idx + 1}`}>
                     <div
                       className={`${style.planet} ${
-                        style[`image${Math.floor(Math.random() * 3) + 1}`]
+                        style[`image${randomNumbers[idx]}`]
                       }`}
                       style={{
                         backgroundImage: `url(../planets/${idx + 1}.svg)`,
