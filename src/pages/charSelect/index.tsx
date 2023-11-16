@@ -1,5 +1,6 @@
 import { useState } from "react";
 import LayoutPage from "@/component/LayoutPage";
+import Layout from "@/component/Layout";
 import style from "@/styles/charSelect.module.scss";
 import Image from "next/image";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
@@ -17,7 +18,7 @@ export default function CharSelect() {
   };
 
   return (
-    <LayoutPage>
+    <Layout>
       <div className={style.header}>
         <h1>アバター選択</h1>
       </div>
@@ -56,15 +57,15 @@ export default function CharSelect() {
         </div>
 
         <div className={style.carouselBtnWrapper}>
-          <div className={`${style.button} ${style.left}`}>
-            <button onClick={goLeft}>
+          <div className={style.left}>
+            <button onClick={goLeft} className={style.button}>
               <i className={style.icon}>
                 <FaChevronLeft />
               </i>
             </button>
           </div>
-          <div className={`${style.button} ${style.right}`}>
-            <button onClick={goRight}>
+          <div className={style.right}>
+            <button onClick={goRight} className={style.button}>
               <i className={style.icon}>
                 <FaChevronRight />
               </i>
@@ -75,6 +76,6 @@ export default function CharSelect() {
           </div>
         </div>
       </div>
-    </LayoutPage>
+    </Layout>
   );
 }
