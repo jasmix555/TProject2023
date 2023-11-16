@@ -1,6 +1,5 @@
 import { useState } from "react";
 import LayoutPage from "@/component/LayoutPage";
-import Layout from "@/component/Layout";
 import style from "@/styles/charSelect.module.scss";
 import Image from "next/image";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
@@ -18,7 +17,7 @@ export default function CharSelect() {
   };
 
   return (
-    <Layout>
+    <LayoutPage>
       <div className={style.header}>
         <h1>アバター選択</h1>
       </div>
@@ -76,6 +75,6 @@ export default function CharSelect() {
           </div>
         </div>
       </div>
-    </Layout>
+    </LayoutPage>
   );
 }

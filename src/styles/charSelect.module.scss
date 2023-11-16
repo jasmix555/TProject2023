@@ -6,7 +6,7 @@
 }
 
 .carouselWrapper {
-  height: 100vh;
+  // height: 100vh;
   width: 100%;
   position: relative;
   border: solid 1px skyblue;
@@ -14,7 +14,7 @@
 
 .characterWrap {
   display: flex;
-  position: relative;
+  position: absolute;
 }
 
 .carouselBtnWrapper {
@@ -43,5 +43,7 @@
     position: absolute;
     align-items: center;
     bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
   }
 }
