@@ -12,7 +12,7 @@ export default function LinkBox({ icon, link }: Props) {
     <>
       <button className={style.homeBtn}>
         <Link href={link} className={style.icon}>
-          {icon}
+          <i className={style.icon}>{icon}</i>
         </Link>
       </button>
     </>

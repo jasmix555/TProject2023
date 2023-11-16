@@ -2,6 +2,7 @@ import { useState } from "react";
 import LayoutPage from "@/component/LayoutPage";
 import style from "@/styles/charSelect.module.scss";
 import Image from "next/image";
+import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 
 export default function CharSelect() {
   const [currentChar, setCurrentChar] = useState(1);
@@ -55,11 +56,22 @@ export default function CharSelect() {
         </div>
 
         <div className={style.carouselBtnWrapper}>
-          <div className={style.left}>
-            <button onClick={goLeft}>Left</button>
+          <div className={`${style.button} ${style.left}`}>
+            <button onClick={goLeft}>
+              <i className={style.icon}>
+                <FaChevronLeft />
+              </i>
+            </button>
           </div>
-          <div className={style.right}>
-            <button onClick={goRight}>Right</button>
+          <div className={`${style.button} ${style.right}`}>
+            <button onClick={goRight}>
+              <i className={style.icon}>
+                <FaChevronRight />
+              </i>
+            </button>
+          </div>
+          <div className={style.select}>
+            <button>決定！</button>
           </div>
         </div>
       </div>

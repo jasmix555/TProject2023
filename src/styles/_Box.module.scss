@@ -1,3 +1,118 @@
+.homeBtn {
+  @extend %btnStyle;
+  position: fixed;
+  top: 2rem;
+  left: 2rem;
+}
+
+.btnChildWrap {
+  margin-top: 0.8rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+%btnStyle {
+  width: 6rem;
+  height: 6rem;
+  border-radius: 1rem;
+  border: var(--border-stroke);
+  background: var(--radial-gradient);
+  box-shadow: var(--border-shadow);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  .icon,
+  a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--white);
+    font-size: 3rem;
+    width: 100%;
+    height: 100%;
+    outline: solid 1px tomato;
+  }
+}
+
+@mixin btnStyle(
+  $bg-color: var(--radial-gradient),
+  $text-color: var(--white),
+  $w: 6rem,
+  $h: 6rem,
+  $shadow: var(--border-shadow),
+  $border: var(--border-stroke),
+  $color: var(--white),
+  $fontS: 3rem,
+  $fontW: 700,
+  $borderR: 1rem
+) {
+  width: $w;
+  height: $h;
+  border-radius: $borderR;
+  border: $border;
+  background: $bg-color;
+  box-shadow: $shadow;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: $fontS;
+  font-weight: $fontW;
+  transition: 200ms ease-in-out;
+  i {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: $color;
+    font-size: $fontS;
+    width: 100%;
+    height: 100%;
+    outline: solid 1px tomato;
+  }
+  &:disabled {
+    color: #000000;
+    background: #b9b9b9;
+  }
+}
+
+@mixin glassBox(
+  $w: auto,
+  $h: auto,
+  $bR: 1rem,
+  $b: 1px solid #ccc,
+  $p: 0.8rem 1.2rem,
+  $fS: 1.6rem
+) {
+  font-size: $fS;
+  width: $w;
+  height: $h;
+  border-radius: $bR;
+  border: $b;
+  padding: $p;
+  background: var(--glass-background);
+  box-shadow: var(--glass-effect);
+  &:focus {
+    outline: none;
+  }
+  &::placeholder {
+    color: #b9b9b9;
+  }
+}
+
+@keyframes appear {
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes disappear {
+  to {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+}
+
 .menu {
   width: fit-content;
   position: fixed;
@@ -39,120 +154,5 @@
 
   .menu:not(.active) .btnWrapper:not(.mainBtn) {
     animation: disappear 0.2s forwards;
-  }
-}
-
-.homeBtn {
-  @extend %btnStyle;
-  position: fixed;
-  top: 2rem;
-  left: 2rem;
-}
-
-.btnChildWrap {
-  margin-top: 0.8rem;
-  display: flex;
-  flex-direction: column;
-  gap: 0.8rem;
-}
-
-%btnStyle {
-  width: 6rem;
-  height: 6rem;
-  border-radius: 1rem;
-  border: var(--border-stroke);
-  background: var(--radial-gradient);
-  box-shadow: var(--border-shadow);
-  display: inline-flex;
-  align-items: center;
-  a {
-    margin: 0 auto;
-  }
-  .icon {
-    display: block;
-    margin: 0 auto;
-    color: var(--white);
-    font-size: 3rem;
-  }
-}
-
-@mixin btnStyle(
-  $bg-color: var(--radial-gradient),
-  $text-color: var(--white),
-  $w: 6rem,
-  $h: 6rem,
-  $shadow: var(--border-shadow),
-  $border: var(--border-stroke),
-  $color: var(--white),
-  $fontS: 3rem,
-  $fontW: 700,
-  $borderR: 1rem
-) {
-  width: $w;
-  height: $h;
-  border-radius: $borderR;
-  border: $border;
-  background: $bg-color;
-  box-shadow: $shadow;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  font-size: $fontS;
-  font-weight: $fontW;
-  transition: 200ms ease-in-out;
-  a {
-    font-weight: $fontW;
-    font-size: $fontS;
-    text-align: center;
-    margin: 0 auto;
-    display: block;
-    width: $w;
-  }
-  .icon {
-    display: block;
-    margin: 0 auto;
-    color: $color;
-    font-size: $fontS;
-  }
-  &:disabled {
-    color: #000000;
-  }
-}
-
-@mixin glassBox(
-  $w: auto,
-  $h: auto,
-  $bR: 1rem,
-  $b: 1px solid #ccc,
-  $p: 0.8rem 1.2rem,
-  $fS: 1.6rem
-) {
-  font-size: $fS;
-  width: $w;
-  height: $h;
-  border-radius: $bR;
-  border: $b;
-  padding: $p;
-  background: var(--glass-background);
-  box-shadow: var(--glass-effect);
-  &:focus {
-    outline: none;
-  }
-  &::placeholder {
-    color: #b9b9b9;
-  }
-}
-
-@keyframes appear {
-  to {
-    transform: translateY(0);
-    opacity: 1;
-  }
-}
-
-@keyframes disappear {
-  to {
-    transform: translateY(-100%);
-    opacity: 0;
   }
 }
