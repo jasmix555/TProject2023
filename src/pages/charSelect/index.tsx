@@ -31,7 +31,6 @@ export default function CharSelect() {
               alt="previous character"
               width={141}
               height={200}
-              className={style.dimmed}
             />
           </div>
           <div className={style.current}>
@@ -50,7 +49,6 @@ export default function CharSelect() {
               alt="next character"
               width={141}
               height={200}
-              className={style.dimmed}
             />
           </div>
         </div>
