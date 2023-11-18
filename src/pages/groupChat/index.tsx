@@ -161,26 +161,24 @@ export const Page = () => {
     setShowGroupChat(!showGroupChat);
   };
 
-  {
-    // const expirationTime = "2023-11-08T12:00:00"; // Replace with the actual expiration timestamp
-    // // Calculate the remaining time in hours
-    // const calculateRemainingTime = (expirationTimestamp: string) => {
-    //   const currentTime = new Date().getTime();
-    //   const expirationTime = new Date(expirationTimestamp).getTime();
-    //   const remainingMilliseconds = expirationTime - currentTime;
-    //   if (remainingMilliseconds <= 0) {
-    //     return { hours: 0, minutes: 0 };
-    //   }
-    //   const remainingHours = Math.floor(remainingMilliseconds / (1000 * 60 * 60));
-    //   const remainingMinutes = Math.floor(
-    //     (remainingMilliseconds % (1000 * 60 * 60)) / (1000 * 60)
-    //   );
-    //   return { hours: remainingHours, minutes: remainingMinutes };
-    // };
-    // const remainingTime = expirationTime
-    //   ? calculateRemainingTime(expirationTime)
-    //   : { hours: 0, minutes: 0 };
-  }
+  const expirationTime = "2023-11-08T12:00:00"; // Replace with the actual expiration timestamp
+  // Calculate the remaining time in hours
+  const calculateRemainingTime = (expirationTimestamp: string) => {
+    const currentTime = new Date().getTime();
+    const expirationTime = new Date(expirationTimestamp).getTime();
+    const remainingMilliseconds = expirationTime - currentTime;
+    if (remainingMilliseconds <= 0) {
+      return { hours: 0, minutes: 0 };
+    }
+    const remainingHours = Math.floor(remainingMilliseconds / (1000 * 60 * 60));
+    const remainingMinutes = Math.floor(
+      (remainingMilliseconds % (1000 * 60 * 60)) / (1000 * 60)
+    );
+    return { hours: remainingHours, minutes: remainingMinutes };
+  };
+  const remainingTime = expirationTime
+    ? calculateRemainingTime(expirationTime)
+    : { hours: 0, minutes: 0 };
 
   return (
     <LayoutPage>
@@ -190,6 +188,14 @@ export const Page = () => {
 
           <div className={style.title}>
             <h1>{title}</h1>
+            {
+              <div className={style.remainingTime}>
+                <span>{remainingTime.hours}</span>
+                <span>時間</span>
+                <span>{remainingTime.minutes}</span>
+                <span>分</span>
+              </div>
+            }
           </div>
 
           <div className={style.remainingTime}></div>

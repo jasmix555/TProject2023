@@ -48,7 +48,6 @@
       background: var(--footer-color);
 
       .groupTitle {
-        // display: flex;
         font-size: 2rem;
         font-weight: 700;
         color: var(--white);
@@ -149,7 +148,7 @@
   align-items: center;
   width: 100%;
   height: 8rem;
-  z-index: 100;
+  z-index: 2000;
 
   .input {
     word-wrap: break-word;
