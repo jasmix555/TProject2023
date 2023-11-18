@@ -52,7 +52,6 @@ type MessageProps = {
 
 const Message = ({
   message,
-  userId,
   userNickname,
   timestamp,
   character,
