@@ -5,6 +5,7 @@ import { getAuth, User } from "firebase/auth";
 import { getFirestore, collection, doc, getDoc } from "firebase/firestore/lite";
 import Image from "next/image";
 import style from "@/styles/index.module.scss";
+import Link from "next/link";
 
 export default function UserCharacter() {
   const [character, setCharacter] = useState(null);
@@ -52,12 +53,14 @@ export default function UserCharacter() {
       <div className={style.characterWrap}>
         <div className={style.character}>
           {character && (
-            <Image
-              src={`/characters/Char${character}L.svg`}
-              alt={`UserCharacter ${character}`}
-              width={200}
-              height={200}
-            />
+            <Link href={"/charSelect"}>
+              <Image
+                src={`/characters/Char${character}L.svg`}
+                alt={`UserCharacter ${character}`}
+                width={200}
+                height={200}
+              />
+            </Link>
           )}
         </div>
       </div>
