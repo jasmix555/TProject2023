@@ -36,7 +36,7 @@ export default function Signin() {
           push("/");
         } else {
           // Profile setup is not complete, send them to the profile setup page
-          push("/profile-setup");
+          push("/charSelect");
         }
       } catch (error) {
         console.error("Error checking profile setup:", error);

@@ -47,6 +47,7 @@ type MessageProps = {
   userId: string;
   userNickname: string;
   timestamp: string;
+  character: number; // Add character field to MessageProps
 };
 
 const Message = ({
@@ -54,13 +55,21 @@ const Message = ({
   userId,
   userNickname,
   timestamp,
+  character,
 }: MessageProps) => {
   const formattedTimestamp = format(new Date(parseInt(timestamp)), "HH:mm"); // Format the timestamp
 
   return (
     <div className={style.messageWrap}>
       <div className={style.avatarWrap}>
-        <div className={style.avatar}></div>
+        <div className={style.avatar}>
+          <img
+            src={`/characters/Char${character}L.svg`}
+            alt={`UserCharacter ${character}`}
+            width={50}
+            height={50}
+          />
+        </div>
       </div>
       <div className={style.messageWrap}>
         <div className={style.messageHeader}>
@@ -72,12 +81,12 @@ const Message = ({
     </div>
   );
 };
-// Your existing imports...
 
 export const Page = () => {
   const messagesElementRef = useRef<HTMLDivElement | null>(null);
   const [message, setMessage] = useState<string>("");
   const [nickname, setNickname] = useState<string>("");
+  const [userCharacter, setUserCharacter] = useState<number>(1); // Initialize with a default value
   const auth = getAuth();
   const user: User | null = auth.currentUser;
   const [showGroupChat, setShowGroupChat] = useState(false);
@@ -85,39 +94,44 @@ export const Page = () => {
   const { groupId, title } = router.query;
 
   useEffect(() => {
-    const fetchUserNickname = async () => {
-      if (user) {
-        const db: Firestore = getFirestore();
-        const userDocRef = doc(db, "users", user.uid);
-
-        try {
+    const fetchUserData = async () => {
+      try {
+        if (user) {
+          const db: Firestore = getFirestore();
+          const userDocRef = doc(db, "users", user.uid);
           const userDocSnapshot = await getDoc(userDocRef);
+
           if (userDocSnapshot.exists()) {
             const userData = userDocSnapshot.data();
 
             if (userData && userData.nickname) {
               setNickname(userData.nickname);
             }
+
+            if (userData && userData.character) {
+              setUserCharacter(userData.character);
+            }
           }
-        } catch (error) {
-          console.error("Error fetching user data:", error);
         }
+      } catch (error) {
+        console.error("Error fetching user data:", error);
       }
     };
 
-    fetchUserNickname();
+    fetchUserData();
   }, [user]);
 
   const handleSendMessage = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
       const db = getDatabase();
-      const dbRef = ref(db, `groupChatMessages/${groupId}`); // Reference the specific group's chat messages
+      const dbRef = ref(db, `groupChatMessages/${groupId}`);
       await push(dbRef, {
         message,
         userId: user ? user.uid : "",
         userNickname: user ? nickname : "",
         timestamp: serverTimestamp(),
+        character: userCharacter, // Pass user's character number to the message
       });
       setMessage("");
     } catch (e) {
@@ -132,15 +146,16 @@ export const Page = () => {
   useEffect(() => {
     try {
       const db = getDatabase();
-      const dbRef = ref(db, `groupChatMessages/${groupId}`); // Reference the specific group's chat messages
+      const dbRef = ref(db, `groupChatMessages/${groupId}`);
       return onChildAdded(dbRef, (snapshot) => {
         const message = String(snapshot.val()["message"] ?? "");
         const userId = String(snapshot.val()["userId"] ?? "");
         const userNickname = String(snapshot.val()["userNickname"] ?? "");
         const timestamp = String(snapshot.val()["timestamp"] ?? "");
+        const character = Number(snapshot.val()["character"] ?? 1); // Default to 1 if character is not present
         setChats((prev) => [
           ...prev,
-          { message, userId, userNickname, timestamp },
+          { message, userId, userNickname, timestamp, character },
         ]);
       });
     } catch (e) {
@@ -149,7 +164,7 @@ export const Page = () => {
       }
       return;
     }
-  }, [groupId]); // Trigger a new query when the groupId changes
+  }, [groupId]);
 
   useEffect(() => {
     messagesElementRef.current?.scrollTo({
@@ -161,8 +176,7 @@ export const Page = () => {
     setShowGroupChat(!showGroupChat);
   };
 
-  const expirationTime = "2023-11-08T12:00:00"; // Replace with the actual expiration timestamp
-  // Calculate the remaining time in hours
+  const expirationTime = "2023-11-08T12:00:00";
   const calculateRemainingTime = (expirationTimestamp: string) => {
     const currentTime = new Date().getTime();
     const expirationTime = new Date(expirationTimestamp).getTime();
@@ -227,6 +241,7 @@ export const Page = () => {
                     userId={chat.userId}
                     userNickname={chat.userNickname}
                     timestamp={chat.timestamp}
+                    character={chat.character}
                     key={`ChatMessage_${index}`}
                   />
                 ))}

@@ -1,7 +1,7 @@
-import { useState, FormEvent } from "react";
 import { useToast } from "@chakra-ui/react";
-import { useRouter } from "next/router";
 import style from "@/styles/form.module.scss";
+import { useState, FormEvent } from "react";
+import { useRouter } from "next/router";
 import { getAuth, User } from "firebase/auth";
 import {
   doc,
@@ -9,6 +9,7 @@ import {
   getFirestore,
   collection,
   Firestore,
+  getDoc,
 } from "firebase/firestore/lite";
 import { FirebaseError } from "@firebase/util";
 import LayoutPage from "@/component/LayoutPage";
@@ -39,7 +40,10 @@ export default function ProfileSetup() {
         // Replace 'user.uid' with the actual user identifier (e.g., email or unique ID)
         const userDocRef = doc(usersCollection, user.uid);
 
+        const existingUserData = (await getDoc(userDocRef)).data();
+
         const userData = {
+          ...existingUserData,
           name,
           nickname,
           language,
