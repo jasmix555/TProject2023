@@ -92,6 +92,7 @@ export default function HomePage() {
                     initial="hidden"
                     animate={inView ? "show" : "hidden"}
                     custom={idx}
+                    key={idx}
                     className={
                       style.content +
                       " " +

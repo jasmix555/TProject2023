@@ -66,8 +66,6 @@ const CreatedGroups = () => {
   const auth = getAuth();
   const router = useRouter();
   const { planet } = router.query;
-  const controls = useAnimation();
-  const [ref, inView] = useInView();
 
   useEffect(() => {
     if (auth.currentUser) {
