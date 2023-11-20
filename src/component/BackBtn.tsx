@@ -7,12 +7,6 @@ type BackBtnProps = {
 };
 
 export default function BackBtn({ link }: BackBtnProps) {
-  // const router = useRouter();
-
-  // const handleBack = () => {
-  //   router.back();
-  // };
-
   return (
     <>
       <Link href={link}>

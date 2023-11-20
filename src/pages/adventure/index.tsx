@@ -67,6 +67,14 @@ const variants = {
     },
     y: 0,
   },
+  out: {
+    opacity: 0,
+    transition: {
+      duration: 0.3,
+      delay: 0.1,
+    },
+    y: 100,
+  },
 };
 
 export default function HomePage() {
@@ -94,6 +102,7 @@ export default function HomePage() {
                   variants={variants}
                   initial="hidden"
                   animate={inView ? "show" : "hidden"}
+                  exit="out"
                   key={idx}
                   className={
                     style.content +

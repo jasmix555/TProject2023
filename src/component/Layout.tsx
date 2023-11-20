@@ -15,8 +15,8 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       setPathStat("/book");
     } else if (location.pathname == "/adventure") {
       setPathStat("/adventure");
-    } else if (location.pathname == "/chat") {
-      setPathStat("/chat");
+    } else if (location.pathname == "/learning") {
+      setPathStat("/learning");
     } else {
       setPathStat("/");
     }

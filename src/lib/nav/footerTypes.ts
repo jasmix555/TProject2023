@@ -12,8 +12,8 @@ export const footerArray = [
     path: "/adventure",
   },
   {
-    id: "chat",
+    id: "learning",
     icon: FaRocketchat,
-    path: "/chat",
+    path: "/learning",
   },
 ];
