@@ -8,6 +8,17 @@
     padding-top: 10rem;
     height: 100%;
 
+    .noGroups {
+      font-size: 3rem;
+      font-weight: 600;
+      font-family: "Play", sans-serif;
+      text-align: center;
+      position: relative;
+      top: 40%;
+      transform: translateY(-40%);
+      animation: float1 3s linear infinite;
+    }
+
     ul {
       height: 64%;
       overflow-y: scroll; // Added scrolling

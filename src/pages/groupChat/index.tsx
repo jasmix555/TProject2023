@@ -29,6 +29,7 @@ import { useRouter } from "next/router";
 import style from "@/styles/groupChat.module.scss";
 import LayoutPage from "@/component/LayoutPage";
 import { group } from "console";
+import Image from "next/image";
 
 const menus = {
   icon: <RiMenu3Line />,
@@ -63,7 +64,7 @@ const Message = ({
     <div className={style.messageWrap}>
       <div className={style.avatarWrap}>
         <div className={style.avatar}>
-          <img
+          <Image
             src={`/characters/Char${character}L.svg`}
             alt={`UserCharacter ${character}`}
             width={50}
@@ -71,7 +72,7 @@ const Message = ({
           />
         </div>
       </div>
-      <div className={style.messageWrap}>
+      <div className={style.messageContentWrap}>
         <div className={style.messageHeader}>
           <p>{userNickname}</p>
           <p>{formattedTimestamp} </p>

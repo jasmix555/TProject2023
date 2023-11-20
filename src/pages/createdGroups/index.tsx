@@ -119,56 +119,65 @@ const CreatedGroups = () => {
       ></div>
       <div className={style.body}>
         <div className={style.content}>
-          <ul>
-            {groups.map((group, idx) => {
-              return (
-                <InView as="div" triggerOnce key={group.id}>
-                  {({ ref, inView }) => (
-                    <motion.li
-                      ref={ref}
-                      variants={variants}
-                      initial="hidden"
-                      animate={inView ? "show" : "hidden"}
-                      custom={idx} // Pass the index as a custom prop
-                    >
-                      <div className={style.contentWrapper}>
-                        <Link
-                          className={style.contentImg}
-                          href={{
-                            pathname: `/groupDescription`,
-                            query: {
-                              groupId: group.id,
-                              title: group.title,
-                              description: group.description,
-                            },
-                          }}
-                        >
-                          <div
-                            className={`${style.image} ${
-                              style[`image${Math.floor(Math.random() * 3) + 1}`]
-                            }`}
-                            style={{
-                              backgroundImage: `url(../planets/${
-                                Math.floor(Math.random() * 6) + 1
-                              }.svg`,
+          {groups.length === 0 ? (
+            <div className={style.noGroups}>
+              <p>No groups found.</p>
+            </div>
+          ) : (
+            <ul>
+              {groups.map((group, idx) => {
+                return (
+                  <InView as="div" triggerOnce key={group.id}>
+                    {({ ref, inView }) => (
+                      <motion.li
+                        ref={ref}
+                        variants={variants}
+                        initial="hidden"
+                        animate={inView ? "show" : "hidden"}
+                        custom={idx} // Pass the index as a custom prop
+                        key={group.id}
+                      >
+                        <div className={style.contentWrapper}>
+                          <Link
+                            className={style.contentImg}
+                            href={{
+                              pathname: `/groupDescription`,
+                              query: {
+                                groupId: group.id,
+                                title: group.title,
+                                description: group.description,
+                              },
                             }}
-                          ></div>
-                        </Link>
-                        <p className={style.contentTitle}>
-                          <span className={style.marqueeOne}>
-                            &nbsp;{group.title}
-                          </span>
-                          <span className={style.marqueeTwo}>
-                            &nbsp;{group.title}
-                          </span>
-                        </p>
-                      </div>
-                    </motion.li>
-                  )}
-                </InView>
-              );
-            })}
-          </ul>
+                          >
+                            <div
+                              className={`${style.image} ${
+                                style[
+                                  `image${Math.floor(Math.random() * 3) + 1}`
+                                ]
+                              }`}
+                              style={{
+                                backgroundImage: `url(../planets/${
+                                  Math.floor(Math.random() * 6) + 1
+                                }.svg`,
+                              }}
+                            ></div>
+                          </Link>
+                          <p className={style.contentTitle}>
+                            <span className={style.marqueeOne}>
+                              &nbsp;{group.title}
+                            </span>
+                            <span className={style.marqueeTwo}>
+                              &nbsp;{group.title}
+                            </span>
+                          </p>
+                        </div>
+                      </motion.li>
+                    )}
+                  </InView>
+                );
+              })}
+            </ul>
+          )}
           <div className={style.createGroup}>
             <Link href={"/createGroup"}>
               <button className={style.create}>
