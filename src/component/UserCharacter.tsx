@@ -4,7 +4,7 @@ import { useToast } from "@chakra-ui/react";
 import { getAuth, User } from "firebase/auth";
 import { getFirestore, collection, doc, getDoc } from "firebase/firestore/lite";
 import Image from "next/image";
-import style from "@/styles/index.module.scss";
+import style from "@/styles/userCharacter.module.scss";
 import Link from "next/link";
 
 export default function UserCharacter() {
@@ -49,21 +49,19 @@ export default function UserCharacter() {
   }, [toast]);
 
   return (
-    <>
-      <div className={style.characterWrap}>
-        <div className={style.character}>
-          {character && (
-            <Link href={"/charSelect"}>
-              <Image
-                src={`/characters/Char${character}L.svg`}
-                alt={`UserCharacter ${character}`}
-                width={200}
-                height={200}
-              />
-            </Link>
-          )}
-        </div>
+    <div className={style.characterWrap}>
+      <div className={style.character}>
+        {character && (
+          <Link href={"/charSelect"}>
+            <Image
+              src={`/characters/Char${character}L.svg`}
+              alt={`UserCharacter ${character}`}
+              width={200}
+              height={200}
+            />
+          </Link>
+        )}
       </div>
-    </>
+    </div>
   );
 }

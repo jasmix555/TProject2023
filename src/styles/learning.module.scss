@@ -1,3 +1,5 @@
+@use "Box.module" as Box;
+
 .body {
   height: 100vh;
   width: 100%;
@@ -27,6 +29,7 @@
 
     .contentWrapper {
       width: 95%;
+      height: 70%;
       margin: 0 auto;
       border-radius: 1rem;
       border: var(--white) 1px solid;
@@ -49,6 +52,19 @@
         padding-bottom: 0.4rem;
       }
 
+      button[type="submit"] {
+        margin: 0 auto;
+        @include Box.btnStyle($w: 20rem, $fontS: 2rem);
+      }
+      textarea {
+        word-wrap: break-word;
+        max-height: 200px;
+        overflow: auto;
+        padding: 0.8rem 1rem;
+        resize: none;
+        height: 4.2rem;
+      }
+
       select,
       textarea,
       input {
@@ -56,10 +72,13 @@
         display: flex;
         padding: 0.6rem 0;
         width: 100%;
-        resize: none;
         background: transparent;
         outline: none;
         font-weight: 500;
+        &:invalid,
+        &::placeholder {
+          color: #bec3cc;
+        }
       }
     }
   }

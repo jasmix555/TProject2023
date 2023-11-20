@@ -38,9 +38,8 @@ export default function UserName() {
   return (
     <>
       <div className={style.wrapper}>
-        <div className={style.background}></div>
         <div>
-          <h1>{nickname ? `${nickname}` : "No Internet"}</h1>
+          <h1>{nickname ? `${nickname}` : "Username Not Found"}</h1>
         </div>
         <div className={style.languages}>
           <h1>勉強中： {language ? `${language}` : " "}</h1>

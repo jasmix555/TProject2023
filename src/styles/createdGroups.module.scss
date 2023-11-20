@@ -1,88 +1,91 @@
 @use "Box.module" as Box;
 
 .body {
-  margin-top: 10rem;
   width: 100%;
-  height: 90vh;
+  height: 100vh;
 
-  ul {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    grid-template-rows: repeat(3, 1fr);
-    grid-gap: 3rem;
-    justify-items: center;
-    align-items: center;
-    height: 70%;
-    font-size: 1.2rem;
-    position: relative;
-    padding: 0.8rem 1.8rem;
+  .content {
+    padding-top: 10rem;
+    height: 100%;
 
-    li {
-      overflow: hidden;
-      list-style: none;
+    ul {
+      height: 64%;
+      overflow-y: scroll; // Added scrolling
+      display: flex;
+      flex-wrap: wrap;
+      padding: 1.2rem 1.4rem;
+      gap: 3rem;
+      align-items: center;
+      margin: 0 auto;
+      font-size: 1.2rem;
 
-      .contentWrapper {
-        display: flex;
-        flex-direction: column;
+      li {
+        overflow: hidden;
+        list-style: none;
 
-        .contentImg {
+        .contentWrapper {
           display: flex;
-          width: 10rem;
-          height: 10rem;
-          padding: 0.7rem;
-          align-items: center;
-          justify-content: center;
+          flex-direction: column;
 
-          .image {
-            object-fit: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-            background-size: cover;
-            width: 90%;
-            height: 90%;
-            display: inline-block;
-            filter: drop-shadow(0 0 0.5rem rgba(189, 255, 247, 0.39));
-          }
-          .image1 {
-            animation: float1 3s linear infinite;
+          .contentImg {
+            display: flex;
+            width: 10rem;
+            height: 10rem;
+            padding: 0.7rem;
+            align-items: center;
+            justify-content: center;
+
+            .image {
+              object-fit: cover;
+              background-position: center;
+              background-repeat: no-repeat;
+              background-size: cover;
+              width: 90%;
+              height: 90%;
+              display: inline-block;
+              filter: drop-shadow(0 0 0.5rem rgba(189, 255, 247, 0.39));
+            }
+            .image1 {
+              animation: float1 3s linear infinite;
+            }
+
+            .image2 {
+              animation: float2 4s linear infinite;
+            }
+
+            .image3 {
+              animation: float3 5s linear infinite;
+            }
           }
 
-          .image2 {
-            animation: float2 4s linear infinite;
-          }
-
-          .image3 {
-            animation: float3 5s linear infinite;
-          }
-        }
-
-        .contentTitle {
-          font-size: 1.8rem;
-          width: 10rem;
-          white-space: nowrap;
-          text-transform: uppercase;
-          .marqueeOne {
-            display: inline-block;
-            animation: scrolling-left1 4s linear infinite;
-          }
-          .marqueeTwo {
-            display: inline-block;
-            animation: scrolling-left2 4s linear infinite;
-            animation-delay: 2s;
+          .contentTitle {
+            font-size: 1.8rem;
+            width: 10rem;
+            white-space: nowrap;
+            text-transform: uppercase;
+            .marqueeOne {
+              display: inline-block;
+              animation: scrolling-left1 4s linear infinite;
+            }
+            .marqueeTwo {
+              display: inline-block;
+              animation: scrolling-left2 4s linear infinite;
+              animation-delay: 2s;
+            }
           }
         }
       }
     }
-  }
 
-  .createGroup {
-    position: absolute;
-    bottom: 9rem;
-    left: 50%;
-    transform: translateX(-50%);
+    .createGroup {
+      position: absolute;
+      bottom: 9rem;
+      left: 50%;
+      transform: translateX(-50%);
 
-    .create {
-      @include Box.btnStyle($w: 18rem);
+      .create {
+        @include Box.btnStyle($w: 18rem);
+      }
     }
   }
 }

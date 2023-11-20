@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { footerArray } from "@/lib/nav/footerTypes";
 import { Icon } from "@chakra-ui/react";
 import Motion from "./Motion";
+import { AuthGuard } from "@/feature/auth/component/AuthGuard/AuthGuard";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   const [pathStat, setPathStat] = useState("/");
@@ -23,7 +24,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   }, []);
 
   return (
-    <>
+    <AuthGuard>
       <Motion>{children}</Motion>
       <div className={style.footerWrap}>
         {footerArray.map((e, idx) => {
@@ -52,6 +53,6 @@ export default function Layout({ children }: { children: React.ReactNode }) {
           }
         })}
       </div>
-    </>
+    </AuthGuard>
   );
 }

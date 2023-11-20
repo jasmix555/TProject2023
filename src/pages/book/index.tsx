@@ -27,9 +27,7 @@ function Book() {
   return (
     <Layout>
       <Header contents={menus} />
-      <div>
-        <h1>Book</h1>
-      </div>
+      <div></div>
     </Layout>
   );
 }

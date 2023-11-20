@@ -16,8 +16,6 @@ import {
 } from "firebase/firestore/lite";
 import { FirebaseError } from "@firebase/util";
 
-// ... (your existing imports)
-
 export default function CharSelect() {
   const [currentChar, setCurrentChar] = useState(1);
   const totalChars = 5;

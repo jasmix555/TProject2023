@@ -10,8 +10,19 @@ import {
 import { FaEdit } from "react-icons/fa";
 import Layout from "@/component/Layout";
 import Header from "@/component/Header";
-import { useState } from "react";
+import { useRouter } from "next/router";
+import {
+  getFirestore,
+  collection,
+  doc,
+  getDoc,
+  Firestore,
+} from "firebase/firestore/lite";
+import { useAuthContext } from "@/feature/provider/AuthProvider";
+import { useState, useEffect } from "react";
 import style from "@/styles/learning.module.scss";
+import UserCharacter from "@/component/UserCharacter";
+import Background from "@/component/Background";
 
 const menus = {
   icon: <RiMenu3Line />,
@@ -48,9 +59,38 @@ export default function Learning() {
     // Handle form submission, you can add your logic here
   };
 
+  const { user } = useAuthContext();
+  const router = useRouter();
+
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        if (user) {
+          const db: Firestore = getFirestore();
+          const usersCollection = collection(db, "users");
+          const userDocRef = doc(usersCollection, user.uid);
+
+          const userData = (await getDoc(userDocRef))?.data();
+
+          if (!userData) {
+            // If user data is not found, navigate to the Welcome page
+            router.push("/welcome");
+          }
+        }
+      } catch (error) {
+        console.error(error);
+        // Handle error as needed
+      }
+    };
+
+    fetchUserData();
+  }, [user, router]);
+
   return (
     <Layout>
       <Header contents={menus} />
+      <Background />
+      <UserCharacter />
       <div className={style.body}>
         <div className={style.wrapper}>
           <div className={style.title}>
@@ -67,6 +107,7 @@ export default function Learning() {
             <div className={style.selection}>
               <label htmlFor="language">言語</label>
               <select
+                required
                 id="language"
                 value={selectedLanguage}
                 onChange={handleLanguageChange}
@@ -85,6 +126,7 @@ export default function Learning() {
             <div className={style.selection}>
               <label htmlFor="genre">ジャンル</label>
               <select
+                required
                 id="genre"
                 value={selectedGenre}
                 onChange={handleGenreChange}

@@ -53,43 +53,41 @@ export default function CreateGroup() {
   };
 
   return (
-    <>
-      <LayoutPage>
-        <form onSubmit={handleSubmit} className={style.form}>
-          <div className={style.contentWrap}>
-            <p>あなただけの小惑星の名前を決めてね！</p>
-            <input
-              className={style.input + " " + style.title}
-              type="text"
-              placeholder="タイトル"
-              value={title}
-              onChange={(e) => setTitle(e.target.value)}
-            />
+    <LayoutPage>
+      <form onSubmit={handleSubmit} className={style.form}>
+        <div className={style.contentWrap}>
+          <p>あなただけの小惑星の名前を決めてね！</p>
+          <input
+            className={style.input + " " + style.title}
+            type="text"
+            placeholder="タイトル"
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+          />
+        </div>
+        <div className={style.contentWrap}>
+          <p>どんな小惑星か詳しく教えてね！</p>
+          <textarea
+            className={style.input + " " + style.textarea}
+            placeholder="例）新しく覚えた単語をみんなに披露したい！！単語の意味やスラングがわからないから教えて欲しい！コミュニケーションをしたい！"
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+          />
+        </div>
+        <div className={style.buttons}>
+          <div className={style.expirationTag}>
+            <p>※惑星は6時間経つと消滅してしまうよ!</p>
           </div>
-          <div className={style.contentWrap}>
-            <p>どんな小惑星か詳しく教えてね！</p>
-            <textarea
-              className={style.input + " " + style.textarea}
-              placeholder="例）新しく覚えた単語をみんなに披露したい！！単語の意味やスラングがわからないから教えて欲しい！コミュニケーションをしたい！"
-              value={description}
-              onChange={(e) => setDescription(e.target.value)}
-            />
-          </div>
-          <div className={style.buttons}>
-            <div className={style.expirationTag}>
-              <p>※惑星は6時間経つと消滅してしまうよ!</p>
-            </div>
-            <button
-              type="submit"
-              disabled={isSubmitDisabled}
-              className={style.create}
-            >
-              惑星をつくる
-            </button>
-            <BackBtn link={"/createdGroups"} />
-          </div>
-        </form>
-      </LayoutPage>
-    </>
+          <button
+            type="submit"
+            disabled={isSubmitDisabled}
+            className={style.create}
+          >
+            惑星をつくる
+          </button>
+          <BackBtn link={"/createdGroups"} />
+        </div>
+      </form>
+    </LayoutPage>
   );
 }

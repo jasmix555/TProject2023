@@ -16,7 +16,6 @@ type MenuBarProps = {
 
 export default function MenuBar({ text, contents }: MenuBarProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isClosing, setIsClosing] = useState(false); // Track if the menu is closing
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
