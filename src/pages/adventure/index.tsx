@@ -84,7 +84,7 @@ export default function HomePage() {
         <div className={style.worldsWrap}>
           {worlds.map((e, idx) => {
             return (
-              <InView as="div" triggerOnce>
+              <InView as="div" triggerOnce key={idx}>
                 {({ ref, inView }) => (
                   <motion.div
                     ref={ref}
@@ -92,7 +92,6 @@ export default function HomePage() {
                     initial="hidden"
                     animate={inView ? "show" : "hidden"}
                     custom={idx}
-                    key={idx}
                     className={
                       style.content +
                       " " +
