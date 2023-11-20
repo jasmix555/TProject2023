@@ -56,57 +56,57 @@ export default function ChatPage() {
           <div className={style.title}>
             <h1>新しい単語を見つけにいこう</h1>
             <p>
-              次の日(8:30am)に新しい単語を教えてくれるよ！
+              次の日
+              <span>(8:30am)</span>
+              に新しい単語を教えてくれるよ！
               <br />
               新しい単語を見つける旅に出よう！
             </p>
           </div>
-          <div className={style.contentWrapper}>
-            <form onSubmit={handleSubmit}>
-              <div className={style.selection}>
-                <label htmlFor="language">言語</label>
-                <select
-                  id="language"
-                  value={selectedLanguage}
-                  onChange={handleLanguageChange}
-                >
-                  <option value="" disabled>
-                    選択してください
-                  </option>
-                  <option value="english">English</option>
-                  <option value="日本語">日本語</option>
-                  <option value="한국어">한국어</option>
-                  <option value="中文">中文</option>
-                  <option value="Bahasa Indonesia">Bahasa Indonesia</option>
-                  <option value="español">español</option>
-                </select>
-              </div>
-              <div className={style.selection}>
-                <label htmlFor="genre">ジャンル</label>
-                <select
-                  id="genre"
-                  value={selectedGenre}
-                  onChange={handleGenreChange}
-                >
-                  <option value="" disabled>
-                    選択してください
-                  </option>
-                  <option value="日常会話">日常会話</option>
-                  <option value="フォーマール">フォーマール</option>
-                </select>
-              </div>
-              <div className={style.memo}>
-                <label htmlFor="memo">メモ</label>
-                <textarea
-                  id="memo"
-                  value={memo}
-                  onChange={handleMemoChange}
-                  placeholder="例：方言を教えてください"
-                />
-              </div>
-              <button type="submit">Submit</button>
-            </form>
-          </div>
+          <form onSubmit={handleSubmit} className={style.contentWrapper}>
+            <div className={style.selection}>
+              <label htmlFor="language">言語</label>
+              <select
+                id="language"
+                value={selectedLanguage}
+                onChange={handleLanguageChange}
+              >
+                <option value="" disabled className={style.disabled}>
+                  選択してください
+                </option>
+                <option value="english">English</option>
+                <option value="日本語">日本語</option>
+                <option value="한국어">한국어</option>
+                <option value="中文">中文</option>
+                <option value="Bahasa Indonesia">Bahasa Indonesia</option>
+                <option value="español">español</option>
+              </select>
+            </div>
+            <div className={style.selection}>
+              <label htmlFor="genre">ジャンル</label>
+              <select
+                id="genre"
+                value={selectedGenre}
+                onChange={handleGenreChange}
+              >
+                <option value="" disabled>
+                  選択してください
+                </option>
+                <option value="日常会話">日常会話</option>
+                <option value="フォーマール">フォーマール</option>
+              </select>
+            </div>
+            <div className={style.memo}>
+              <label htmlFor="memo">メモ</label>
+              <textarea
+                id="memo"
+                value={memo}
+                onChange={handleMemoChange}
+                placeholder="例：方言を教えてください"
+              />
+            </div>
+            <button type="submit">Submit</button>
+          </form>
         </div>
       </div>
     </Layout>
