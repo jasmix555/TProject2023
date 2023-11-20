@@ -6,9 +6,5 @@ export default function LayoutPage({
 }: {
   children: React.ReactNode;
 }) {
-  return (
-    <AuthGuard>
-      <Motion>{children}</Motion>;
-    </AuthGuard>
-  );
+  return <Motion>{children}</Motion>;
 }

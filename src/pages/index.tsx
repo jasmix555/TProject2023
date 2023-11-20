@@ -66,19 +66,17 @@ export default function Home() {
   }, [user, router]);
 
   return (
-    <>
+    <Layout>
       {user ? (
-        <Layout>
+        <>
           <Background />
           <UserName />
           <UserCharacter />
           <MenuBar contents={menus} />
-        </Layout>
+        </>
       ) : (
-        <Layout>
-          <Welcome />
-        </Layout>
+        <Welcome />
       )}
-    </>
+    </Layout>
   );
 }
