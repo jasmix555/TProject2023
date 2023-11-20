@@ -25,8 +25,14 @@ import style from "@/styles/createdGroups.module.scss";
 import BackBtn from "@/component/BackBtn";
 import LayoutPage from "@/component/LayoutPage";
 import Background from "@/component/Background";
-import { motion, useAnimation } from "framer-motion";
-import { useInView, InView } from "react-intersection-observer";
+import { motion } from "framer-motion";
+import { InView } from "react-intersection-observer";
+
+interface Group {
+  id: string;
+  title: string;
+  description: string; // Add the description property here
+}
 
 const menus = {
   icon: <RiMenu3Line />,
@@ -41,28 +47,8 @@ const menus = {
   ],
 };
 
-const variants = {
-  hidden: { opacity: 0, y: 100 },
-  show: {
-    opacity: 1,
-    transition: {
-      duration: 0.3,
-      delay: 0.1,
-    },
-    y: 0,
-  },
-  out: {
-    opacity: 0,
-    transition: {
-      duration: 0.3,
-      delay: 0.1,
-    },
-    y: 100,
-  },
-};
-
 const CreatedGroups = () => {
-  const [groups, setGroups] = useState<{ id: string; title: string }[]>([]);
+  const [groups, setGroups] = useState<Group[]>([]);
   const auth = getAuth();
   const router = useRouter();
   const { planet } = router.query;
@@ -77,14 +63,19 @@ const CreatedGroups = () => {
           const q = query(groupsCollection);
           const querySnapshot = await getDocs(q);
 
-          const groupData: { id: string; title: string; createdAt: number }[] =
-            [];
+          const groupData: {
+            id: string;
+            title: string;
+            createdAt: number;
+            description: string;
+          }[] = [];
 
           querySnapshot.forEach((doc) => {
             const data = doc.data();
             groupData.push({
-              id: doc.id,
+              id: data.id,
               title: data.title,
+              description: data.description,
               createdAt: data.createdAt, // Assuming you have a timestamp field
             });
           });
@@ -144,8 +135,12 @@ const CreatedGroups = () => {
                         <Link
                           className={style.contentImg}
                           href={{
-                            pathname: `/groupChat`,
-                            query: { groupId: group.id, title: group.title },
+                            pathname: `/groupDescription`,
+                            query: {
+                              groupId: group.id,
+                              title: group.title,
+                              description: group.description,
+                            },
                           }}
                         >
                           <div

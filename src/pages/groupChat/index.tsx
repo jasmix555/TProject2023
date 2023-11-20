@@ -28,6 +28,7 @@ import { format } from "date-fns"; // Import format function
 import { useRouter } from "next/router";
 import style from "@/styles/groupChat.module.scss";
 import LayoutPage from "@/component/LayoutPage";
+import { group } from "console";
 
 const menus = {
   icon: <RiMenu3Line />,
@@ -92,6 +93,7 @@ export const Page = () => {
   const router = useRouter();
   const { groupId, title } = router.query;
 
+  // Fetch user data
   useEffect(() => {
     const fetchUserData = async () => {
       try {
@@ -120,6 +122,7 @@ export const Page = () => {
     fetchUserData();
   }, [user]);
 
+  // Send message
   const handleSendMessage = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
@@ -127,6 +130,7 @@ export const Page = () => {
       const dbRef = ref(db, `groupChatMessages/${groupId}`);
       await push(dbRef, {
         message,
+        title,
         userId: user ? user.uid : "",
         userNickname: user ? nickname : "",
         timestamp: serverTimestamp(),
@@ -140,8 +144,10 @@ export const Page = () => {
     }
   };
 
+  // Listen for new messages
   const [chats, setChats] = useState<MessageProps[]>([]);
 
+  // Listen for new messages
   useEffect(() => {
     try {
       const db = getDatabase();
@@ -165,16 +171,19 @@ export const Page = () => {
     }
   }, [groupId]);
 
+  // Scroll to the bottom of the messages when a new message is added
   useEffect(() => {
     messagesElementRef.current?.scrollTo({
       top: messagesElementRef.current.scrollHeight,
     });
   }, [chats]);
 
+  // Toggle group chat
   const toggleGroupChat = () => {
     setShowGroupChat(!showGroupChat);
   };
 
+  // Calculate remaining time
   const expirationTime = "2023-11-08T12:00:00";
   const calculateRemainingTime = (expirationTimestamp: string) => {
     const currentTime = new Date().getTime();
@@ -200,7 +209,7 @@ export const Page = () => {
           <Header contents={menus} />
 
           <div className={style.title}>
-            <h1>{title}</h1>
+            <h1>{title || "ロード中..."}</h1>
             {
               <div className={style.remainingTime}>
                 <span>{remainingTime.hours}</span>
@@ -230,7 +239,7 @@ export const Page = () => {
                   <button className={style.closeBtn} onClick={toggleGroupChat}>
                     <FaXmark />
                   </button>
-                  <h1>{title}</h1>
+                  <h1>{title || "ロード中..."}</h1>
                 </div>
               </div>
               <div className={style.showMessage} ref={messagesElementRef}>
