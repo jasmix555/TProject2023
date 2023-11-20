@@ -26,7 +26,7 @@ const menus = {
   ],
 };
 
-export default function ChatPage() {
+export default function Learning() {
   const [selectedLanguage, setSelectedLanguage] = useState("");
   const [selectedGenre, setSelectedGenre] = useState("");
   const [memo, setMemo] = useState("");

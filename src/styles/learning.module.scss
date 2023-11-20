@@ -36,21 +36,30 @@
       padding: 1.4rem 2rem;
       display: flex;
       flex-direction: column;
-      border: solid 1px tomato;
-      .selection {
-        border: solid 1px tomato;
+      gap: 2rem;
+
+      label {
+        font-weight: 700;
+        font-size: 1.8rem;
+      }
+
+      .selection,
+      .memo {
+        border-bottom: solid 1px var(--white);
+        padding-bottom: 0.4rem;
       }
 
       select,
       textarea,
       input {
+        font-size: 1.8rem;
         display: flex;
-        border-bottom: solid 1px var(--white);
+        padding: 0.6rem 0;
         width: 100%;
-        padding: 0.8rem 0;
         resize: none;
         background: transparent;
         outline: none;
+        font-weight: 500;
       }
     }
   }
