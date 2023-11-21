@@ -1,9 +1,6 @@
-import { useState, useEffect } from "react";
 import {
   getFirestore,
-  Timestamp,
   collection,
-  addDoc,
   getDocs,
   query,
   where,

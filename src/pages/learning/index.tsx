@@ -6,6 +6,7 @@ import {
   FaBook,
   FaGear,
   FaUsers,
+  FaCaretDown,
 } from "react-icons/fa6";
 import { FaEdit } from "react-icons/fa";
 import Layout from "@/component/Layout";
@@ -41,6 +42,8 @@ export default function Learning() {
   const [selectedLanguage, setSelectedLanguage] = useState("");
   const [selectedGenre, setSelectedGenre] = useState("");
   const [memo, setMemo] = useState("");
+  const { user } = useAuthContext();
+  const router = useRouter();
 
   const handleLanguageChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setSelectedLanguage(e.target.value);
@@ -59,8 +62,7 @@ export default function Learning() {
     // Handle form submission, you can add your logic here
   };
 
-  const { user } = useAuthContext();
-  const router = useRouter();
+  const [isSelectFocused, setIsSelectFocused] = useState(false);
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -123,6 +125,7 @@ export default function Learning() {
                 <option value="español">español</option>
               </select>
             </div>
+
             <div className={style.selection}>
               <label htmlFor="genre">ジャンル</label>
               <select
