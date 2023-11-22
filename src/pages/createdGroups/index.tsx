@@ -127,7 +127,7 @@ const CreatedGroups = () => {
             <ul>
               {groups.map((group, idx) => {
                 return (
-                  <InView as="div" triggerOnce key={group.id}>
+                  <InView as="div" triggerOnce key={idx}>
                     {({ ref, inView }) => (
                       <motion.li
                         ref={ref}
@@ -135,7 +135,7 @@ const CreatedGroups = () => {
                         initial="hidden"
                         animate={inView ? "show" : "hidden"}
                         custom={idx} // Pass the index as a custom prop
-                        key={group.id}
+                        key={`${group.id} `}
                       >
                         <div className={style.contentWrapper}>
                           <Link
