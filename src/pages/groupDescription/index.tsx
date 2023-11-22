@@ -4,9 +4,10 @@ import {
   getDocs,
   query,
   where,
-} from "firebase/firestore";
+} from "firebase/firestore/lite";
 import { getAuth } from "firebase/auth";
 import { useRouter } from "next/router";
+import { useState } from "react"; // Import useState
 import style from "@/styles/createGroup.module.scss";
 import LayoutPage from "@/component/LayoutPage";
 import BackBtn from "@/component/BackBtn";
@@ -17,26 +18,33 @@ export default function GroupDescription() {
   const user = auth.currentUser;
   const router = useRouter();
   const { title, description } = router.query;
+  const { planet } = router.query;
+
+  const [descriptionValue, setDescriptionValue] = useState(description || ""); // Use state for textarea
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    console.log("Form submitted!");
 
     if (user) {
       const db = getFirestore();
-      const groupsRef = collection(db, "groups");
+      const planetGroupsRef = collection(
+        db,
+        "planets",
+        planet as string, // Ensure planet is a string
+        "groups"
+      );
 
       try {
-        // Check if the group already exists with the given title and creatorId
         const existingGroupQuery = await getDocs(
           query(
-            groupsRef,
+            planetGroupsRef,
             where("title", "==", title),
             where("creatorId", "==", user.uid)
           )
         );
 
         if (existingGroupQuery.docs.length > 0) {
-          // Group already exists, navigate to the group chat page
           const existingGroupId = existingGroupQuery.docs[0].id;
           router.push({
             pathname: `/groupChat`,
@@ -63,14 +71,15 @@ export default function GroupDescription() {
             disabled
             className={style.input + " " + style.title}
             type="text"
-            value={title}
+            defaultValue={title}
           />
         </div>
         <div className={style.contentWrap}>
           <p>どんな小惑星か詳しく教えてね！</p>
           <textarea
             className={style.input + " " + style.textarea}
-            value={description}
+            value={descriptionValue}
+            onChange={(e) => setDescriptionValue(e.target.value)} // Add onChange for textarea
           />
         </div>
         <div className={style.buttons}>
@@ -80,7 +89,7 @@ export default function GroupDescription() {
           <button type="submit" className={style.create}>
             着陸する！
           </button>
-          <BackBtn link={"/createdGroups"} />
+          <BackBtn link={`/createdGroups?planet=${planet}`} />
         </div>
       </form>
     </LayoutPage>

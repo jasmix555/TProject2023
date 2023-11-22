@@ -67,16 +67,18 @@ export default function Home() {
 
   return (
     <Layout>
-      {user ? (
-        <>
-          <Background />
-          <UserName />
-          <UserCharacter />
-          <MenuBar contents={menus} />
-        </>
-      ) : (
-        <Welcome />
-      )}
+      <AuthGuard>
+        {user ? (
+          <>
+            <Background />
+            <UserName />
+            <UserCharacter />
+            <MenuBar contents={menus} />
+          </>
+        ) : (
+          <Welcome />
+        )}
+      </AuthGuard>
     </Layout>
   );
 }

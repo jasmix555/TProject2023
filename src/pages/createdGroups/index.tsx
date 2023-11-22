@@ -54,11 +54,17 @@ const CreatedGroups = () => {
   const { planet } = router.query;
 
   useEffect(() => {
-    if (auth.currentUser) {
+    if (auth.currentUser && planet) {
       const db: Firestore = getFirestore();
       const fetchCreatedGroups = async () => {
         try {
-          const groupsCollection = collection(db, "groups");
+          // Update the collection path to fetch groups specific to the planet
+          const groupsCollection = collection(
+            db,
+            "planets",
+            planet as string,
+            "groups"
+          );
           const user = auth.currentUser as User;
           const q = query(groupsCollection);
           const querySnapshot = await getDocs(q);
@@ -76,7 +82,7 @@ const CreatedGroups = () => {
               id: data.id,
               title: data.title,
               description: data.description,
-              createdAt: data.createdAt, // Assuming you have a timestamp field
+              createdAt: data.createdAt,
             });
           });
 
@@ -93,7 +99,7 @@ const CreatedGroups = () => {
 
       fetchCreatedGroups();
     }
-  }, [auth]);
+  }, [auth, planet]);
 
   const variants = {
     hidden: { opacity: 0, y: 100 },
@@ -146,6 +152,7 @@ const CreatedGroups = () => {
                                 groupId: group.id,
                                 title: group.title,
                                 description: group.description,
+                                planet: planet,
                               },
                             }}
                           >
@@ -179,7 +186,14 @@ const CreatedGroups = () => {
             </ul>
           )}
           <div className={style.createGroup}>
-            <Link href={"/createGroup"}>
+            <Link
+              href={{
+                pathname: `/createGroup`,
+                query: {
+                  planet: planet,
+                },
+              }}
+            >
               <button className={style.create}>
                 <FaPlus />
               </button>

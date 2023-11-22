@@ -4,6 +4,7 @@ import Link from "next/link";
 
 type BackBtnProps = {
   link: string;
+  planet?: string; // Add planet prop
 };
 
 export default function BackBtn({ link }: BackBtnProps) {

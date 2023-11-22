@@ -19,6 +19,8 @@ export default function CreateGroup() {
   const user = auth.currentUser;
   const router = useRouter(); // Initialize the useRouter hook
 
+  const { planet } = router.query; // Extract planet information from the query
+
   const isSubmitDisabled = !title || title.length < 5 || !description;
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -26,7 +28,12 @@ export default function CreateGroup() {
 
     if (user) {
       const db = getFirestore();
-      const groupsRef = collection(db, "groups");
+      const planetGroupsRef = collection(
+        db,
+        "planets",
+        planet as string, // Ensure planet is a string
+        "groups"
+      );
 
       const hours = parseInt(expirationTime, 10);
       const expirationTimestamp = Timestamp.fromMillis(
@@ -34,7 +41,7 @@ export default function CreateGroup() {
       );
 
       try {
-        const newGroupRef = await addDoc(groupsRef, {
+        const newGroupRef = await addDoc(planetGroupsRef, {
           creatorId: user.uid,
           title,
           description,
@@ -45,7 +52,7 @@ export default function CreateGroup() {
         const groupId = newGroupRef.id;
 
         // Navigate to the group chat page using the generated group ID
-        router.push(`/createdGroups`);
+        router.push(`/createdGroups?planet=${planet}`);
       } catch (error) {
         console.error("Error creating group:", error);
       }
@@ -85,7 +92,7 @@ export default function CreateGroup() {
           >
             惑星をつくる
           </button>
-          <BackBtn link={"/createdGroups"} />
+          <BackBtn link={`/createdGroups?planet=${planet}`} />
         </div>
       </form>
     </LayoutPage>
