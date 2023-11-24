@@ -176,6 +176,7 @@ const CreatedGroups = () => {
                             <span className={style.marqueeTwo}>
                               &nbsp;{group.title}
                             </span>
+                            {/* {group.title} */}
                           </p>
                         </div>
                       </motion.li>

@@ -74,15 +74,23 @@
             font-size: 1.8rem;
             width: 10rem;
             white-space: nowrap;
-            text-transform: uppercase;
+            text-overflow: ellipsis;
+
+            // display: -webkit-box;
+            // -webkit-box-orient: vertical;
+            // overflow: hidden;
+            // -webkit-line-clamp: 2;
+            // font-size: 1.8rem;
+            // width: 10rem;
+
             .marqueeOne {
               display: inline-block;
-              animation: scrolling-left1 4s linear infinite;
+              animation: scrolling-left1 6s linear infinite;
             }
             .marqueeTwo {
               display: inline-block;
-              animation: scrolling-left2 4s linear infinite;
-              animation-delay: 2s;
+              animation: scrolling-left2 6s linear infinite;
+              animation-delay: 3s;
             }
           }
         }
