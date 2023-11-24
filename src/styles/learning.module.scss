@@ -53,6 +53,10 @@
       }
 
       button[type="submit"] {
+        position: absolute;
+        top: 36rem;
+        left: 50%;
+        transform: translateX(-50%);
         margin: 0 auto;
         @include Box.btnStyle($w: 20rem, $fontS: 2rem);
       }

@@ -1,4 +1,4 @@
-import { useToast } from "@chakra-ui/react";
+// Import necessary modules and styles
 import { FormEvent, useState, useEffect } from "react";
 import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
@@ -9,6 +9,7 @@ import { getDoc, doc, getFirestore } from "firebase/firestore/lite";
 import LayoutPage from "@/component/LayoutPage";
 import BackBtn from "@/component/BackBtn";
 import Background from "@/component/Background";
+import Toast, { ToastProps } from "@/component/Toast";
 
 export default function Signin() {
   const [email, setEmail] = useState<string>("");
@@ -16,28 +17,26 @@ export default function Signin() {
   const [show, setShow] = useState(false);
   const handleClick = () => setShow(!show);
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const toast = useToast();
   const { push } = useRouter();
   const auth = getAuth();
+
+  // Toast state and function
+  const [toast, setToast] = useState<ToastProps>({
+    message: "",
+    status: "info",
+    onClose: () => {},
+  });
 
   // Check if the user's profile setup is complete
   const checkProfileSetup = async () => {
     const user = auth.currentUser;
     if (user) {
       const db = getFirestore();
-
-      // Replace 'users' with the actual collection name where user data is stored
       const userDocRef = doc(db, "users", user.uid);
 
       try {
         const userDocSnapshot = await getDoc(userDocRef);
-        if (userDocSnapshot.exists()) {
-          // Profile setup is complete, redirect to the index page
-          push("/");
-        } else {
-          // Profile setup is not complete, send them to the profile setup page
-          push("/charSelect");
-        }
+        userDocSnapshot.exists() ? push("/") : push("/charSelect");
       } catch (error) {
         console.error("Error checking profile setup:", error);
       }
@@ -49,27 +48,34 @@ export default function Signin() {
     checkProfileSetup();
   }, []);
 
+  // Function to show toast messages
+  const showToast = (
+    message: string,
+    status: "success" | "error" | "warning" | "info"
+  ) => {
+    setToast({
+      message,
+      status,
+      onClose: () =>
+        setToast({ message: "", status: "info", onClose: () => {} }),
+    });
+  };
+
+  // Handle form submission
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
-    setIsLoading(true);
     e.preventDefault();
+    setIsLoading(true);
+
     try {
       await signInWithEmailAndPassword(auth, email, password);
       setEmail("");
       setPassword("");
-      toast({
-        title: "ログインしました。",
-        status: "success",
-        position: "top",
-      });
-      checkProfileSetup(); // Check the profile setup after a successful login
+      showToast("ログインしました。", "success");
+      checkProfileSetup();
     } catch (e) {
-      toast({
-        title: "エラーが発生しました。",
-        status: "error",
-        position: "top",
-      });
+      showToast("ログインに失敗しました。", "error");
       if (e instanceof FirebaseError) {
-        console.log(e);
+        console.error("Firebase Error:", e.message);
       }
     } finally {
       setIsLoading(false);
@@ -86,12 +92,10 @@ export default function Signin() {
               <p>E-Mail</p>
               <input
                 className={style.input}
-                type={"email"}
-                name={"email"}
+                type="email"
+                name="email"
                 value={email}
-                onChange={(e) => {
-                  setEmail(e.target.value);
-                }}
+                onChange={(e) => setEmail(e.target.value)}
               />
             </div>
             <div className={style.inputWrap}>
@@ -100,26 +104,28 @@ export default function Signin() {
                 <input
                   className={style.input}
                   type={show ? "text" : "password"}
-                  name={"password"}
+                  name="password"
                   value={password}
-                  onChange={(e) => {
-                    setPassword(e.target.value);
-                  }}
+                  onChange={(e) => setPassword(e.target.value)}
                 />
-                <i onClick={handleClick}>
+                <i
+                  onClick={handleClick}
+                  title={show ? "Hide Password" : "Show Password"}
+                >
                   {show ? <AiFillEyeInvisible /> : <AiFillEye />}
                 </i>
               </div>
             </div>
             <div className={style.submitWrap}>
-              <button type="submit">
-                {isLoading ? "ログイン中" : "ログイン"}
+              <button type="submit" disabled={isLoading}>
+                {isLoading ? "ログイン中..." : "ログイン"}
               </button>
-              <BackBtn link={"/login"} />
+              <BackBtn link="/login" />
             </div>
           </div>
         </form>
       </div>
+      {toast.message && <Toast {...toast} />}
     </LayoutPage>
   );
 }

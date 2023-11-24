@@ -93,6 +93,7 @@ export const Page = () => {
   const [showGroupChat, setShowGroupChat] = useState(false);
   const router = useRouter();
   const { groupId, title } = router.query;
+  const [groupInfo, setGroupInfo] = useState({ title: "", expirationTime: "" });
 
   // Fetch user data
   useEffect(() => {

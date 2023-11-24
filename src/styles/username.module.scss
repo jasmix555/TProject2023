@@ -10,11 +10,11 @@
   box-shadow: var(--glass-effect);
   backdrop-filter: var(--glass-filter);
   padding: 0.6rem 1rem;
-  font-weight: 600;
-  font-size: 1.4rem;
 
   .languages {
     h1 {
+      font-weight: 600;
+      font-size: 1.4rem;
       text-overflow: ellipsis;
       overflow: hidden;
       white-space: nowrap;

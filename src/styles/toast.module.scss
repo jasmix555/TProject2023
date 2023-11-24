@@ -1,0 +1,16 @@
+.toast {
+  width: 70%;
+  height: 6rem;
+  z-index: 9999;
+  position: fixed;
+  top: 2rem;
+  left: 50%;
+  transform: translateX(-50%) !important;
+  border-radius: 1rem;
+  background: #333;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  font-weight: 600;
+}

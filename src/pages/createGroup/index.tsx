@@ -46,13 +46,14 @@ export default function CreateGroup() {
           title,
           description,
           expirationTime: expirationTimestamp,
+          createdAt: Timestamp.now(),
         });
 
         // After successfully creating the group, get the generated key
         const groupId = newGroupRef.id;
 
         // Navigate to the group chat page using the generated group ID
-        router.push(`/createdGroups?planet=${planet}`);
+        router.push(`/groupChat?groupId=${groupId}`);
       } catch (error) {
         console.error("Error creating group:", error);
       }

@@ -50,12 +50,15 @@
       background: var(--footer-color);
 
       .groupTitle {
-        font-size: 2rem;
-        font-weight: 700;
         color: var(--white);
         padding: 1.3rem 2rem;
         margin: 1rem 0;
         text-align: center;
+
+        h1 {
+          font-weight: 700;
+          font-size: 2rem;
+        }
 
         .closeBtn {
           position: absolute;
@@ -104,15 +107,7 @@
         }
 
         .avatarWrap {
-          font-size: 1.2rem;
-          height: 7rem;
-          width: 7rem;
-          margin-right: 0.4rem;
-          display: flex;
-          gap: 0.4rem;
-          flex-direction: column;
-          justify-content: center;
-          align-items: center;
+          margin-right: 1rem;
 
           .avatar {
             width: 6rem;
@@ -121,12 +116,13 @@
             margin: 0 auto;
             background: url("/25.svg") no-repeat center center;
             overflow: hidden;
+
             img {
-              width: 10rem;
-              height: 10rem;
+              width: 100%;
+              height: 100%;
               object-fit: cover;
               position: relative;
-              bottom: 1.2rem;
+              top: 0.4rem;
             }
           }
         }

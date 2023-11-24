@@ -150,7 +150,7 @@ export default function Learning() {
                 placeholder="例：方言を教えてください"
               />
             </div>
-            <button type="submit">Submit</button>
+            <button type="submit">学びに行く</button>
           </form>
         </div>
       </div>

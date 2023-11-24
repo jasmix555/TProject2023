@@ -1,8 +1,12 @@
 @use "Box.module" as Box;
 
 .header {
-  font-size: 3rem;
-  font-weight: 500;
+  text-align: center;
+
+  h1 {
+    font-size: 3rem;
+    font-weight: 500;
+  }
 }
 
 .carouselWrapper {
@@ -14,7 +18,6 @@
 .characterWrap {
   display: flex;
   position: absolute;
-  border: solid 1px tomato;
   align-items: center;
   justify-content: center;
   width: 100%;

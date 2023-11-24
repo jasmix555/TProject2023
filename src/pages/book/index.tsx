@@ -11,6 +11,7 @@ import {
 } from "react-icons/fa6";
 import { FaEdit } from "react-icons/fa";
 import Calendar from "@/component/Calendar";
+import Background from "@/component/Background";
 
 const menus = {
   icon: <RiMenu3Line />,
@@ -28,9 +29,8 @@ function Book() {
   return (
     <Layout>
       <Header contents={menus} />
-      <div>
-        <Calendar />
-      </div>
+      <Background />
+      <Calendar />
     </Layout>
   );
 }
