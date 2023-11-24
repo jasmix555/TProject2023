@@ -10,6 +10,7 @@ import {
   FaUsers,
 } from "react-icons/fa6";
 import { FaEdit } from "react-icons/fa";
+import Calendar from "@/component/Calendar";
 
 const menus = {
   icon: <RiMenu3Line />,
@@ -27,7 +28,9 @@ function Book() {
   return (
     <Layout>
       <Header contents={menus} />
-      <div></div>
+      <div>
+        <Calendar />
+      </div>
     </Layout>
   );
 }

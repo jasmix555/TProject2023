@@ -29,7 +29,6 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       <div className={style.footerWrap}>
         {footerArray.map((e, idx) => {
           if (pathStat == e.path) {
-            // console.log("success");
             return (
               <div className={style.footerItem} key={idx}>
                 <button className={style.active + " " + style.border}>
@@ -40,7 +39,6 @@ export default function Layout({ children }: { children: React.ReactNode }) {
               </div>
             );
           } else {
-            // console.log("fail");
             return (
               <div className={style.footerItem} key={idx}>
                 <button>

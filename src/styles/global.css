@@ -45,6 +45,11 @@ body {
   color: var(--white) !important;
 }
 
+a {
+  color: var(--white);
+  text-decoration: none;
+}
+
 *,
 ::before,
 ::after {
@@ -113,7 +118,6 @@ template {
 }
 
 abbr[title] {
-  border-bottom: 1px dotted; /* Add a bordered underline effect in all browsers */
   text-decoration: none; /* Remove text decoration in Firefox 40+ */
 }
 

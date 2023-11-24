@@ -36,15 +36,13 @@ export default function UserName() {
   }, [user, db]);
 
   return (
-    <>
-      <div className={style.wrapper}>
-        <div>
-          <h1>{nickname ? `${nickname}` : "Username Not Found"}</h1>
-        </div>
-        <div className={style.languages}>
-          <h1>勉強中： {language ? `${language}` : " "}</h1>
-        </div>
+    <div className={style.wrapper}>
+      <div>
+        <h1>{nickname ? `${nickname}` : "Username Not Found"}</h1>
       </div>
-    </>
+      <div className={style.languages}>
+        <h1>勉強中： {language ? `${language}` : " "}</h1>
+      </div>
+    </div>
   );
 }
