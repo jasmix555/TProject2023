@@ -39,8 +39,8 @@ export default function GroupDescription() {
         const existingGroupQuery = await getDocs(
           query(
             planetGroupsRef,
-            where("title", "==", title),
-            where("creatorId", "==", user.uid)
+            where("title", "==", title)
+            // where("creatorId", "==", user.uid)
           )
         );
 
