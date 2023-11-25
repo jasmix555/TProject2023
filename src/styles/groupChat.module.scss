@@ -4,20 +4,33 @@
   height: 100vh;
 }
 
+.number {
+  font-family: "Play", sans-serif;
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--white);
+  text-align: center;
+  margin: 0;
+}
+
 .title {
-  font-size: 1.6rem;
   text-align: center;
   background: var(--glass-background);
   box-shadow: var(--glass-effect);
   backdrop-filter: var(--glass-filter);
   border: solid 1px #fff;
-  padding: 0.4rem;
+  padding: 0.4rem 0.8rem;
   border-radius: 1rem;
   position: relative;
   height: 6rem;
   top: 2rem;
   width: 16rem;
   margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
   h1 {
     margin: 0 auto;
     width: 70%;

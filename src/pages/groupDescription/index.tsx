@@ -1,13 +1,7 @@
-import {
-  getFirestore,
-  collection,
-  getDocs,
-  query,
-  where,
-} from "firebase/firestore/lite";
+import { getFirestore, collection, doc, getDoc } from "firebase/firestore/lite";
 import { getAuth } from "firebase/auth";
 import { useRouter } from "next/router";
-import { useState } from "react"; // Import useState
+import { useState, useEffect } from "react";
 import style from "@/styles/createGroup.module.scss";
 import LayoutPage from "@/component/LayoutPage";
 import BackBtn from "@/component/BackBtn";
@@ -17,51 +11,64 @@ export default function GroupDescription() {
   const auth = getAuth();
   const user = auth.currentUser;
   const router = useRouter();
-  const { title, description } = router.query;
-  const { planet } = router.query;
+  const { groupId, planet } = router.query;
 
-  const [descriptionValue, setDescriptionValue] = useState(description || ""); // Use state for textarea
+  const [group, setGroup] = useState({
+    id: "",
+    title: "",
+    description: "",
+  });
+
+  const [descriptionValue, setDescriptionValue] = useState(
+    group.description || ""
+  );
+
+  useEffect(() => {
+    const fetchGroupInfo = async () => {
+      if (user && groupId) {
+        try {
+          const db = getFirestore();
+          // Directly reference the group document based on the provided Firestore structure
+          const groupDocRef = doc(
+            collection(db, "planets", planet as string, "groups"),
+            groupId as string
+          );
+
+          const groupDoc = await getDoc(groupDocRef);
+
+          if (groupDoc.exists()) {
+            const groupData = groupDoc.data();
+            setGroup({
+              id: groupDoc.id,
+              title: groupData.title,
+              description: groupData.description,
+            });
+
+            setDescriptionValue(groupData.description);
+          } else {
+            console.log("Group not found.");
+          }
+        } catch (error) {
+          console.error("Error fetching group information:", error);
+        }
+      }
+    };
+
+    fetchGroupInfo();
+  }, [user, groupId, planet]);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     console.log("Form submitted!");
 
-    if (user) {
-      const db = getFirestore();
-      const planetGroupsRef = collection(
-        db,
-        "planets",
-        planet as string, // Ensure planet is a string
-        "groups"
-      );
-
-      try {
-        const existingGroupQuery = await getDocs(
-          query(
-            planetGroupsRef,
-            where("title", "==", title)
-            // where("creatorId", "==", user.uid)
-          )
-        );
-
-        if (existingGroupQuery.docs.length > 0) {
-          const existingGroupId = existingGroupQuery.docs[0].id;
-          router.push({
-            pathname: `/groupChat`,
-            query: {
-              title,
-              description,
-              groupId: existingGroupId,
-            },
-          });
-        } else {
-          console.log("Group not found for the user.");
-          // You might want to provide a user-friendly message here.
-        }
-      } catch (error) {
-        console.error("Error creating or navigating to the group:", error);
-        // You might want to log more details or provide a user-friendly error message.
-      }
+    if (user && groupId && group) {
+      router.push({
+        pathname: `/groupChat`,
+        query: {
+          planet,
+          groupId,
+        },
+      });
     }
   };
 
@@ -75,7 +82,7 @@ export default function GroupDescription() {
             disabled
             className={style.input + " " + style.title}
             type="text"
-            defaultValue={title}
+            defaultValue={group.title}
           />
         </div>
         <div className={style.contentWrap}>
@@ -83,7 +90,8 @@ export default function GroupDescription() {
           <textarea
             className={style.input + " " + style.textarea}
             value={descriptionValue}
-            onChange={(e) => setDescriptionValue(e.target.value)} // Add onChange for textarea
+            disabled
+            onChange={(e) => setDescriptionValue(e.target.value)}
           />
         </div>
         <div className={style.buttons}>

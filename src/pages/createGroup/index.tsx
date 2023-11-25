@@ -14,12 +14,12 @@ import BackBtn from "@/component/BackBtn";
 export default function CreateGroup() {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
-  const [expirationTime, setExpirationTime] = useState("2"); // Default to 2 hours
+  const [expirationTime, setExpirationTime] = useState("2");
   const auth = getAuth();
   const user = auth.currentUser;
-  const router = useRouter(); // Initialize the useRouter hook
+  const router = useRouter();
 
-  const { planet } = router.query; // Extract planet information from the query
+  const { planet } = router.query;
 
   const isSubmitDisabled = !title || title.length < 5 || !description;
 
@@ -31,7 +31,7 @@ export default function CreateGroup() {
       const planetGroupsRef = collection(
         db,
         "planets",
-        planet as string, // Ensure planet is a string
+        planet as string,
         "groups"
       );
 
@@ -49,11 +49,16 @@ export default function CreateGroup() {
           createdAt: Timestamp.now(),
         });
 
-        // After successfully creating the group, get the generated key
         const groupId = newGroupRef.id;
 
-        // Navigate to the group chat page using the generated group ID
-        router.push(`/groupChat?groupId=${groupId}`);
+        // Navigate to the group description page using the generated groupId
+        router.push({
+          pathname: `/groupDescription`,
+          query: {
+            groupId,
+            planet,
+          },
+        });
       } catch (error) {
         console.error("Error creating group:", error);
       }

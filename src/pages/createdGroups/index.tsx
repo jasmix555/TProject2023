@@ -31,7 +31,7 @@ import { InView } from "react-intersection-observer";
 interface Group {
   id: string;
   title: string;
-  description: string; // Add the description property here
+  description: string;
 }
 
 const menus = {
@@ -58,7 +58,6 @@ const CreatedGroups = () => {
       const db: Firestore = getFirestore();
       const fetchCreatedGroups = async () => {
         try {
-          // Update the collection path to fetch groups specific to the planet
           const groupsCollection = collection(
             db,
             "planets",
@@ -79,14 +78,13 @@ const CreatedGroups = () => {
           querySnapshot.forEach((doc) => {
             const data = doc.data();
             groupData.push({
-              id: data.id,
+              id: doc.id,
               title: data.title,
               description: data.description,
               createdAt: data.createdAt,
             });
           });
 
-          // Sort groups by createdAt in descending order
           const sortedGroups = groupData.sort(
             (a, b) => b.createdAt - a.createdAt
           );
@@ -108,7 +106,7 @@ const CreatedGroups = () => {
       y: 0,
       transition: {
         duration: 0.3,
-        delay: 0.1 + custom * 0.02, // Add a delay based on the index
+        delay: 0.1 + custom * 0.02,
       },
     }),
   };
@@ -140,8 +138,8 @@ const CreatedGroups = () => {
                         variants={variants}
                         initial="hidden"
                         animate={inView ? "show" : "hidden"}
-                        custom={idx} // Pass the index as a custom prop
-                        key={`${group.id} `}
+                        custom={idx}
+                        key={group.id}
                       >
                         <div className={style.contentWrapper}>
                           <Link
@@ -150,8 +148,6 @@ const CreatedGroups = () => {
                               pathname: `/groupDescription`,
                               query: {
                                 groupId: group.id,
-                                title: group.title,
-                                description: group.description,
                                 planet: planet,
                               },
                             }}
@@ -165,7 +161,7 @@ const CreatedGroups = () => {
                               style={{
                                 backgroundImage: `url(../planets/${
                                   Math.floor(Math.random() * 6) + 1
-                                }.svg`,
+                                }.svg)`,
                               }}
                             ></div>
                           </Link>
@@ -176,7 +172,6 @@ const CreatedGroups = () => {
                             <span className={style.marqueeTwo}>
                               &nbsp;{group.title}
                             </span>
-                            {/* {group.title} */}
                           </p>
                         </div>
                       </motion.li>

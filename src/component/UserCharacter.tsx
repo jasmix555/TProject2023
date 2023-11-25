@@ -1,4 +1,4 @@
-// components/UserCharacterPage.js
+// UserCharacter.tsx
 import { useEffect, useState } from "react";
 import { useToast } from "@chakra-ui/react";
 import { getAuth, User } from "firebase/auth";
@@ -9,6 +9,7 @@ import Link from "next/link";
 
 export default function UserCharacter() {
   const [character, setCharacter] = useState(null);
+  const [loading, setLoading] = useState(true);
   const toast = useToast();
 
   useEffect(() => {
@@ -27,9 +28,9 @@ export default function UserCharacter() {
             setCharacter(userData.character);
           } else {
             toast({
-              title: "Error",
-              description: "User character data not found.",
-              status: "error",
+              title: "Info",
+              description: "You haven't selected a character yet.",
+              status: "info",
               position: "top",
             });
           }
@@ -42,11 +43,17 @@ export default function UserCharacter() {
           status: "error",
           position: "top",
         });
+      } finally {
+        setLoading(false);
       }
     };
 
     fetchUserData();
   }, [toast]);
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <div className={style.characterWrap}>

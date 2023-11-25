@@ -8,7 +8,13 @@ import {
 } from "@firebase/database";
 import { FirebaseError } from "@firebase/util";
 import { AuthGuard } from "@/feature/auth/component/AuthGuard/AuthGuard";
-import { Firestore, doc, getDoc, getFirestore } from "firebase/firestore";
+import {
+  Firestore,
+  doc,
+  getDoc,
+  getFirestore,
+  collection,
+} from "firebase/firestore";
 import { getAuth, User } from "firebase/auth";
 import Header from "@/component/Header";
 import { RiMenu3Line } from "react-icons/ri";
@@ -24,11 +30,10 @@ import {
 } from "react-icons/fa6";
 import { FaEdit } from "react-icons/fa";
 import { BsSend } from "react-icons/bs";
-import { format } from "date-fns"; // Import format function
+import { format, differenceInSeconds, addHours } from "date-fns";
 import { useRouter } from "next/router";
 import style from "@/styles/groupChat.module.scss";
 import LayoutPage from "@/component/LayoutPage";
-import { group } from "console";
 import Image from "next/image";
 
 const menus = {
@@ -48,7 +53,7 @@ type MessageProps = {
   message: string;
   userId: string;
   userNickname: string;
-  timestamp: string;
+  timestamp: number;
   character: number; // Add character field to MessageProps
 };
 
@@ -58,7 +63,7 @@ const Message = ({
   timestamp,
   character,
 }: MessageProps) => {
-  const formattedTimestamp = format(new Date(parseInt(timestamp)), "HH:mm"); // Format the timestamp
+  const formattedTimestamp = format(new Date(timestamp), "HH:mm");
 
   return (
     <div className={style.messageWrap}>
@@ -92,32 +97,62 @@ export const Page = () => {
   const user: User | null = auth.currentUser;
   const [showGroupChat, setShowGroupChat] = useState(false);
   const router = useRouter();
-  const { groupId, title } = router.query;
+  const { groupId, planet } = router.query; // No need to extract 'title' from the router query
   const [groupInfo, setGroupInfo] = useState({ title: "", expirationTime: "" });
 
-  // Fetch user data
+  // Fetch group information
+  useEffect(() => {
+    const fetchGroupInfo = async () => {
+      try {
+        console.log("Fetching group information for groupId:", groupId);
+        const db = getFirestore();
+        const groupDocRef = doc(
+          collection(db, "planets", planet as string, "groups"),
+          groupId as string
+        );
+        const groupDocSnapshot = await getDoc(groupDocRef);
+        console.log("Group doc snapshot:", groupDocSnapshot);
+
+        if (groupDocSnapshot.exists()) {
+          const groupData = groupDocSnapshot.data();
+          // console.log("Group data:", groupData);
+
+          // Format the expiration time
+          const expirationTime = groupData.expirationTime?.toDate();
+          const formattedExpirationTime = expirationTime
+            ? format(expirationTime, "yyyy-MM-dd HH:mm:ss")
+            : "";
+
+          setGroupInfo({
+            title: groupData.title,
+            expirationTime: formattedExpirationTime,
+          });
+        } else {
+          console.log("Group not found.");
+        }
+      } catch (e) {
+        console.error("Error fetching group information:", e);
+      }
+    };
+
+    fetchGroupInfo();
+  }, [groupId]);
+
+  // Fetch user nickname and character
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        if (user) {
-          const db: Firestore = getFirestore();
-          const userDocRef = doc(db, "users", user.uid);
-          const userDocSnapshot = await getDoc(userDocRef);
+        const db = getFirestore();
+        const usersCollection = collection(db, "users");
+        const userDocRef = doc(usersCollection, user?.uid);
+        const userData = (await getDoc(userDocRef)).data();
 
-          if (userDocSnapshot.exists()) {
-            const userData = userDocSnapshot.data();
-
-            if (userData && userData.nickname) {
-              setNickname(userData.nickname);
-            }
-
-            if (userData && userData.character) {
-              setUserCharacter(userData.character);
-            }
-          }
+        if (userData) {
+          setNickname(userData.nickname);
+          setUserCharacter(userData.character);
         }
       } catch (error) {
-        console.error("Error fetching user data:", error);
+        console.error(error);
       }
     };
 
@@ -132,7 +167,6 @@ export const Page = () => {
       const dbRef = ref(db, `groupChatMessages/${groupId}`);
       await push(dbRef, {
         message,
-        title,
         userId: user ? user.uid : "",
         userNickname: user ? nickname : "",
         timestamp: serverTimestamp(),
@@ -158,8 +192,9 @@ export const Page = () => {
         const message = String(snapshot.val()["message"] ?? "");
         const userId = String(snapshot.val()["userId"] ?? "");
         const userNickname = String(snapshot.val()["userNickname"] ?? "");
-        const timestamp = String(snapshot.val()["timestamp"] ?? "");
-        const character = Number(snapshot.val()["character"] ?? 1); // Default to 1 if character is not present
+        const timestamp = Number(snapshot.val()["timestamp"] ?? 0);
+        const character = Number(snapshot.val()["character"] ?? 1);
+
         setChats((prev) => [
           ...prev,
           { message, userId, userNickname, timestamp, character },
@@ -185,24 +220,32 @@ export const Page = () => {
     setShowGroupChat(!showGroupChat);
   };
 
-  // Calculate remaining time
-  const expirationTime = "2023-11-08T12:00:00";
-  const calculateRemainingTime = (expirationTimestamp: string) => {
-    const currentTime = new Date().getTime();
-    const expirationTime = new Date(expirationTimestamp).getTime();
-    const remainingMilliseconds = expirationTime - currentTime;
-    if (remainingMilliseconds <= 0) {
-      return { hours: 0, minutes: 0 };
-    }
-    const remainingHours = Math.floor(remainingMilliseconds / (1000 * 60 * 60));
-    const remainingMinutes = Math.floor(
-      (remainingMilliseconds % (1000 * 60 * 60)) / (1000 * 60)
-    );
-    return { hours: remainingHours, minutes: remainingMinutes };
-  };
-  const remainingTime = expirationTime
-    ? calculateRemainingTime(expirationTime)
-    : { hours: 0, minutes: 0 };
+  const [countdown, setCountdown] = useState<number | null>(null);
+
+  useEffect(() => {
+    const calculateCountdown = () => {
+      if (groupInfo.expirationTime) {
+        const now = new Date();
+        const sixHoursLater = addHours(new Date(groupInfo.expirationTime), 6);
+
+        const secondsRemaining = differenceInSeconds(sixHoursLater, now);
+
+        if (secondsRemaining > 0) {
+          setCountdown(secondsRemaining);
+        } else {
+          // The countdown has reached zero
+          setCountdown(null);
+        }
+      }
+    };
+
+    // Calculate initially and then set up interval for continuous updates
+    calculateCountdown();
+
+    const intervalId = setInterval(calculateCountdown, 1000); // Update every second
+
+    return () => clearInterval(intervalId); // Cleanup on component unmount
+  }, [groupInfo.expirationTime]);
 
   return (
     <LayoutPage>
@@ -211,18 +254,15 @@ export const Page = () => {
           <Header contents={menus} />
 
           <div className={style.title}>
-            <h1>{title || "ロード中..."}</h1>
-            {
-              <div className={style.remainingTime}>
-                <span>{remainingTime.hours}</span>
-                <span>時間</span>
-                <span>{remainingTime.minutes}</span>
-                <span>分</span>
-              </div>
-            }
+            <h1>{groupInfo.title || "ロード中..."}</h1>
+            {countdown !== null ? (
+              <p className={style.number}>
+                {format(new Date(countdown * 1000), "hh:mm:ss")}
+              </p>
+            ) : (
+              <p className={style.number}>Time is up!</p>
+            )}
           </div>
-
-          <div className={style.remainingTime}></div>
 
           <div>
             <button className={style.groupChatButton} onClick={toggleGroupChat}>
@@ -241,7 +281,7 @@ export const Page = () => {
                   <button className={style.closeBtn} onClick={toggleGroupChat}>
                     <FaXmark />
                   </button>
-                  <h1>{title || "ロード中..."}</h1>
+                  <h1>{groupInfo.title || "ロード中..."}</h1>
                 </div>
               </div>
               <div className={style.showMessage} ref={messagesElementRef}>
