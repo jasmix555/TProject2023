@@ -54,9 +54,13 @@ export default function GroupDescription() {
               groupId: existingGroupId,
             },
           });
+        } else {
+          console.log("Group not found for the user.");
+          // You might want to provide a user-friendly message here.
         }
       } catch (error) {
         console.error("Error creating or navigating to the group:", error);
+        // You might want to log more details or provide a user-friendly error message.
       }
     }
   };
