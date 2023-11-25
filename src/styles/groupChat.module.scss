@@ -65,12 +65,17 @@
       .groupTitle {
         color: var(--white);
         padding: 1.3rem 2rem;
-        margin: 1rem 0;
+        margin: 1.4rem 0;
         text-align: center;
 
         h1 {
           font-weight: 700;
           font-size: 2rem;
+          margin: 0 auto;
+          width: 70%;
+          text-overflow: ellipsis;
+          overflow: hidden;
+          white-space: nowrap;
         }
 
         .closeBtn {

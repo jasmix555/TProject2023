@@ -260,7 +260,7 @@ export const Page = () => {
                 {format(new Date(countdown * 1000), "hh:mm:ss")}
               </p>
             ) : (
-              <p className={style.number}>Time is up!</p>
+              <p className={style.number}>時間終了です！</p>
             )}
           </div>
 
