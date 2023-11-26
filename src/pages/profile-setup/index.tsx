@@ -115,6 +115,12 @@ export default function ProfileSetup() {
                 // Add more fields for additional user profile data as needed
               />
             </div>
+            <div className={style.inputWrap}>
+              <p>生年月日</p>
+            </div>
+            <div className={style.inputWrap}>
+              <p>今の状況（留学中・自国で勉強中・独学）</p>
+            </div>
           </div>
           <div className={style.submitWrap}>
             <button type="submit" disabled={isLoading}>
