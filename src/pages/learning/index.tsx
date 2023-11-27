@@ -62,8 +62,6 @@ export default function Learning() {
     // Handle form submission, you can add your logic here
   };
 
-  const [isSelectFocused, setIsSelectFocused] = useState(false);
-
   useEffect(() => {
     const fetchUserData = async () => {
       try {
