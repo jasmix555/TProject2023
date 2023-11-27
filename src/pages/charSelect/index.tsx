@@ -1,8 +1,6 @@
 import { useState, useEffect, FormEvent } from "react";
 import LayoutPage from "@/component/LayoutPage";
 import style from "@/styles/charSelect.module.scss";
-import Image from "next/image";
-import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import { useRouter } from "next/router";
 import { useToast } from "@chakra-ui/react";
 import { getAuth, User } from "firebase/auth";
@@ -15,9 +13,20 @@ import {
   getDoc,
 } from "firebase/firestore/lite";
 import { FirebaseError } from "@firebase/util";
+import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/css";
+import "swiper/css/navigation";
+import "swiper/css/pagination";
+import "swiper/css/scrollbar";
+import styles from "@/styles/charSelect.module.scss";
+
+// Import Swiper core and required modules
+import SwiperCore, { Navigation, Pagination } from "swiper/modules";
+
+const characters = ["1", "2", "3", "4", "5"];
 
 export default function CharSelect() {
-  const [currentChar, setCurrentChar] = useState(1);
+  const [currentChar, setCurrentChar] = useState(0);
   const totalChars = 5;
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
@@ -47,6 +56,7 @@ export default function CharSelect() {
           character: currentChar,
         };
 
+        // Update the user document in Firestore with the new data
         await setDoc(userDocRef, userData);
 
         // Check if necessary fields exist in the user profile
@@ -82,28 +92,11 @@ export default function CharSelect() {
     }
   };
 
-  useEffect(() => {
-    const preloadImages = () => {
-      const nextImage = new window.Image();
-      nextImage.src = `/characters/Char${
-        currentChar === totalChars ? 1 : currentChar + 1
-      }M.svg`;
-
-      const prevImage = new window.Image();
-      prevImage.src = `/characters/Char${
-        currentChar === 1 ? totalChars : currentChar - 1
-      }M.svg`;
-    };
-
-    preloadImages();
-  }, [currentChar, totalChars]);
-
-  const goLeft = () => {
-    setCurrentChar(currentChar === 1 ? totalChars : currentChar - 1);
-  };
-
-  const goRight = () => {
-    setCurrentChar(currentChar === totalChars ? 1 : currentChar + 1);
+  const handleSlideChange = (swiper: any) => {
+    // Calculate the new active index within the range of characters
+    const newIndex =
+      ((swiper.realIndex + characters.length) % characters.length) + 1;
+    setCurrentChar(newIndex);
   };
 
   return (
@@ -112,59 +105,41 @@ export default function CharSelect() {
         <h1>アバター選択</h1>
       </div>
       <div className={style.carouselWrapper}>
-        <div className={style.characterWrap}>
-          <div className={style.previous}>
-            <Image
-              src={`/characters/Char${
-                currentChar === 1 ? totalChars : currentChar - 1
-              }M.svg`}
-              alt="previous character"
-              width={141}
-              height={200}
-            />
-          </div>
-          <div className={style.current}>
-            <Image
-              src={`/characters/Char${currentChar}L.svg`}
-              alt="current character"
-              width={283}
-              height={400}
-            />
-          </div>
-          <div className={style.next}>
-            <Image
-              src={`/characters/Char${
-                currentChar === totalChars ? 1 : currentChar + 1
-              }M.svg`}
-              alt="next character"
-              width={141}
-              height={200}
-            />
-          </div>
-        </div>
-
-        <div className={style.carouselBtnWrapper}>
-          <button onClick={goLeft} className={`${style.button} ${style.left}`}>
-            <i className={style.icon}>
-              <FaChevronLeft />
-            </i>
-          </button>
-          <button
-            onClick={goRight}
-            className={`${style.button} ${style.right}`}
+        <div className={styles.swiperContainer}>
+          <Swiper
+            modules={[Navigation, Pagination]}
+            spaceBetween={0}
+            slidesPerView={2}
+            centeredSlides
+            loop={true}
+            pagination={{ clickable: true }}
+            navigation
+            className={styles.swiper}
+            onSlideChange={handleSlideChange}
           >
-            <i className={style.icon}>
-              <FaChevronRight />
-            </i>
-          </button>
-          <button
-            onClick={handleSubmit}
-            disabled={isLoading}
-            className={style.select}
-          >
-            {isLoading ? "設定中" : "決定！"}
-          </button>
+            {characters.map((character, index) => (
+              <SwiperSlide
+                key={index}
+                className={`${styles.swiperSlide} ${
+                  index + 1 === currentChar ? styles.active : ""
+                }`}
+              >
+                <img
+                  src={`/characters/${character}.svg`}
+                  alt={`Character ${index + 1}`}
+                  className={`${styles.swiperImage}`}
+                />
+              </SwiperSlide>
+            ))}
+          </Swiper>
         </div>
+        <button
+          onClick={handleSubmit}
+          disabled={isLoading}
+          className={style.select}
+        >
+          {isLoading ? "設定中" : "決定！"}
+        </button>
       </div>
     </LayoutPage>
   );

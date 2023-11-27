@@ -61,7 +61,7 @@ export default function UserCharacter() {
         {character && (
           <Link href={"/charSelect"}>
             <Image
-              src={`/characters/Char${character}L.svg`}
+              src={`/characters/${character}.svg`}
               alt={`UserCharacter ${character}`}
               width={200}
               height={200}

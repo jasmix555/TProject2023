@@ -2,6 +2,7 @@
 
 .header {
   text-align: center;
+  position: absolute;
 
   h1 {
     font-size: 3rem;
@@ -10,45 +11,65 @@
 }
 
 .carouselWrapper {
-  height: 78vh;
-  width: 100%;
-  position: relative;
-}
+  width: 100vw;
+  height: 100vh;
 
-.characterWrap {
-  display: flex;
-  position: absolute;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  height: 100%;
-}
+  .swiperContainer {
+    width: 100%;
+    height: 100%;
+    position: relative;
 
-.carouselBtnWrapper {
-  font-size: 3rem;
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  z-index: 100;
-  .button {
-    position: fixed;
-    top: 50%;
-    @include Box.btnStyle($w: 6rem, $h: 6rem);
-  }
+    .swiper {
+      margin: 0 auto;
+      width: 100%;
+      height: 60%;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      &::after {
+        content: "";
+        position: absolute;
+        bottom: 4rem;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 75%;
+        height: 8rem;
+        background: #fff;
+        z-index: -1;
+        clip-path: ellipse(50% 50% at 50% 50%);
+      }
 
-  .left {
-    left: 1.2rem;
-  }
+      .swiperSlide {
+        filter: grayscale(70%);
+        scale: 0.7;
+        transition: all 150ms ease-in-out;
+        position: relative;
 
-  .right {
-    right: 1.2rem;
+        .swiperImage {
+          width: 100%;
+          height: 100%;
+          object-fit: contain;
+        }
+
+        &.active {
+          filter: grayscale(0%);
+          scale: 1.5;
+
+          .swiperImage {
+            width: 100%;
+            height: 100%;
+          }
+        }
+      }
+    }
   }
 
   .select {
     @include Box.btnStyle($w: 20rem);
     position: absolute;
     align-items: center;
-    bottom: 0;
+    bottom: 6rem;
     left: 50%;
     transform: translateX(-50%);
   }
