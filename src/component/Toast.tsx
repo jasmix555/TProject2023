@@ -12,12 +12,8 @@ const Toast: React.FC<ToastProps> = ({ message, status, onClose }) => {
   const [isVisible, setIsVisible] = useState(true);
 
   useEffect(() => {
-    const timeout = setTimeout(() => {
-      setIsVisible(false);
-      onClose(); // Close the toast as soon as the animation completes
-    }, 2000);
-
-    return () => clearTimeout(timeout);
+    setIsVisible(false);
+    onClose(); // Close the toast as soon as the animation completes
   }, []);
 
   return (
