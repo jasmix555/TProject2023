@@ -13,7 +13,6 @@ import {
   FIREBASE_DATABASE_URL,
 } from "@/constant/env";
 
-import firebase from "firebase/compat/app";
 // Your web app's Firebase configuration
 const firebaseConfig = {
   apiKey: FIREBASE_API_KEY,

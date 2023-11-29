@@ -3,7 +3,6 @@ import "../styles/global.css";
 import type { AppProps } from "next/app";
 import { initializeFirebaseApp } from "@/lib/firebase/firebase";
 import { AuthProvider } from "@/feature/provider/AuthProvider";
-import { ChakraProvider } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 
 function App({ Component, pageProps }: AppProps) {
