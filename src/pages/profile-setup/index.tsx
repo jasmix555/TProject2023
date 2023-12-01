@@ -13,6 +13,7 @@ import {
 } from "firebase/firestore/lite";
 import { FirebaseError } from "@firebase/util";
 import Select from "react-select";
+import makeAnimated from "react-select/animated";
 import LayoutPage from "@/component/LayoutPage";
 
 type OptionType = { value: string; label: string };
@@ -93,6 +94,8 @@ export default function ProfileSetup() {
     }
   };
 
+  const animatedComponents = makeAnimated();
+
   return (
     <LayoutPage>
       <div className={style.bodyWrap}>
@@ -125,6 +128,8 @@ export default function ProfileSetup() {
             <div className={style.inputWrap}>
               <p>言語</p>
               <Select
+                closeMenuOnSelect={false}
+                components={animatedComponents}
                 isMulti
                 options={[
                   { value: "us", label: "英語" },
@@ -145,34 +150,46 @@ export default function ProfileSetup() {
                     backgroundColor: "var(--glass-background)",
                     border: "var(--white) 1px solid",
                     boxShadow: "var(--glass-effect)",
-                    "&::placeholder": {
-                      color: "red;",
-                    },
+                  }),
+                  input: (base) => ({
+                    ...base,
+                    color: "var(--white)",
                   }),
                   menu: (base) => ({
                     ...base,
                     backgroundColor: "var(--glass-background)",
                     border: "var(--white) 1px solid",
-                    boxShadow: "var(--glass-effect)",
+                  }),
+                  placeholder: (base) => ({
+                    ...base,
+                    color: "var(--white)",
                   }),
                   multiValue: (base) => ({
                     ...base,
                     backgroundColor: "var(--glass-background)",
                     border: "var(--white) 1px solid",
-                    boxShadow: "var(--glass-effect)",
                   }),
                   multiValueLabel: (base) => ({
                     ...base,
                     color: "var(--white)",
-                    fontWeight: "bold",
+                    fontWeight: "600",
                   }),
-                  multiValueRemove: (base) => ({
-                    ...base,
-                    ":hover": {
-                      backgroundColor: "#ff4081",
-                      color: "white",
-                    },
-                  }),
+                  option: (styles, { isFocused, isSelected }) => {
+                    if (isSelected) {
+                      return {
+                        ...styles,
+                        backgroundColor: "grey",
+                      };
+                    } else if (isFocused) {
+                      return {
+                        ...styles,
+                        color: "black",
+                        backgroundColor: "var(--white)",
+                      };
+                    } else {
+                      return styles;
+                    }
+                  },
                 }}
               />
             </div>
