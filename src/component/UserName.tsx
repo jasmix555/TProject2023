@@ -4,18 +4,9 @@ import { getAuth, User } from "firebase/auth";
 import { Firestore, doc, getDoc, getFirestore } from "firebase/firestore/lite";
 import { CircleFlag } from "react-circle-flags";
 
-const Flags = [
-  { name: "English", code: "us" },
-  { name: "Japanese", code: "jp" },
-  { name: "Indonesian", code: "id" },
-  { name: "Chinese", code: "cn" },
-  { name: "French", code: "fr" },
-  { name: "Korean", code: "kr" },
-];
-
 export default function UserName() {
   const [nickname, setNickname] = useState<string>("");
-  const [language, setLanguage] = useState<string>("");
+  const [languages, setLanguages] = useState<string>("");
   const auth = getAuth();
   const user: User | null = auth.currentUser;
   const db: Firestore = getFirestore();
@@ -23,7 +14,6 @@ export default function UserName() {
   useEffect(() => {
     const fetchUserNickname = async () => {
       if (user) {
-        // Replace 'users' with the actual collection name where user data is stored
         const userDocRef = doc(db, "users", user.uid);
 
         try {
@@ -31,9 +21,18 @@ export default function UserName() {
           if (userDocSnapshot.exists()) {
             const userData = userDocSnapshot.data();
 
-            if (userData && userData.nickname && userData.language) {
-              setNickname(userData.nickname);
-              setLanguage(userData.language);
+            console.log(userData); // Log the user data
+
+            if (userData) {
+              if (userData.nickname) {
+                setNickname(userData.nickname);
+              }
+
+              if (userData.languages) {
+                // Convert the languages array to a string
+                const languagesString = userData.languages.join(", ");
+                setLanguages(languagesString);
+              }
             }
           }
         } catch (error) {
@@ -51,7 +50,16 @@ export default function UserName() {
         <h1>{nickname ? `${nickname}` : "Username Not Found"}</h1>
       </div>
       <div className={style.languages}>
-        <h1>勉強中： {language ? `${language}` : " "}</h1>
+        <h1 className={style.langWrap}>
+          勉強中：
+          {languages.split(",").map((languageCode: string) => {
+            return (
+              <span>
+                <CircleFlag countryCode={languageCode.trim()} width="30" />
+              </span>
+            );
+          })}
+        </h1>
       </div>
     </div>
   );

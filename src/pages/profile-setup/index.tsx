@@ -12,14 +12,26 @@ import {
   getDoc,
 } from "firebase/firestore/lite";
 import { FirebaseError } from "@firebase/util";
-import { CircleFlag } from "react-circle-flags";
+import Select from "react-select";
 import LayoutPage from "@/component/LayoutPage";
+
+type OptionType = { value: string; label: string };
+
+const Flags = [
+  { name: "English", code: "us" },
+  { name: "Japanese", code: "jp" },
+  { name: "Indonesian", code: "id" },
+  { name: "Chinese", code: "cn" },
+  { name: "French", code: "fr" },
+  { name: "Korean", code: "kr" },
+  { name: "Spanish", code: "es" },
+];
 
 export default function ProfileSetup() {
   const [name, setName] = useState<string>("");
   const [nickname, setNickname] = useState<string>("");
-  const [language, setLanguage] = useState<string>("");
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [languages, setLanguages] = useState<OptionType[]>([]);
 
   const toast = useToast();
   const router = useRouter();
@@ -43,11 +55,14 @@ export default function ProfileSetup() {
 
         const existingUserData = (await getDoc(userDocRef)).data();
 
+        // Convert the selected options to an array of language codes
+        const selectedLanguages = languages.map((option) => option.value);
+
         const userData = {
           ...existingUserData,
           name,
           nickname,
-          language,
+          languages: selectedLanguages, // Add the selected languages here
           // Add other user profile data here
         };
 
@@ -84,7 +99,7 @@ export default function ProfileSetup() {
         <form onSubmit={handleSubmit}>
           <div className={style.contentWrap}>
             <div className={style.inputWrap}>
-              <p>Name</p>
+              <p>名前</p>
               <input
                 autoComplete="off"
                 className={style.input}
@@ -96,7 +111,7 @@ export default function ProfileSetup() {
               />
             </div>
             <div className={style.inputWrap}>
-              <p>Nickname</p>
+              <p>ニックネーム</p>
               <input
                 autoComplete="off"
                 className={style.input}
@@ -108,30 +123,58 @@ export default function ProfileSetup() {
               />
             </div>
             <div className={style.inputWrap}>
-              <p>Language Preference</p>
-              <input
-                autoComplete="off"
-                className={style.input}
-                type="text"
-                name="language"
-                value={language}
-                onChange={(e) => setLanguage(e.target.value)}
-                // Add more fields for additional user profile data as needed
+              <p>言語</p>
+              <Select
+                isMulti
+                options={[
+                  { value: "us", label: "英語" },
+                  { value: "jp", label: "日本語" },
+                  { value: "id", label: "インドネシア語" },
+                  { value: "cn", label: "中国語" },
+                  { value: "fr", label: "フランス語" },
+                  { value: "kr", label: "韓国語" },
+                  { value: "es", label: "スペイン語" },
+                ]}
+                onChange={(selectedOptions) =>
+                  setLanguages(Array.from(selectedOptions))
+                }
+                value={languages}
+                styles={{
+                  control: (base) => ({
+                    ...base,
+                    backgroundColor: "var(--glass-background)",
+                    border: "var(--white) 1px solid",
+                    boxShadow: "var(--glass-effect)",
+                    "&::placeholder": {
+                      color: "red;",
+                    },
+                  }),
+                  menu: (base) => ({
+                    ...base,
+                    backgroundColor: "var(--glass-background)",
+                    border: "var(--white) 1px solid",
+                    boxShadow: "var(--glass-effect)",
+                  }),
+                  multiValue: (base) => ({
+                    ...base,
+                    backgroundColor: "var(--glass-background)",
+                    border: "var(--white) 1px solid",
+                    boxShadow: "var(--glass-effect)",
+                  }),
+                  multiValueLabel: (base) => ({
+                    ...base,
+                    color: "var(--white)",
+                    fontWeight: "bold",
+                  }),
+                  multiValueRemove: (base) => ({
+                    ...base,
+                    ":hover": {
+                      backgroundColor: "#ff4081",
+                      color: "white",
+                    },
+                  }),
+                }}
               />
-            </div>
-            <div className={style.inputWrap}>
-              <p>Language Select</p>
-              <select name="language" id="language">
-                <option value="en">
-                  <CircleFlag countryCode="en" />
-                  English
-                </option>
-                <option value="ja">
-                  <CircleFlag countryCode="ja" />
-                  Japanese
-                </option>
-                <option value="ja">Japanese</option>
-              </select>
             </div>
           </div>
           <div className={style.submitWrap}>
