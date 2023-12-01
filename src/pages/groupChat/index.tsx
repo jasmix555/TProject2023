@@ -70,7 +70,7 @@ const Message = ({
       <div className={style.avatarWrap}>
         <div className={style.avatar}>
           <Image
-            src={`/characters/Char${character}L.svg`}
+            src={`/characters/${character}.svg`}
             alt={`UserCharacter ${character}`}
             width={50}
             height={50}

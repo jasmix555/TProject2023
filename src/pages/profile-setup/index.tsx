@@ -12,6 +12,7 @@ import {
   getDoc,
 } from "firebase/firestore/lite";
 import { FirebaseError } from "@firebase/util";
+import { CircleFlag } from "react-circle-flags";
 import LayoutPage from "@/component/LayoutPage";
 
 export default function ProfileSetup() {
@@ -85,6 +86,7 @@ export default function ProfileSetup() {
             <div className={style.inputWrap}>
               <p>Name</p>
               <input
+                autoComplete="off"
                 className={style.input}
                 type="text"
                 name="name"
@@ -96,6 +98,7 @@ export default function ProfileSetup() {
             <div className={style.inputWrap}>
               <p>Nickname</p>
               <input
+                autoComplete="off"
                 className={style.input}
                 type="text"
                 name="nickname"
@@ -107,6 +110,7 @@ export default function ProfileSetup() {
             <div className={style.inputWrap}>
               <p>Language Preference</p>
               <input
+                autoComplete="off"
                 className={style.input}
                 type="text"
                 name="language"
@@ -116,10 +120,18 @@ export default function ProfileSetup() {
               />
             </div>
             <div className={style.inputWrap}>
-              <p>生年月日</p>
-            </div>
-            <div className={style.inputWrap}>
-              <p>今の状況（留学中・自国で勉強中・独学）</p>
+              <p>Language Select</p>
+              <select name="language" id="language">
+                <option value="en">
+                  <CircleFlag countryCode="en" />
+                  English
+                </option>
+                <option value="ja">
+                  <CircleFlag countryCode="ja" />
+                  Japanese
+                </option>
+                <option value="ja">Japanese</option>
+              </select>
             </div>
           </div>
           <div className={style.submitWrap}>

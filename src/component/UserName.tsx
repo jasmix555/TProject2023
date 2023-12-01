@@ -2,6 +2,16 @@ import style from "@/styles/username.module.scss";
 import { useState, useEffect } from "react";
 import { getAuth, User } from "firebase/auth";
 import { Firestore, doc, getDoc, getFirestore } from "firebase/firestore/lite";
+import { CircleFlag } from "react-circle-flags";
+
+const Flags = [
+  { name: "English", code: "us" },
+  { name: "Japanese", code: "jp" },
+  { name: "Indonesian", code: "id" },
+  { name: "Chinese", code: "cn" },
+  { name: "French", code: "fr" },
+  { name: "Korean", code: "kr" },
+];
 
 export default function UserName() {
   const [nickname, setNickname] = useState<string>("");
