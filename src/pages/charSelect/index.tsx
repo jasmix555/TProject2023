@@ -22,6 +22,7 @@ import styles from "@/styles/charSelect.module.scss";
 
 // Import Swiper core and required modules
 import SwiperCore, { Navigation, Pagination } from "swiper/modules";
+import Background from "@/component/Background";
 
 const characters = ["1", "2", "3", "4", "5"];
 
@@ -101,6 +102,7 @@ export default function CharSelect() {
 
   return (
     <LayoutPage>
+      <Background />
       <div className={style.header}>
         <h1>アバター選択</h1>
       </div>
