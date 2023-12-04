@@ -52,9 +52,9 @@ export default function UserName() {
       <div className={style.languages}>
         <h1 className={style.langWrap}>
           勉強中：
-          {languages.split(",").map((languageCode: string) => {
+          {languages.split(",").map((languageCode: string, idx) => {
             return (
-              <span>
+              <span key={idx}>
                 <CircleFlag countryCode={languageCode.trim()} width="30" />
               </span>
             );

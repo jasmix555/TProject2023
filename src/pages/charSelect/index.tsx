@@ -23,6 +23,7 @@ import styles from "@/styles/charSelect.module.scss";
 // Import Swiper core and required modules
 import SwiperCore, { Navigation, Pagination } from "swiper/modules";
 import Background from "@/component/Background";
+import Image from "next/image";
 
 const characters = ["1", "2", "3", "4", "5"];
 
@@ -126,10 +127,12 @@ export default function CharSelect() {
                   index + 1 === currentChar ? styles.active : ""
                 }`}
               >
-                <img
+                <Image
                   src={`/characters/${character}.svg`}
                   alt={`Character ${index + 1}`}
                   className={`${styles.swiperImage}`}
+                  width={200}
+                  height={200}
                 />
               </SwiperSlide>
             ))}
