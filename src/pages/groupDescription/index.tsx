@@ -7,8 +7,21 @@ import LayoutPage from "@/component/LayoutPage";
 import BackBtn from "@/component/BackBtn";
 import Background from "@/component/Background";
 import { FaUsers } from "react-icons/fa";
-import { ref, onValue } from "@firebase/database";
-import { getDatabase } from "firebase/database";
+import {
+  ref,
+  onValue,
+  set,
+  getDatabase,
+  DatabaseReference,
+  DataSnapshot,
+  Database,
+} from "firebase/database";
+
+interface Group {
+  id: string;
+  title: string;
+  description: string;
+}
 
 export default function GroupDescription() {
   const auth = getAuth();
@@ -16,7 +29,7 @@ export default function GroupDescription() {
   const router = useRouter();
   const { groupId, planet } = router.query;
 
-  const [group, setGroup] = useState({
+  const [group, setGroup] = useState<Group>({
     id: "",
     title: "",
     description: "",
@@ -63,13 +76,19 @@ export default function GroupDescription() {
       if (groupId) {
         try {
           const db = getDatabase();
-          const groupChatUsersRef = ref(db, `groupChatUsers/${groupId}`);
+          const groupChatUsersRef: DatabaseReference = ref(
+            db,
+            `groupChatUsers/${groupId}`
+          );
 
-          const unsubscribe = onValue(groupChatUsersRef, (snapshot) => {
-            const users = snapshot.val();
-            const count = users ? Object.keys(users).length : 0;
-            setUserCount(count);
-          });
+          const unsubscribe = onValue(
+            groupChatUsersRef,
+            (snapshot: DataSnapshot) => {
+              const users = snapshot.val();
+              const count = users ? Object.keys(users).length : 0;
+              setUserCount(count);
+            }
+          );
 
           return () => {
             unsubscribe();
@@ -81,7 +100,28 @@ export default function GroupDescription() {
     };
 
     fetchGroupInfo();
-    fetchUserCount();
+    const unsubscribeUserCount = fetchUserCount();
+
+    return () => {
+      if (unsubscribeUserCount) {
+        unsubscribeUserCount();
+
+        // Decrement user count and set presence to false when leaving the page
+        if (groupId && user) {
+          const db = getDatabase();
+          const groupChatUsersRef = ref(db, `groupChatUsers/${groupId}`);
+
+          // Set presence to false for the current user
+          set(groupChatUsersRef, { [user.uid]: false })
+            .then(() => {
+              console.log("Presence set to false successfully.");
+            })
+            .catch((error) => {
+              console.error("Error setting presence to false:", error);
+            });
+        }
+      }
+    };
   }, [user, groupId, planet]);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -89,6 +129,14 @@ export default function GroupDescription() {
     console.log("Form submitted!");
 
     if (user && groupId && group) {
+      // Increment user count and set presence to true when entering the group
+      const db: Database = getDatabase();
+      const groupChatUsersRef: DatabaseReference = ref(
+        db,
+        `groupChatUsers/${groupId}`
+      );
+      set(groupChatUsersRef, { [user.uid]: true });
+
       router.push({
         pathname: `/groupChat`,
         query: {
@@ -120,6 +168,13 @@ export default function GroupDescription() {
             disabled
             onChange={(e) => setDescriptionValue(e.target.value)}
           />
+        </div>
+
+        <div className={style.capacity}>
+          <div className={style.currentUsers}>
+            <FaUsers />
+            <p>{userCount}/5</p>
+          </div>
         </div>
 
         <div className={style.buttons}>

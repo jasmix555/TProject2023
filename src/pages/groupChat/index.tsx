@@ -5,6 +5,7 @@ import {
   push,
   ref,
   serverTimestamp,
+  get,
 } from "@firebase/database";
 import { FirebaseError } from "@firebase/util";
 import { AuthGuard } from "@/feature/auth/component/AuthGuard/AuthGuard";
@@ -31,7 +32,7 @@ import style from "@/styles/groupChat.module.scss";
 import LayoutPage from "@/component/LayoutPage";
 import Image from "next/image";
 import Background from "@/component/Background";
-import UserCount from "@/component/UserCount";
+import { usePresence } from "@/component/presenceUtils";
 
 const menus = {
   icon: <RiMenu3Line />,
@@ -272,6 +273,45 @@ export const Page = () => {
     return () => clearInterval(intervalId); // Cleanup on component unmount
   }, [groupInfo.expirationTime]);
 
+  const [userCount, setUserCount] = useState(0);
+
+  // Increase user count when entering the group chat
+  usePresence(groupId as string);
+
+  // Listen for changes in user count
+  useEffect(() => {
+    const fetchUserCount = () => {
+      if (groupId) {
+        try {
+          const db = getDatabase();
+          const groupChatUsersRef = ref(db, `groupChatUsers/${groupId}`);
+
+          // Fetch the data once to get an initial count
+          get(groupChatUsersRef).then((snapshot) => {
+            const count = Object.keys(snapshot.val() || {}).length;
+            setUserCount(count);
+          });
+
+          // Use onChildAdded to listen for new users and update the count
+          return onChildAdded(groupChatUsersRef, (_) => {
+            const count = Object.keys(_).length;
+            setUserCount(count);
+          });
+        } catch (error) {
+          console.error("Error fetching user count:", error);
+        }
+      }
+    };
+
+    const unsubscribeUserCount = fetchUserCount();
+
+    return () => {
+      if (unsubscribeUserCount) {
+        unsubscribeUserCount();
+      }
+    };
+  }, [groupId]);
+
   return (
     <LayoutPage>
       <AuthGuard>
@@ -288,6 +328,13 @@ export const Page = () => {
             ) : (
               <p className={style.number}>時間終了です！</p>
             )}
+          </div>
+
+          <div className={style.capacity}>
+            <div className={style.currentUsers}>
+              <FaUsers />
+              <p>{userCount}/5</p>
+            </div>
           </div>
 
           <div className={style.chatlog}>
