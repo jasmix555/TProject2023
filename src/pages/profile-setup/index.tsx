@@ -54,17 +54,19 @@ export default function ProfileSetup() {
         // Replace 'user.uid' with the actual user identifier (e.g., email or unique ID)
         const userDocRef = doc(usersCollection, user.uid);
 
-        const existingUserData = (await getDoc(userDocRef)).data();
+        const existingUserData = (await getDoc(userDocRef)).data() || {};
 
         // Convert the selected options to an array of language codes
         const selectedLanguages = languages.map((option) => option.value);
 
         const userData = {
           ...existingUserData,
-          name,
-          nickname,
-          languages: selectedLanguages, // Add the selected languages here
-          // Add other user profile data here
+          name: name || existingUserData.name,
+          nickname: nickname || existingUserData.nickname,
+          languages:
+            selectedLanguages.length > 0
+              ? selectedLanguages
+              : existingUserData.languages || [],
           userId: user.uid,
         };
 
