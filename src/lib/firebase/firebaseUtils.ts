@@ -13,13 +13,13 @@ export const increaseUserCount = async (groupId: string, user: User | null) => {
   if (user) {
     try {
       const db = getDatabase();
-      const groupChatUsersRef: DatabaseReference = ref(
+      const userPresenceRef: DatabaseReference = ref(
         db,
-        `groupChatUsers/${groupId}`
+        `groupChatUsers/${groupId}/${user.uid}`
       );
 
       // Set presence to true for the current user
-      await set(groupChatUsersRef, { [user.uid]: true });
+      await set(userPresenceRef, true);
     } catch (error) {
       console.error("Error increasing user count:", error);
     }
@@ -30,13 +30,13 @@ export const decreaseUserCount = async (groupId: string, user: User | null) => {
   if (user) {
     try {
       const db = getDatabase();
-      const groupChatUsersRef: DatabaseReference = ref(
+      const userPresenceRef: DatabaseReference = ref(
         db,
-        `groupChatUsers/${groupId}`
+        `groupChatUsers/${groupId}/${user.uid}`
       );
 
       // Set presence to false for the current user
-      await set(groupChatUsersRef, { [user.uid]: false });
+      await set(userPresenceRef, false);
     } catch (error) {
       console.error("Error decreasing user count:", error);
     }
