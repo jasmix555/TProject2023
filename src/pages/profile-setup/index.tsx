@@ -1,6 +1,6 @@
 import { useToast } from "@chakra-ui/react";
 import style from "@/styles/form.module.scss";
-import { useState, FormEvent } from "react";
+import { useState, FormEvent, useEffect } from "react";
 import { useRouter } from "next/router";
 import { getAuth, User } from "firebase/auth";
 import {
@@ -54,19 +54,17 @@ export default function ProfileSetup() {
         // Replace 'user.uid' with the actual user identifier (e.g., email or unique ID)
         const userDocRef = doc(usersCollection, user.uid);
 
-        const existingUserData = (await getDoc(userDocRef)).data() || {};
+        const existingUserData = (await getDoc(userDocRef)).data();
 
         // Convert the selected options to an array of language codes
         const selectedLanguages = languages.map((option) => option.value);
 
         const userData = {
           ...existingUserData,
-          name: name || existingUserData.name,
-          nickname: nickname || existingUserData.nickname,
-          languages:
-            selectedLanguages.length > 0
-              ? selectedLanguages
-              : existingUserData.languages || [],
+          name,
+          nickname,
+          languages: selectedLanguages, // Add the selected languages here
+          // Add other user profile data here
           userId: user.uid,
         };
 
@@ -96,6 +94,61 @@ export default function ProfileSetup() {
       setIsLoading(false);
     }
   };
+
+  // Fetch existing user data when the component mounts
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const auth = getAuth();
+        const user: User | null = auth.currentUser;
+
+        if (user) {
+          const db: Firestore = getFirestore();
+          const usersCollection = collection(db, "users");
+          const userDocRef = doc(usersCollection, user.uid);
+          const existingUserData = (await getDoc(userDocRef)).data();
+
+          if (existingUserData) {
+            // Populate state with existing user data
+            setName(existingUserData.name || "");
+            setNickname(existingUserData.nickname || "");
+            setLanguages(
+              existingUserData.languages
+                ? existingUserData.languages.map((code: string) => {
+                    // Find the corresponding language object in the options array
+                    const language = [
+                      { value: "us", label: "英語" },
+                      { value: "jp", label: "日本語" },
+                      { value: "id", label: "インドネシア語" },
+                      { value: "cn", label: "中国語" },
+                      { value: "fr", label: "フランス語" },
+                      { value: "kr", label: "韓国語" },
+                      { value: "es", label: "スペイン語" },
+                    ].find((option) => option.value === code);
+
+                    // If a match is found, return the language object
+                    // If a match is not found, return an object with the value property and a placeholder label
+                    return language
+                      ? language
+                      : { value: code, label: "Unknown language" };
+                  })
+                : []
+            );
+          }
+        }
+      } catch (error) {
+        console.error("Error fetching user data:", error);
+        toast({
+          title: "Error",
+          description: "Error fetching user data.",
+          status: "error",
+          position: "top",
+        });
+      }
+    };
+
+    fetchUserData();
+  }, []); // Empty dependency array ensures the effect runs only once when the component mounts
 
   const animatedComponents = makeAnimated();
 
