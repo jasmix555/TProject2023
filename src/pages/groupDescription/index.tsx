@@ -15,6 +15,7 @@ import {
   DatabaseReference,
   DataSnapshot,
   Database,
+  get,
 } from "firebase/database";
 
 interface Group {
@@ -129,24 +130,35 @@ export default function GroupDescription() {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log("Form submitted!");
 
     if (user && groupId && group) {
-      // Increment user count and set presence to true when entering the group
-      const db: Database = getDatabase();
-      const groupChatUsersRef: DatabaseReference = ref(
-        db,
-        `groupChatUsers/${groupId}`
-      );
-      set(groupChatUsersRef, { [user.uid]: true });
+      try {
+        const db: Database = getDatabase();
+        const groupChatUsersRef: DatabaseReference = ref(
+          db,
+          `groupChatUsers/${groupId}`
+        );
 
-      router.push({
-        pathname: `/groupChat`,
-        query: {
-          planet,
-          groupId,
-        },
-      });
+        // Fetch the existing users
+        const existingUsersSnapshot = await get(groupChatUsersRef);
+        const existingUsers = existingUsersSnapshot.val() || {};
+
+        // Add the current user with presence set to true
+        existingUsers[user.uid] = true;
+
+        // Set the updated users list
+        await set(groupChatUsersRef, existingUsers);
+
+        router.push({
+          pathname: `/groupChat`,
+          query: {
+            planet,
+            groupId,
+          },
+        });
+      } catch (error) {
+        console.error("Error entering group chat:", error);
+      }
     }
   };
 
