@@ -30,6 +30,26 @@
     }
   }
 
+  .capacity {
+    border: var(--border-stroke);
+    font-size: 1.6rem;
+    padding: 0.6rem 2rem;
+    border-radius: 5px;
+    box-shadow: var(--border-shadow);
+    background: rgba(15, 37, 79, 0.5);
+    backdrop-filter: blur(10px);
+    .currentUsers {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 1rem;
+      p {
+        font-family: "Play", sans-serif;
+        color: var(--accent-color);
+      }
+    }
+  }
+
   .buttons {
     position: relative;
     bottom: -4rem;

@@ -65,6 +65,7 @@ export default function ProfileSetup() {
           nickname,
           languages: selectedLanguages, // Add the selected languages here
           // Add other user profile data here
+          userId: user.uid,
         };
 
         await setDoc(userDocRef, userData);

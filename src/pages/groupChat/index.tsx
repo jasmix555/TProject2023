@@ -8,13 +8,7 @@ import {
 } from "@firebase/database";
 import { FirebaseError } from "@firebase/util";
 import { AuthGuard } from "@/feature/auth/component/AuthGuard/AuthGuard";
-import {
-  Firestore,
-  doc,
-  getDoc,
-  getFirestore,
-  collection,
-} from "firebase/firestore";
+import { doc, getDoc, getFirestore, collection } from "firebase/firestore";
 import { getAuth, User } from "firebase/auth";
 import Header from "@/component/Header";
 import { RiMenu3Line } from "react-icons/ri";
@@ -28,6 +22,7 @@ import {
   FaUsers,
   FaComments,
 } from "react-icons/fa6";
+import { PiBookBookmark, PiBookBookmarkFill } from "react-icons/pi";
 import { FaEdit } from "react-icons/fa";
 import { BsSend } from "react-icons/bs";
 import { format, differenceInSeconds, addHours } from "date-fns";
@@ -35,6 +30,9 @@ import { useRouter } from "next/router";
 import style from "@/styles/groupChat.module.scss";
 import LayoutPage from "@/component/LayoutPage";
 import Image from "next/image";
+import Background from "@/component/Background";
+import UserCount from "@/component/UserCount";
+import { updatePresence } from "@/component/Presence";
 
 const menus = {
   icon: <RiMenu3Line />,
@@ -62,28 +60,55 @@ const Message = ({
   userNickname,
   timestamp,
   character,
+  userId,
 }: MessageProps) => {
   const formattedTimestamp = format(new Date(timestamp), "HH:mm");
+  const auth = getAuth();
+  const isCurrentUser = userId === auth.currentUser?.uid;
 
   return (
-    <div className={style.messageWrap}>
-      <div className={style.avatarWrap}>
-        <div className={style.avatar}>
-          <Image
-            src={`/characters/${character}.svg`}
-            alt={`UserCharacter ${character}`}
-            width={50}
-            height={50}
-          />
-        </div>
-      </div>
-      <div className={style.messageContentWrap}>
-        <div className={style.messageHeader}>
-          <p>{userNickname}</p>
-          <p>{formattedTimestamp} </p>
-        </div>
-        <div className={style.message}>{message}</div>
-      </div>
+    <div className={isCurrentUser ? style.messageWrapUser : style.messageWrap}>
+      {isCurrentUser ? (
+        // Display this when the message is sent by the current user
+        <>
+          <div className={style.wrapper}>
+            <div className={style.timestamp}>
+              <p>{formattedTimestamp} </p>
+            </div>
+            <div className={style.messageContentWrap}>
+              <div className={style.message}>{message}</div>
+            </div>
+          </div>
+        </>
+      ) : (
+        // Display this when the message is sent by someone else
+        <>
+          <div className={style.avatarWrap}>
+            <div className={style.avatar}>
+              <Image
+                src={`/characters/${character}.svg`}
+                alt={`UserCharacter ${character}`}
+                width={50}
+                height={50}
+              />
+            </div>
+            <p>{userNickname}</p>
+          </div>
+          <div className={style.wrapper}>
+            <div className={style.messageContentWrap}>
+              <div className={style.message}>{message}</div>
+            </div>
+            <div className={style.timestamp}>
+              <div className={style.bookmark}>
+                <button onClick={() => console.log("Button clicked!")}>
+                  <PiBookBookmark />
+                </button>
+              </div>
+              <p>{formattedTimestamp} </p>
+            </div>
+          </div>
+        </>
+      )}
     </div>
   );
 };
@@ -93,6 +118,7 @@ export const Page = () => {
   const [message, setMessage] = useState<string>("");
   const [nickname, setNickname] = useState<string>("");
   const [userCharacter, setUserCharacter] = useState<number>(1); // Initialize with a default value
+  const [groupCapacity, setGroupCapacity] = useState<number>(0); // Initialize with a default value
   const auth = getAuth();
   const user: User | null = auth.currentUser;
   const [showGroupChat, setShowGroupChat] = useState(false);
@@ -247,9 +273,20 @@ export const Page = () => {
     return () => clearInterval(intervalId); // Cleanup on component unmount
   }, [groupInfo.expirationTime]);
 
+  useEffect(() => {
+    // Call the updatePresence function when the component mounts
+    updatePresence();
+
+    // Optionally, you can return a cleanup function to handle component unmount or other cleanup logic
+    return () => {
+      // Add any cleanup logic here, if needed
+    };
+  }, []);
+
   return (
     <LayoutPage>
       <AuthGuard>
+        <Background />
         <div className={style.body}>
           <Header contents={menus} />
 
@@ -264,7 +301,9 @@ export const Page = () => {
             )}
           </div>
 
-          <div>
+          <UserCount groupId={groupId as string} />
+
+          <div className={style.chatlog}>
             <button className={style.groupChatButton} onClick={toggleGroupChat}>
               <FaComments />
             </button>

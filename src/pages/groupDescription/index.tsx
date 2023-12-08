@@ -6,6 +6,9 @@ import style from "@/styles/createGroup.module.scss";
 import LayoutPage from "@/component/LayoutPage";
 import BackBtn from "@/component/BackBtn";
 import Background from "@/component/Background";
+import { FaUsers } from "react-icons/fa";
+import { ref, onValue } from "@firebase/database";
+import { getDatabase } from "firebase/database";
 
 export default function GroupDescription() {
   const auth = getAuth();
@@ -22,6 +25,8 @@ export default function GroupDescription() {
   const [descriptionValue, setDescriptionValue] = useState(
     group.description || ""
   );
+
+  const [userCount, setUserCount] = useState(0);
 
   useEffect(() => {
     const fetchGroupInfo = async () => {
@@ -54,7 +59,29 @@ export default function GroupDescription() {
       }
     };
 
+    const fetchUserCount = () => {
+      if (groupId) {
+        try {
+          const db = getDatabase();
+          const groupChatUsersRef = ref(db, `groupChatUsers/${groupId}`);
+
+          const unsubscribe = onValue(groupChatUsersRef, (snapshot) => {
+            const users = snapshot.val();
+            const count = users ? Object.keys(users).length : 0;
+            setUserCount(count);
+          });
+
+          return () => {
+            unsubscribe();
+          };
+        } catch (error) {
+          console.error("Error fetching user count:", error);
+        }
+      }
+    };
+
     fetchGroupInfo();
+    fetchUserCount();
   }, [user, groupId, planet]);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -94,6 +121,14 @@ export default function GroupDescription() {
             onChange={(e) => setDescriptionValue(e.target.value)}
           />
         </div>
+
+        <div className={style.capacity}>
+          <div className={style.currentUsers}>
+            <FaUsers />
+            <p>{userCount}/5</p>
+          </div>
+        </div>
+
         <div className={style.buttons}>
           <div className={style.expirationTag}>
             <p>※惑星は6時間経つと消滅してしまうよ!</p>
