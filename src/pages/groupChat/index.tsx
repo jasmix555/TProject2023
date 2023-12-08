@@ -6,6 +6,7 @@ import {
   ref,
   serverTimestamp,
   get,
+  onValue,
 } from "@firebase/database";
 import { FirebaseError } from "@firebase/util";
 import { AuthGuard } from "@/feature/auth/component/AuthGuard/AuthGuard";
@@ -278,7 +279,7 @@ export const Page = () => {
   // Increase user count when entering the group chat
   usePresence(groupId as string);
 
-  // Listen for changes in user count
+  /// Listen for changes in user count and presence
   useEffect(() => {
     const fetchUserCount = () => {
       if (groupId) {
@@ -292,9 +293,9 @@ export const Page = () => {
             setUserCount(count);
           });
 
-          // Use onChildAdded to listen for new users and update the count
-          return onChildAdded(groupChatUsersRef, (_) => {
-            const count = Object.keys(_).length;
+          // Use onValue to listen for changes in the user count and presence
+          return onValue(groupChatUsersRef, (snapshot) => {
+            const count = Object.keys(snapshot.val() || {}).length;
             setUserCount(count);
           });
         } catch (error) {
