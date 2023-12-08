@@ -1,6 +1,11 @@
-import { useEffect } from "react";
-import { getDatabase, ref, onDisconnect, set } from "firebase/database";
+import {
+  runTransaction,
+  getDatabase,
+  onDisconnect,
+  ref,
+} from "firebase/database";
 import { getAuth } from "firebase/auth";
+import { useEffect } from "react";
 
 export const usePresence = (groupId: string) => {
   useEffect(() => {
@@ -11,11 +16,19 @@ export const usePresence = (groupId: string) => {
     if (user) {
       const presenceRef = ref(db, `groupChatUsers/${groupId}/${user.uid}`);
 
-      // Set presence to true
-      set(presenceRef, true);
-
-      // Remove presence on disconnect
-      onDisconnect(presenceRef).remove();
+      runTransaction(presenceRef, (currentData) => {
+        // Ensure that the currentData is not overwritten by another transaction
+        if (!currentData) {
+          // Set presence to true if it doesn't exist
+          return true;
+        } else {
+          // Do not modify existing data
+          return;
+        }
+      }).then(() => {
+        // Remove presence on disconnect
+        onDisconnect(presenceRef).remove();
+      });
     }
   }, [groupId]);
 };
