@@ -7,12 +7,13 @@ export default function Welcome() {
   return (
     <LayoutPage>
       <Background />
-      <div className={style.wrapper}>
-        <div className={style.logo}></div>
-        <button>
-          <Link href="/login">Start</Link>
-        </button>
-      </div>
+      <Link href="/login">
+        <div className={style.wrapper}>
+          <div className={style.logo1}></div>
+          <div className={style.logo2}></div>
+          <p>タップではじめる</p>
+        </div>
+      </Link>
     </LayoutPage>
   );
 }
