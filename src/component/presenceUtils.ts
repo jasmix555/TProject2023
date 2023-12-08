@@ -18,8 +18,8 @@ export const usePresence = (groupId: string) => {
 
       runTransaction(presenceRef, (currentData) => {
         // Ensure that the currentData is not overwritten by another transaction
-        if (!currentData) {
-          // Set presence to true if it doesn't exist
+        if (currentData === null || currentData === false) {
+          // Set presence to true if it doesn't exist or is currently false
           return true;
         } else {
           // Do not modify existing data
