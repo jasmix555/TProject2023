@@ -32,7 +32,6 @@ import LayoutPage from "@/component/LayoutPage";
 import Image from "next/image";
 import Background from "@/component/Background";
 import UserCount from "@/component/UserCount";
-import { updatePresence } from "@/component/Presence";
 
 const menus = {
   icon: <RiMenu3Line />,
@@ -273,16 +272,6 @@ export const Page = () => {
     return () => clearInterval(intervalId); // Cleanup on component unmount
   }, [groupInfo.expirationTime]);
 
-  useEffect(() => {
-    // Call the updatePresence function when the component mounts
-    updatePresence();
-
-    // Optionally, you can return a cleanup function to handle component unmount or other cleanup logic
-    return () => {
-      // Add any cleanup logic here, if needed
-    };
-  }, []);
-
   return (
     <LayoutPage>
       <AuthGuard>
@@ -300,8 +289,6 @@ export const Page = () => {
               <p className={style.number}>時間終了です！</p>
             )}
           </div>
-
-          <UserCount groupId={groupId as string} />
 
           <div className={style.chatlog}>
             <button className={style.groupChatButton} onClick={toggleGroupChat}>

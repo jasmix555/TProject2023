@@ -122,13 +122,6 @@ export default function GroupDescription() {
           />
         </div>
 
-        <div className={style.capacity}>
-          <div className={style.currentUsers}>
-            <FaUsers />
-            <p>{userCount}/5</p>
-          </div>
-        </div>
-
         <div className={style.buttons}>
           <div className={style.expirationTag}>
             <p>※惑星は6時間経つと消滅してしまうよ!</p>

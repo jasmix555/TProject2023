@@ -1,4 +1,4 @@
-// UserCount.jsx
+// UserCount.tsx
 
 import React, { useEffect, useState } from "react";
 import { onValue, ref } from "@firebase/database";
@@ -12,10 +12,10 @@ const UserCount = ({ groupId }: { groupId: string }) => {
   useEffect(() => {
     // Reference to the groupChatUsers node for the specific groupId
     const db = getDatabase();
-    const groupChatUsersRef = ref(db, `groupChatUsers/${groupId}`);
+    const groupChatMessagesRef = ref(db, `groupChatMessages/${groupId}`);
 
     // Listen for changes in the user count
-    const unsubscribe = onValue(groupChatUsersRef, (snapshot) => {
+    const unsubscribe = onValue(groupChatMessagesRef, (snapshot) => {
       const users = snapshot.val();
       const count = users ? Object.keys(users).length : 0;
       setUserCount(count);

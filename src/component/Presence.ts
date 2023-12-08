@@ -1,4 +1,4 @@
-// presenceUtils.js
+// presenceUtils.ts
 
 import { getAuth } from "firebase/auth";
 import {
