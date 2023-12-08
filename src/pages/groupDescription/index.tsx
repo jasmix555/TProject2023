@@ -14,9 +14,9 @@ import {
   getDatabase,
   DatabaseReference,
   DataSnapshot,
-  Database,
   get,
 } from "firebase/database";
+import { listenForUserCount } from "@/lib/firebase/firebaseUtils";
 
 interface Group {
   id: string;
@@ -47,7 +47,6 @@ export default function GroupDescription() {
       if (user && groupId) {
         try {
           const db = getFirestore();
-          // Directly reference the group document based on the provided Firestore structure
           const groupDocRef = doc(
             collection(db, "planets", planet as string, "groups"),
             groupId as string
@@ -76,23 +75,13 @@ export default function GroupDescription() {
     const fetchUserCount = () => {
       if (groupId) {
         try {
-          const db = getDatabase();
-          const groupChatUsersRef: DatabaseReference = ref(
-            db,
-            `groupChatUsers/${groupId}`
-          );
-
-          const unsubscribe = onValue(
-            groupChatUsersRef,
-            (snapshot: DataSnapshot) => {
-              const users = snapshot.val();
-              const count = users ? Object.keys(users).length : 0;
-              setUserCount(count);
-            }
+          const unsubscribe = listenForUserCount(
+            groupId as string,
+            setUserCount
           );
 
           return () => {
-            unsubscribe();
+            if (unsubscribe) unsubscribe();
           };
         } catch (error) {
           console.error("Error fetching user count:", error);
@@ -115,7 +104,7 @@ export default function GroupDescription() {
             `groupChatUsers/${groupId}/${user.uid}`
           );
 
-          // Set presence to false for the current user
+          // Set presence to false for the current user when leaving the page
           set(userPresenceRef, false)
             .then(() => {
               console.log("Presence set to false successfully.");
@@ -133,7 +122,7 @@ export default function GroupDescription() {
 
     if (user && groupId && group) {
       try {
-        const db: Database = getDatabase();
+        const db = getDatabase();
         const groupChatUsersRef: DatabaseReference = ref(
           db,
           `groupChatUsers/${groupId}`
