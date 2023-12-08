@@ -109,10 +109,13 @@ export default function GroupDescription() {
         // Decrement user count and set presence to false when leaving the page
         if (groupId && user) {
           const db = getDatabase();
-          const groupChatUsersRef = ref(db, `groupChatUsers/${groupId}`);
+          const userPresenceRef = ref(
+            db,
+            `groupChatUsers/${groupId}/${user.uid}`
+          );
 
           // Set presence to false for the current user
-          set(groupChatUsersRef, { [user.uid]: false })
+          set(userPresenceRef, false)
             .then(() => {
               console.log("Presence set to false successfully.");
             })
