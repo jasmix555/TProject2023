@@ -10,20 +10,19 @@
   -webkit-text-size-adjust: 100%;
   --main-color: #536b99;
   --accent-color: #ffbe15;
+  --red: #ff4040;
   --white: #fbfbfb;
   --background-color: #192743;
-  --radial-gradient: radial-gradient(
-    50.58% 50% at 49.87% 50%,
-    #245bc3 0%,
-    #0e244e 100%
-  );
   --footer-color: #0e244e;
-  --border-stroke: 2px solid #2745e1;
+  --input-bg: rgba(9, 30, 68, 0.7);
+  --input-clr: #d6ddff;
+  --border-clr: #2745e1;
+  --border-stroke: 2px solid var(--border-clr);
   --border-shadow: 0px 0px 4px 0px #4070cb; /* box-shadow */
   --glass-background: rgba(255, 255, 255, 0.3);
   --glass-effect: 0px 0px 5px 5px rgba(255, 255, 255, 0.2); /* box-shadow */
   --glass-filter: blur(1px); /* backdrop-filter */
-  --radial-gradient-two: radial-gradient(
+  --radial-gradient: radial-gradient(
     50.58% 50% at 49.87% 50%,
     #245bc3 0%,
     #0e244e 100%

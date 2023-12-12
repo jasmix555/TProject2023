@@ -85,24 +85,22 @@ export default function Signin() {
   return (
     <LayoutPage>
       <Background />
-      <div className={style.bodyWrap}>
-        <form onSubmit={handleSubmit}>
-          <div className={style.contentWrap}>
-            <div className={style.inputWrap}>
+      <form onSubmit={handleSubmit}>
+        <div className={style.contentWrap}>
+          <div className={style.inputWrap}>
+            <div className={style.content}>
               <p>E-Mail</p>
               <input
-                className={style.input}
                 type="email"
                 name="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
               />
             </div>
-            <div className={style.inputWrap}>
+            <div className={style.content}>
               <p>Password</p>
               <div className={style.iconVis}>
                 <input
-                  className={style.input}
                   type={show ? "text" : "password"}
                   name="password"
                   value={password}
@@ -116,15 +114,15 @@ export default function Signin() {
                 </i>
               </div>
             </div>
-            <div className={style.submitWrap}>
-              <button type="submit" disabled={isLoading}>
-                {isLoading ? "ログイン中..." : "ログイン"}
-              </button>
-              <BackBtn link="/login" />
-            </div>
           </div>
-        </form>
-      </div>
+          <div className={style.submitWrap}>
+            <button type="submit" disabled={isLoading}>
+              {isLoading ? "ログイン中..." : "ログイン"}
+            </button>
+            <BackBtn link="/login" />
+          </div>
+        </div>
+      </form>
       {toast.message && <Toast {...toast} />}
     </LayoutPage>
   );

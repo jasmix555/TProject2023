@@ -1,60 +1,139 @@
 @use "Box.module" as Box;
 
 .bodyWrap {
-  width: 80%;
+  width: 100vw;
   height: 100vh;
-  color: var(--white);
-  font-size: 1.8rem;
   display: flex;
   align-items: center;
+  justify-content: center;
   margin: 0 auto;
-  .contentWrap {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    gap: 4rem;
-    margin: 0 auto;
+}
+
+.contentWrap {
+  width: 100vw;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  flex-direction: column;
+  gap: 4rem;
+  margin: 0 auto;
+  height: 100vh;
+  font-size: 1.8rem;
+  font-family: "Play", sans-serif;
+
+  .logo {
+    width: 180px;
+    height: 90px;
+    background: url(../../public/Logo/SpaceLang.svg);
+    background-repeat: no-repeat;
+    background-size: contain;
   }
 
-  .input {
-    background: var(--glass-background);
-    border-radius: 0.5rem;
-    border: 1px solid var(--white);
-    box-shadow: 0px 0px 4px 4px rgba(255, 255, 255, 0.2);
-    width: 31rem;
-    padding: 1rem 1.5rem;
-    font-weight: 600;
-    outline: none;
-  }
-  .iconVis {
+  .inputWrap {
     display: flex;
-    width: 100%;
+    flex-direction: column;
     align-items: center;
-    i {
+    justify-content: center;
+    gap: 2rem;
+    width: 100%;
+    height: 34rem;
+    position: relative;
+
+    .frame {
       position: absolute;
-      font-size: 3rem;
-      color: var(--white);
-      right: 15%;
-      cursor: pointer;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+
+      :global(svg) {
+        :global(path) {
+          stroke: tomato;
+          stroke-width: 2;
+          fill: none;
+        }
+
+        border: solid 1px tomato;
+      }
+    }
+
+    .title {
+      font-weight: 800;
+      font-size: 2.4rem;
+      color: var(--input-clr);
+      position: absolute;
+      top: 1.4rem;
+      left: 4.4rem;
+    }
+
+    .content {
+      display: flex;
+      flex-direction: column;
+
+      label {
+        font-weight: 800;
+        color: var(--input-clr);
+      }
+
+      input {
+        background: var(--input-bg);
+        border-radius: 10px;
+        border: var(--border-stroke);
+        box-shadow: var(--border-shadow);
+        width: 30rem;
+        height: 5rem;
+        padding: 1rem 1.5rem;
+        font-weight: 600;
+        outline: none;
+        color: var(--input-clr);
+        &::placeholder {
+          color: #31518f;
+        }
+        &-webkit-autofill {
+          background: var(--input-bg);
+        }
+      }
+      .iconVis {
+        position: relative; /* Set the position to relative */
+        display: flex;
+        align-items: center;
+
+        i {
+          position: absolute;
+          font-size: 3rem;
+          color: var(--input-clr);
+          right: 1rem;
+
+          display: flex;
+          align-items: center;
+          justify-content: center;
+
+          svg {
+            width: auto;
+            height: auto;
+          }
+        }
+      }
+    }
+
+    .link {
+      position: absolute;
+      bottom: 2rem;
+      right: 2rem;
+      width: fit-content;
+      font-size: 1.2rem;
+      color: var(--input-clr);
+      border-bottom: 1px solid var(--input-clr);
     }
   }
 
   .submitWrap {
-    position: relative;
-    top: 10rem;
-    left: 50%;
-    transform: translateX(-50%);
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 1rem;
     button[type="submit"] {
-      @include Box.btnStyle($w: 20rem, $fontS: 2rem);
+      @include Box.btnStyle($w: 28rem, $fontS: 2rem, $borderR: 100px);
       font-weight: 700;
     }
-  }
-
-  .languageSelect {
-    border: solid 1px tomato;
   }
 }

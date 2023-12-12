@@ -6,6 +6,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: space-around;
 
   .logo1 {
     width: 250px;
@@ -15,17 +16,30 @@
     background-size: contain;
     background-position: center;
     animation: float1 3s ease-in-out infinite;
-    margin-top: 10rem;
   }
 
-  .logo2 {
-    width: 200px;
-    height: 200px;
-    background: url(../../public/Logo/SpaceLang.svg);
-    background-repeat: no-repeat;
-    background-size: contain;
-    background-position: center;
-    margin-bottom: 14rem;
+  .middle {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    bottom: 8rem;
+    gap: 3rem;
+    .logo2 {
+      width: 200px;
+      height: 100px;
+      background: url(../../public/Logo/SpaceLang.svg);
+      background-repeat: no-repeat;
+      background-size: contain;
+      background-position: center;
+    }
+    .catchcopy {
+      color: var(--white);
+      text-align: center;
+      font-size: 2rem;
+      font-weight: 800;
+      animation: textstroke 3s ease-in-out infinite;
+    }
   }
 
   p {
@@ -49,26 +63,29 @@
   }
 }
 
-@keyframes float2 {
-  0% {
-    transform: translateY(0px);
-  }
-  50% {
-    transform: translateY(-10px);
-  }
-  100% {
-    transform: translateY(0px);
-  }
-}
-
 @keyframes opacity {
   0% {
-    opacity: 0.2;
+    opacity: 0.1;
   }
   50% {
     opacity: 0.8;
   }
+  80% {
+    opacity: 1;
+  }
   100% {
-    opacity: 0.2;
+    opacity: 0.1;
+  }
+}
+
+@keyframes textstroke {
+  0% {
+    -webkit-text-stroke: 1px var(--border-clr);
+  }
+  50% {
+    -webkit-text-stroke: none;
+  }
+  100% {
+    -webkit-text-stroke: 1px var(--border-clr);
   }
 }

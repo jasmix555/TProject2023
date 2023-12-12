@@ -9,6 +9,12 @@
     bottom: 14rem;
     left: 50%;
     transform: translateX(-50%);
-    @include Box.btnStyle($w: 20rem, $fontS: 2rem);
+    @include Box.btnStyle(
+      $w: 20rem,
+      $fontS: 2rem,
+      $bg: var(--red),
+      $color: var(--white),
+      $border: none
+    );
   }
 }

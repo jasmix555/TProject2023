@@ -11,8 +11,9 @@ import { useRouter } from "next/router";
 import style from "@/styles/form.module.scss";
 import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
 import LayoutPage from "@/component/LayoutPage";
-import BackBtn from "@/component/BackBtn";
 import Background from "@/component/Background";
+import Link from "next/link";
+import Image from "next/image";
 
 export default function Register() {
   const [email, setEmail] = useState<string>("");
@@ -60,45 +61,52 @@ export default function Register() {
   return (
     <LayoutPage>
       <Background />
-      <div className={style.bodyWrap}>
-        <form onSubmit={handleSubmit}>
-          <div className={style.contentWrap}>
-            <div className={style.inputWrap}>
-              <p>E-Mail</p>
+      <form onSubmit={handleSubmit}>
+        <div className={style.contentWrap}>
+          <div className={style.logo}></div>
+          <div className={style.inputWrap}>
+            <div className={style.frame}>
+              <Image src="/inputFrame.svg" alt="logo" fill />
+            </div>
+            <div className={style.title}>Sign Up</div>
+            <div className={style.content}>
+              <label htmlFor="email">E-Mail</label>
               <input
-                className={style.input}
                 type="email"
                 name="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
+                placeholder="ecc-comp@gmail.com"
               />
             </div>
-            <div className={style.inputWrap}>
-              <p>Password</p>
+            <div className={style.content}>
+              <label htmlFor="password">Password</label>
               <div className={style.iconVis}>
                 <input
-                  className={style.input}
                   type={show ? "text" : "password"}
                   name="password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   required
+                  placeholder="・・・・・・"
                 />
                 <i onClick={handleClick}>
-                  {show ? <AiFillEyeInvisible /> : <AiFillEye />}
+                  {show ? <AiFillEye /> : <AiFillEyeInvisible />}
                 </i>
               </div>
             </div>
-            <div className={style.submitWrap}>
-              <button type="submit" disabled={isLoading}>
-                {isLoading ? "作成中" : "新規登録"}
-              </button>
-              <BackBtn link={"/login"} />
+            <div className={style.link}>
+              <Link href="/signin">アカウントをお持ちの方はこちら</Link>
             </div>
           </div>
-        </form>
-      </div>
+          <div className={style.submitWrap}>
+            <button type="submit" disabled={isLoading}>
+              {isLoading ? "作成中" : "新規登録"}
+            </button>
+          </div>
+        </div>
+      </form>
     </LayoutPage>
   );
 }

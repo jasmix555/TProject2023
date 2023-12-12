@@ -35,8 +35,7 @@
 }
 
 @mixin btnStyle(
-  $bg-color: var(--radial-gradient),
-  $text-color: var(--white),
+  $bg: var(--radial-gradient),
   $w: 6rem,
   $h: 6rem,
   $shadow: var(--border-shadow),
@@ -50,7 +49,7 @@
   height: $h;
   border-radius: $borderR;
   border: $border;
-  background: $bg-color;
+  background: $bg;
   box-shadow: $shadow;
   display: inline-flex;
   align-items: center;

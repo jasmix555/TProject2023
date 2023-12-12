@@ -1,4 +1,4 @@
-import { useState, useEffect, FormEvent } from "react";
+import { useState } from "react";
 import LayoutPage from "@/component/LayoutPage";
 import style from "@/styles/charSelect.module.scss";
 import { useRouter } from "next/router";
@@ -19,8 +19,6 @@ import "swiper/css/navigation";
 import "swiper/css/pagination";
 import "swiper/css/scrollbar";
 import styles from "@/styles/charSelect.module.scss";
-
-// Import Swiper core and required modules
 import SwiperCore, { Navigation, Pagination } from "swiper/modules";
 import Background from "@/component/Background";
 import Image from "next/image";
@@ -29,9 +27,7 @@ const characters = ["1", "2", "3", "4", "5"];
 
 export default function CharSelect() {
   const [currentChar, setCurrentChar] = useState(0);
-  const totalChars = 5;
   const [isLoading, setIsLoading] = useState<boolean>(false);
-
   const toast = useToast();
   const router = useRouter();
 
