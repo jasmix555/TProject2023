@@ -5,9 +5,10 @@
   position: absolute;
   top: 2rem;
   left: 2rem;
-  border: var(--white) 1px solid;
-  background: var(--glass-background);
-  box-shadow: var(--glass-effect);
+  background: var(--input-bg);
+  border: var(--border-stroke);
+  box-shadow: var(--border-shadow);
+  border-radius: 10px;
   backdrop-filter: var(--glass-filter);
   padding: 0.6rem 1rem;
 

@@ -44,15 +44,12 @@
       width: 100%;
       height: 100%;
       z-index: -1;
+      pointer-events: none;
 
-      :global(svg) {
-        :global(path) {
-          stroke: tomato;
-          stroke-width: 2;
-          fill: none;
-        }
-
-        border: solid 1px tomato;
+      svg {
+        width: 100%;
+        height: 100%;
+        fill: red;
       }
     }
 
@@ -61,7 +58,7 @@
       font-size: 2.4rem;
       color: var(--input-clr);
       position: absolute;
-      top: 1.4rem;
+      top: 1rem;
       left: 4.4rem;
     }
 
@@ -76,9 +73,9 @@
 
       input {
         background: var(--input-bg);
-        border-radius: 10px;
         border: var(--border-stroke);
         box-shadow: var(--border-shadow);
+        border-radius: 10px;
         width: 30rem;
         height: 5rem;
         padding: 1rem 1.5rem;
@@ -117,12 +114,13 @@
 
     .link {
       position: absolute;
-      bottom: 2rem;
+      bottom: 2.4rem;
       right: 2rem;
       width: fit-content;
       font-size: 1.2rem;
       color: var(--input-clr);
       border-bottom: 1px solid var(--input-clr);
+      font-weight: 500;
     }
   }
 

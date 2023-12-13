@@ -66,7 +66,7 @@ export default function Register() {
           <div className={style.logo}></div>
           <div className={style.inputWrap}>
             <div className={style.frame}>
-              <Image src="/inputFrame.svg" alt="logo" fill />
+              <img src="/inputFrame.svg" alt="logo" />
             </div>
             <div className={style.title}>Sign Up</div>
             <div className={style.content}>

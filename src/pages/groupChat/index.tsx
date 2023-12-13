@@ -119,13 +119,47 @@ export const Page = () => {
   const [message, setMessage] = useState<string>("");
   const [nickname, setNickname] = useState<string>("");
   const [userCharacter, setUserCharacter] = useState<number>(1); // Initialize with a default value
-  const [groupCapacity, setGroupCapacity] = useState<number>(0); // Initialize with a default value
   const auth = getAuth();
   const user: User | null = auth.currentUser;
   const [showGroupChat, setShowGroupChat] = useState(false);
   const router = useRouter();
   const { groupId, planet } = router.query; // No need to extract 'title' from the router query
   const [groupInfo, setGroupInfo] = useState({ title: "", expirationTime: "" });
+
+  // Send message
+  const handleSendMessage = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    try {
+      const db = getDatabase();
+      const dbRef = ref(db, `groupChatMessages/${groupId}`);
+      await push(dbRef, {
+        message,
+        userId: user ? user.uid : "",
+        userNickname: user ? nickname : "",
+        timestamp: serverTimestamp(),
+        character: userCharacter, // Pass user's character number to the message
+      });
+      setMessage("");
+    } catch (e) {
+      if (e instanceof FirebaseError) {
+        console.log(e);
+      }
+    }
+  };
+
+  // Toggle group chat
+  const toggleGroupChat = () => {
+    setShowGroupChat(!showGroupChat);
+  };
+
+  // Listen for new messages
+  const [chats, setChats] = useState<MessageProps[]>([]);
+
+  const [countdown, setCountdown] = useState<number | null>(null);
+  const [userCount, setUserCount] = useState(0);
+
+  // Increase user count when entering the group chat
+  usePresence(groupId as string);
 
   // Fetch group information
   useEffect(() => {
@@ -186,30 +220,6 @@ export const Page = () => {
     fetchUserData();
   }, [user]);
 
-  // Send message
-  const handleSendMessage = async (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    try {
-      const db = getDatabase();
-      const dbRef = ref(db, `groupChatMessages/${groupId}`);
-      await push(dbRef, {
-        message,
-        userId: user ? user.uid : "",
-        userNickname: user ? nickname : "",
-        timestamp: serverTimestamp(),
-        character: userCharacter, // Pass user's character number to the message
-      });
-      setMessage("");
-    } catch (e) {
-      if (e instanceof FirebaseError) {
-        console.log(e);
-      }
-    }
-  };
-
-  // Listen for new messages
-  const [chats, setChats] = useState<MessageProps[]>([]);
-
   // Listen for new messages
   useEffect(() => {
     try {
@@ -242,13 +252,6 @@ export const Page = () => {
     });
   }, [chats]);
 
-  // Toggle group chat
-  const toggleGroupChat = () => {
-    setShowGroupChat(!showGroupChat);
-  };
-
-  const [countdown, setCountdown] = useState<number | null>(null);
-
   useEffect(() => {
     const calculateCountdown = () => {
       if (groupInfo.expirationTime) {
@@ -273,11 +276,6 @@ export const Page = () => {
 
     return () => clearInterval(intervalId); // Cleanup on component unmount
   }, [groupInfo.expirationTime]);
-
-  const [userCount, setUserCount] = useState(0);
-
-  // Increase user count when entering the group chat
-  usePresence(groupId as string);
 
   /// Listen for changes in user count and presence
   useEffect(() => {
