@@ -171,7 +171,7 @@ const Message = ({
             <div className={style.timestamp}>
               <div className={style.bookmark}>
                 <button onClick={handleBookmarkClick}>
-                  {isBookmarked ? <PiBookBookmark /> : <PiBookBookmarkFill />}
+                  {isBookmarked ? <PiBookBookmarkFill /> : <PiBookBookmark />}
                 </button>
               </div>
               <p>{formattedTimestamp} </p>
