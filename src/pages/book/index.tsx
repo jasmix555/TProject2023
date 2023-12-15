@@ -12,6 +12,7 @@ import {
 import { FaEdit } from "react-icons/fa";
 import Calendar from "@/component/Calendar";
 import Background from "@/component/Background";
+import { useAuthContext } from "@/feature/provider/AuthProvider";
 
 const menus = {
   icon: <RiMenu3Line />,
@@ -30,9 +31,16 @@ function Book() {
     <Layout>
       <Header contents={menus} />
       <Background />
-      <Calendar />
+      <BookContent />
     </Layout>
   );
 }
 
 export default Book;
+
+const BookContent: React.FC = () => {
+  const { user } = useAuthContext();
+  const userId = user?.uid || ""; // Replace with your actual user ID retrieval logic
+
+  return <Calendar userId={userId} />;
+};

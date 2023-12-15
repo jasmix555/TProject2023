@@ -10,7 +10,15 @@ import {
 } from "@firebase/database";
 import { FirebaseError } from "@firebase/util";
 import { AuthGuard } from "@/feature/auth/component/AuthGuard/AuthGuard";
-import { doc, getDoc, getFirestore, collection } from "firebase/firestore";
+import {
+  doc,
+  getDoc,
+  getFirestore,
+  collection,
+  updateDoc,
+  arrayUnion,
+  Firestore,
+} from "firebase/firestore";
 import { getAuth, User } from "firebase/auth";
 import Header from "@/component/Header";
 import { RiMenu3Line } from "react-icons/ri";
@@ -56,6 +64,11 @@ type MessageProps = {
   character: number; // Add character field to MessageProps
 };
 
+type DictionaryItem = {
+  message: string;
+  timestamp: number;
+};
+
 const Message = ({
   message,
   userNickname,
@@ -66,6 +79,62 @@ const Message = ({
   const formattedTimestamp = format(new Date(timestamp), "HH:mm");
   const auth = getAuth();
   const isCurrentUser = userId === auth.currentUser?.uid;
+  const [isInteracted, setIsInteracted] = useState(false);
+  const [isBookmarked, setIsBookmarked] = useState(false);
+
+  // Assume dictionary is an array of DictionaryItem
+  const userDictionary: DictionaryItem[] = []; // Replace with actual user dictionary
+
+  // Check if the message is already saved in the dictionary
+  useEffect(() => {
+    const isMessageSaved = userDictionary.some(
+      (existingMessage) => existingMessage.message === message
+    );
+    setIsBookmarked(isMessageSaved);
+  }, [message, userDictionary]);
+
+  const handleBookmarkClick = async () => {
+    setIsInteracted(true);
+
+    try {
+      const auth = getAuth();
+      const user: User | null = auth.currentUser;
+
+      if (!user) {
+        return; // Exit if there is no user
+      }
+
+      const db = getFirestore();
+      const usersCollection = collection(db, "users");
+      const userDocRef = doc(usersCollection, user.uid);
+
+      const dictionaryItem: DictionaryItem = {
+        message,
+        timestamp,
+      };
+
+      // Check if the message already exists in the dictionary
+      const userData = (await getDoc(userDocRef)).data();
+      const existingMessages: DictionaryItem[] = userData?.dictionary || [];
+      const isMessageExists = existingMessages.some(
+        (existingMessage) => existingMessage.message === message
+      );
+
+      if (!isMessageExists) {
+        // Only save the message if it doesn't exist in the dictionary
+        await updateDoc(userDocRef, {
+          dictionary: arrayUnion(dictionaryItem),
+        });
+
+        setIsBookmarked(true); // Update state to indicate bookmarking
+        console.log("Message saved to dictionary!");
+      } else {
+        console.log("Message already exists in the dictionary.");
+      }
+    } catch (error) {
+      console.error("Error saving message to dictionary:", error);
+    }
+  };
 
   return (
     <div className={isCurrentUser ? style.messageWrapUser : style.messageWrap}>
@@ -101,8 +170,8 @@ const Message = ({
             </div>
             <div className={style.timestamp}>
               <div className={style.bookmark}>
-                <button onClick={() => console.log("Button clicked!")}>
-                  <PiBookBookmark />
+                <button onClick={handleBookmarkClick}>
+                  {isBookmarked ? <PiBookBookmark /> : <PiBookBookmarkFill />}
                 </button>
               </div>
               <p>{formattedTimestamp} </p>
@@ -125,6 +194,7 @@ export const Page = () => {
   const router = useRouter();
   const { groupId, planet } = router.query; // No need to extract 'title' from the router query
   const [groupInfo, setGroupInfo] = useState({ title: "", expirationTime: "" });
+  const [dictionary, setDictionary] = useState<DictionaryItem[]>([]);
 
   // Send message
   const handleSendMessage = async (e: FormEvent<HTMLFormElement>) => {
@@ -203,7 +273,8 @@ export const Page = () => {
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        const db = getFirestore();
+        const user: User | null = auth.currentUser;
+        const db: Firestore = getFirestore();
         const usersCollection = collection(db, "users");
         const userDocRef = doc(usersCollection, user?.uid);
         const userData = (await getDoc(userDocRef)).data();
@@ -211,9 +282,10 @@ export const Page = () => {
         if (userData) {
           setNickname(userData.nickname);
           setUserCharacter(userData.character);
+          setDictionary(userData.dictionary || []); // Assuming dictionary is an array
         }
       } catch (error) {
-        console.error(error);
+        console.error("Error fetching user data:", error);
       }
     };
 

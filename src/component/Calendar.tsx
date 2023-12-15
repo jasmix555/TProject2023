@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { collection, doc, getDoc, getFirestore } from "firebase/firestore";
+import { useEffect, useState } from "react";
 import Calendar from "react-calendar";
 import styled from "styled-components";
 
@@ -125,15 +126,125 @@ const StyledCalendarContainer = styled.div`
   }
 `;
 
+const DateInfoContainer = styled.div`
+  position: absolute;
+  top: 20rem; // Adjust the positioning as needed
+  left: 50%;
+  width: 100vw;
+  height: 600px;
+  transform: translateX(-50%);
+  background: black;
+  box-shadow: var(--glass-effect);
+  border: solid 1px #fff;
+  border-radius: 1rem;
+  padding: 1rem;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
+
 type ValuePiece = Date | null;
 type Value = ValuePiece | [ValuePiece, ValuePiece];
 
-const CalendarComponent: React.FC = () => {
+type Message = {
+  message: string;
+  timestamp: number;
+};
+
+const DateInfo: React.FC<{ date: Date | null; userId: string }> = ({
+  date,
+  userId,
+}) => {
+  const [savedMessages, setSavedMessages] = useState<string[]>([]);
+  const [isEditMode, setIsEditMode] = useState<boolean>(false);
+
+  // Fetch saved messages for the selected date
+  const fetchSavedInfo = async (selectedDate: Date | null) => {
+    try {
+      const db = getFirestore();
+      const usersCollection = collection(db, "users");
+      const userDoc = doc(usersCollection, userId);
+
+      // Check if user document exists
+      const userDocSnapshot = await getDoc(userDoc);
+      if (userDocSnapshot.exists()) {
+        const userData = userDocSnapshot.data();
+        const dictionary = userData?.dictionary || [];
+
+        // Filter messages for the selected date
+        const messagesForDate: Message[] = dictionary.filter(
+          (message: Message) => {
+            // Convert timestamp to Date
+            const messageDate = new Date(message.timestamp);
+            return messageDate.toDateString() === selectedDate?.toDateString();
+          }
+        );
+
+        setSavedMessages(messagesForDate.map((message) => message.message));
+      } else {
+        console.error("User document not found for userId:", userId);
+      }
+    } catch (error) {
+      console.error("Error fetching saved messages:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchSavedInfo(date);
+  }, [date]);
+
+  const handleEditClick = () => {
+    setIsEditMode(true);
+  };
+
+  const handleSaveClick = () => {
+    setIsEditMode(false);
+  };
+
+  return (
+    <DateInfoContainer>
+      {isEditMode ? (
+        <div>{/* Edit mode UI */}</div>
+      ) : (
+        <div>
+          {savedMessages.length > 0 ? (
+            // Display saved messages
+            savedMessages.map((message, index) => (
+              <div key={`SavedMessage_${index}`}>{message}</div>
+            ))
+          ) : (
+            <p>No messages saved for this date.</p>
+          )}
+          <button onClick={handleEditClick}>Edit</button>
+        </div>
+      )}
+    </DateInfoContainer>
+  );
+};
+
+const CalendarComponent: React.FC<{ userId: string }> = ({ userId }) => {
   const [value, onChange] = useState<Value>(new Date());
+  const [selectedDate, setSelectedDate] = useState<Date | null>(null);
+
+  const handleDateClick = (date: Date | Date[]) => {
+    if (Array.isArray(date)) {
+      // Range selection is not supported in this example
+      return;
+    }
+
+    setSelectedDate(date);
+  };
 
   return (
     <StyledCalendarContainer>
-      <Calendar maxDetail="month" onChange={onChange} value={value} />
+      <Calendar
+        maxDetail="month"
+        onChange={onChange}
+        onClickDay={handleDateClick}
+        value={value}
+      />
+      {selectedDate && <DateInfo date={selectedDate} userId={userId} />}
     </StyledCalendarContainer>
   );
 };

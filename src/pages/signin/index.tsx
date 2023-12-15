@@ -10,6 +10,7 @@ import LayoutPage from "@/component/LayoutPage";
 import BackBtn from "@/component/BackBtn";
 import Background from "@/component/Background";
 import Toast, { ToastProps } from "@/component/Toast";
+import Link from "next/link";
 
 export default function Signin() {
   const [email, setEmail] = useState<string>("");
@@ -87,39 +88,47 @@ export default function Signin() {
       <Background />
       <form onSubmit={handleSubmit}>
         <div className={style.contentWrap}>
+          <div className={style.logo}></div>
           <div className={style.inputWrap}>
+            <div className={style.frame}>
+              <img src="/inputFrame.svg" alt="logo" />
+            </div>
+            <div className={style.title}>Login</div>
             <div className={style.content}>
-              <p>E-Mail</p>
+              <label htmlFor="email">E-Mail</label>
               <input
                 type="email"
                 name="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
+                required
+                placeholder="ecc-comp@gmail.com"
               />
             </div>
             <div className={style.content}>
-              <p>Password</p>
+              <label htmlFor="password">Password</label>
               <div className={style.iconVis}>
                 <input
                   type={show ? "text" : "password"}
                   name="password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
+                  required
+                  placeholder="・・・・・・"
                 />
-                <i
-                  onClick={handleClick}
-                  title={show ? "Hide Password" : "Show Password"}
-                >
-                  {show ? <AiFillEyeInvisible /> : <AiFillEye />}
+                <i onClick={handleClick}>
+                  {show ? <AiFillEye /> : <AiFillEyeInvisible />}
                 </i>
               </div>
+            </div>
+            <div className={style.link}>
+              <Link href="/signup">新しいアカウント作成</Link>
             </div>
           </div>
           <div className={style.submitWrap}>
             <button type="submit" disabled={isLoading}>
               {isLoading ? "ログイン中..." : "ログイン"}
             </button>
-            <BackBtn link="/login" />
           </div>
         </div>
       </form>
