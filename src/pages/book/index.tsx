@@ -44,22 +44,24 @@ const CurrentDate = styled.div`
   transform: translateX(-50%);
 
   .format {
-    font-size: 2rem;
-    font-weight: 600;
-    color: var(--text-color);
+    font-weight: 900;
+    color: var(--white);
+    line-height: 1.2;
+    -webkit-text-stroke: var(--border-clr) 2px;
   }
 
   .year {
-    font-size: 3rem;
+    font-size: 3.4rem;
   }
 
   .date {
     font-size: 7rem;
     line-height: 0.8;
+    -webkit-text-stroke: var(--border-clr) 3px;
   }
 
   .month {
-    font-size: 2rem;
+    font-size: 3rem;
   }
 `;
 
