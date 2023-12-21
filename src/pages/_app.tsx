@@ -27,11 +27,9 @@ function App({ Component, pageProps }: AppProps) {
   }
 
   return (
-    // <ChakraProvider>
     <AuthProvider>
       <Component {...pageProps} />
     </AuthProvider>
-    // </ChakraProvider>
   );
 }
 

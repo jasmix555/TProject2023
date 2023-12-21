@@ -13,7 +13,6 @@ import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
 import LayoutPage from "@/component/LayoutPage";
 import Background from "@/component/Background";
 import Link from "next/link";
-import Image from "next/image";
 
 export default function Register() {
   const [email, setEmail] = useState<string>("");

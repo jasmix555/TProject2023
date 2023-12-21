@@ -1,5 +1,3 @@
-// UserCount.tsx
-
 import React, { useEffect, useState } from "react";
 import { onValue, ref } from "@firebase/database";
 import { getDatabase } from "firebase/database";

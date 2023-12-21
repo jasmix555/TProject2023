@@ -3,7 +3,6 @@ import style from "@/styles/_Box.module.scss";
 import Link from "next/link";
 
 type MenuBarProps = {
-  text?: string;
   contents: {
     icon: any;
     options: {
@@ -14,7 +13,7 @@ type MenuBarProps = {
   };
 };
 
-export default function MenuBar({ text, contents }: MenuBarProps) {
+export default function MenuBar({ contents }: MenuBarProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const toggleMenu = () => {

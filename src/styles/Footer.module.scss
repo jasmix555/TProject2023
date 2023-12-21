@@ -3,7 +3,6 @@
   left: 50%;
   bottom: 8%;
   transform: translate(-50%, 50%);
-
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   width: 360px;
@@ -16,6 +15,7 @@
   box-shadow: var(--border-shadow);
   font-size: 3rem;
   color: var(--white);
+  z-index: 999;
 
   .footerItem {
     text-align: center;

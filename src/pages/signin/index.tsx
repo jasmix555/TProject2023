@@ -7,7 +7,6 @@ import { useRouter } from "next/router";
 import style from "@/styles/form.module.scss";
 import { getDoc, doc, getFirestore } from "firebase/firestore/lite";
 import LayoutPage from "@/component/LayoutPage";
-import BackBtn from "@/component/BackBtn";
 import Background from "@/component/Background";
 import Toast, { ToastProps } from "@/component/Toast";
 import Link from "next/link";
