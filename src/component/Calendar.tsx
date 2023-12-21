@@ -2,6 +2,9 @@ import { collection, doc, getDoc, getFirestore } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import Calendar from "react-calendar";
 import styled from "styled-components";
+import { FaTimes } from "react-icons/fa";
+import style from "@/styles/calendar.module.scss";
+import { motion, useAnimation, AnimationControls } from "framer-motion"; // Import motion and useAnimation
 
 const StyledCalendarContainer = styled.div`
   .react-calendar {
@@ -126,24 +129,6 @@ const StyledCalendarContainer = styled.div`
   }
 `;
 
-const DateInfoContainer = styled.div`
-  position: absolute;
-  top: 20rem; // Adjust the positioning as needed
-  left: 50%;
-  width: 100vw;
-  height: 600px;
-  transform: translateX(-50%);
-  background: black;
-  box-shadow: var(--glass-effect);
-  border: solid 1px #fff;
-  border-radius: 1rem;
-  padding: 1rem;
-  text-align: center;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-`;
-
 type ValuePiece = Date | null;
 type Value = ValuePiece | [ValuePiece, ValuePiece];
 
@@ -152,10 +137,17 @@ type Message = {
   timestamp: number;
 };
 
-const DateInfo: React.FC<{ date: Date | null; userId: string }> = ({
-  date,
-  userId,
-}) => {
+const containerVariants = {
+  hidden: { y: "100%" },
+  visible: { y: "0%" },
+};
+
+const DateInfo: React.FC<{
+  date: Date | null;
+  userId: string;
+  onClose: () => void;
+  controls: AnimationControls;
+}> = ({ date, userId, onClose, controls }) => {
   const [savedMessages, setSavedMessages] = useState<string[]>([]);
   const [isEditMode, setIsEditMode] = useState<boolean>(false);
 
@@ -202,30 +194,51 @@ const DateInfo: React.FC<{ date: Date | null; userId: string }> = ({
     setIsEditMode(false);
   };
 
+  const handleClick = (event: React.MouseEvent<HTMLDivElement>) => {
+    if (event.target === event.currentTarget) {
+      // Close the DateInfo component only if the click is on the .wrapper itself
+      onClose();
+    }
+  };
+
+  useEffect(() => {
+    controls.start("visible"); // Trigger the animation when the component mounts
+  }, [controls]);
+
   return (
-    <DateInfoContainer>
-      {isEditMode ? (
-        <div>{/* Edit mode UI */}</div>
-      ) : (
-        <div>
-          {savedMessages.length > 0 ? (
-            // Display saved messages
-            savedMessages.map((message, index) => (
-              <div key={`SavedMessage_${index}`}>{message}</div>
-            ))
-          ) : (
-            <p>No messages saved for this date.</p>
-          )}
-          <button onClick={handleEditClick}>Edit</button>
-        </div>
-      )}
-    </DateInfoContainer>
+    <motion.div
+      variants={containerVariants}
+      initial="hidden"
+      animate={controls}
+      className={style.wrapper}
+      onClick={handleClick}
+    >
+      <div className={style.container}>
+        <FaTimes className={style.closeButton} onClick={onClose} />
+        {isEditMode ? (
+          <div>{/* Edit mode UI */}</div>
+        ) : (
+          <div>
+            {savedMessages.length > 0 ? (
+              // Display saved messages
+              savedMessages.map((message, index) => (
+                <div key={`SavedMessage_${index}`}>{message}</div>
+              ))
+            ) : (
+              <p>No messages saved for this date.</p>
+            )}
+            {/* <button onClick={handleEditClick}>Edit</button> */}
+          </div>
+        )}
+      </div>
+    </motion.div>
   );
 };
 
 const CalendarComponent: React.FC<{ userId: string }> = ({ userId }) => {
   const [value, onChange] = useState<Value>(new Date());
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
+  const controls = useAnimation(); // Move the controls outside the component
 
   const handleDateClick = (date: Date | Date[]) => {
     if (Array.isArray(date)) {
@@ -234,6 +247,11 @@ const CalendarComponent: React.FC<{ userId: string }> = ({ userId }) => {
     }
 
     setSelectedDate(date);
+    controls.start("visible"); // Trigger the animation when a date is clicked
+  };
+
+  const handleClose = () => {
+    setSelectedDate(null);
   };
 
   return (
@@ -244,7 +262,14 @@ const CalendarComponent: React.FC<{ userId: string }> = ({ userId }) => {
         onClickDay={handleDateClick}
         value={value}
       />
-      {selectedDate && <DateInfo date={selectedDate} userId={userId} />}
+      {selectedDate && (
+        <DateInfo
+          date={selectedDate}
+          userId={userId}
+          onClose={handleClose}
+          controls={controls} // Pass the controls to the DateInfo component
+        />
+      )}
     </StyledCalendarContainer>
   );
 };

@@ -16,6 +16,7 @@
   --footer-color: #0e244e;
   --input-bg: rgba(9, 30, 68, 0.7);
   --input-clr: #d6ddff;
+  --border-bg: #0f254f;
   --border-clr: #2745e1;
   --border-stroke: 2px solid var(--border-clr);
   --border-shadow: 0px 0px 4px 0px #4070cb; /* box-shadow */

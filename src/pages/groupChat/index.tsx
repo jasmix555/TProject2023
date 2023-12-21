@@ -85,13 +85,13 @@ const Message = ({
   // Assume dictionary is an array of DictionaryItem
   const userDictionary: DictionaryItem[] = []; // Replace with actual user dictionary
 
-  // Check if the message is already saved in the dictionary
   useEffect(() => {
+    // Check if the message is already saved in the dictionary when the component mounts
     const isMessageSaved = userDictionary.some(
       (existingMessage) => existingMessage.message === message
     );
     setIsBookmarked(isMessageSaved);
-  }, [message, userDictionary]);
+  }, []); // Empty dependency array ensures that this effect runs only once when the component mounts
 
   const handleBookmarkClick = async () => {
     setIsInteracted(true);
