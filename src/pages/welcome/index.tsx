@@ -7,7 +7,7 @@ export default function Welcome() {
   return (
     <LayoutPage>
       <Background />
-      <Link href="/signup">
+      <Link href="/signin">
         <div className={style.wrapper}>
           <div className={style.logo1}></div>
           <div className={style.middle}>

@@ -15,18 +15,9 @@ import { FirebaseError } from "@firebase/util";
 import Select from "react-select";
 import makeAnimated from "react-select/animated";
 import LayoutPage from "@/component/LayoutPage";
+import Background from "@/component/Background";
 
 type OptionType = { value: string; label: string };
-
-const Flags = [
-  { name: "English", code: "us" },
-  { name: "Japanese", code: "jp" },
-  { name: "Indonesian", code: "id" },
-  { name: "Chinese", code: "cn" },
-  { name: "French", code: "fr" },
-  { name: "Korean", code: "kr" },
-  { name: "Spanish", code: "es" },
-];
 
 export default function ProfileSetup() {
   const [name, setName] = useState<string>("");
@@ -154,106 +145,107 @@ export default function ProfileSetup() {
 
   return (
     <LayoutPage>
+      <Background />
       <div className={style.bodyWrap}>
         <form onSubmit={handleSubmit}>
           <div className={style.contentWrap}>
             <div className={style.inputWrap}>
-              <p>名前</p>
-              <input
-                autoComplete="off"
-                className={style.input}
-                type="text"
-                name="name"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                required
-              />
+              <div className={style.frame}>
+                <img src="/inputFrameL.svg" alt="logo" />
+              </div>
+              <div className={style.title}>Sign Up</div>
+              <div className={style.content}>
+                <label htmlFor="name">Username</label>
+                <input
+                  autoComplete="off"
+                  className={style.input}
+                  type="text"
+                  name="name"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  required
+                />
+              </div>
+              <div className={style.content}>
+                <p>Languages learnt</p>
+                <Select
+                  closeMenuOnSelect={false}
+                  components={animatedComponents}
+                  isMulti
+                  options={[
+                    { value: "us", label: "英語" },
+                    { value: "jp", label: "日本語" },
+                    { value: "id", label: "インドネシア語" },
+                    { value: "cn", label: "中国語" },
+                    { value: "fr", label: "フランス語" },
+                    { value: "kr", label: "韓国語" },
+                    { value: "es", label: "スペイン語" },
+                  ]}
+                  onChange={(selectedOptions) =>
+                    setLanguages(Array.from(selectedOptions))
+                  }
+                  value={languages}
+                  styles={{
+                    control: (base) => ({
+                      ...base,
+                      backgroundColor: "var(--input-bg)",
+                      border: "var(--border-stroke)",
+                      boxShadow: "var(--border-shadow)",
+                      width: "30rem",
+                      Height: "5rem",
+                      fontWeight: "600",
+                      borderRadius: "10px",
+                      padding: "1rem 0.4rem",
+                    }),
+                    input: (base) => ({
+                      ...base,
+                      color: "var(--white)",
+                      boxShadow: "none !important",
+                    }),
+                    menu: (base) => ({
+                      ...base,
+                      backgroundColor: "var(--input-bg)",
+                      border: "var(--border-stroke)",
+                    }),
+                    placeholder: (base) => ({
+                      ...base,
+                      color: "var(--white)",
+                    }),
+                    multiValue: (base) => ({
+                      ...base,
+                      backgroundColor: "var(--input-bg)",
+                      border: "var(--border-stroke)",
+                    }),
+                    multiValueLabel: (base) => ({
+                      ...base,
+                      color: "var(--input-clr)",
+                      fontWeight: "600",
+                    }),
+                    option: (styles, { isFocused, isSelected }) => {
+                      if (isSelected) {
+                        return {
+                          ...styles,
+                          backgroundColor: "grey",
+                        };
+                      } else if (isFocused) {
+                        return {
+                          ...styles,
+                          color: "black",
+                          backgroundColor: "var(--white)",
+                        };
+                      } else {
+                        return styles;
+                      }
+                    },
+                  }}
+                />
+              </div>
             </div>
-            <div className={style.inputWrap}>
-              <p>ニックネーム</p>
-              <input
-                autoComplete="off"
-                className={style.input}
-                type="text"
-                name="nickname"
-                value={nickname}
-                onChange={(e) => setNickname(e.target.value)}
-                required
-              />
+            <div className={style.submitWrap}>
+              <button type="submit" disabled={isLoading}>
+                {isLoading ? "Saving..." : "Save User Info"}
+              </button>
             </div>
-            <div className={style.inputWrap}>
-              <p>言語</p>
-              <Select
-                closeMenuOnSelect={false}
-                components={animatedComponents}
-                isMulti
-                options={[
-                  { value: "us", label: "英語" },
-                  { value: "jp", label: "日本語" },
-                  { value: "id", label: "インドネシア語" },
-                  { value: "cn", label: "中国語" },
-                  { value: "fr", label: "フランス語" },
-                  { value: "kr", label: "韓国語" },
-                  { value: "es", label: "スペイン語" },
-                ]}
-                onChange={(selectedOptions) =>
-                  setLanguages(Array.from(selectedOptions))
-                }
-                value={languages}
-                styles={{
-                  control: (base) => ({
-                    ...base,
-                    backgroundColor: "var(--glass-background)",
-                    border: "var(--white) 1px solid",
-                    boxShadow: "var(--glass-effect)",
-                  }),
-                  input: (base) => ({
-                    ...base,
-                    color: "var(--white)",
-                  }),
-                  menu: (base) => ({
-                    ...base,
-                    backgroundColor: "var(--glass-background)",
-                    border: "var(--white) 1px solid",
-                  }),
-                  placeholder: (base) => ({
-                    ...base,
-                    color: "var(--white)",
-                  }),
-                  multiValue: (base) => ({
-                    ...base,
-                    backgroundColor: "var(--glass-background)",
-                    border: "var(--white) 1px solid",
-                  }),
-                  multiValueLabel: (base) => ({
-                    ...base,
-                    color: "var(--white)",
-                    fontWeight: "600",
-                  }),
-                  option: (styles, { isFocused, isSelected }) => {
-                    if (isSelected) {
-                      return {
-                        ...styles,
-                        backgroundColor: "grey",
-                      };
-                    } else if (isFocused) {
-                      return {
-                        ...styles,
-                        color: "black",
-                        backgroundColor: "var(--white)",
-                      };
-                    } else {
-                      return styles;
-                    }
-                  },
-                }}
-              />
-            </div>
-          </div>
-          <div className={style.submitWrap}>
-            <button type="submit" disabled={isLoading}>
-              {isLoading ? "Setting Up..." : "Save User Info"}
-            </button>
           </div>
         </form>
       </div>
