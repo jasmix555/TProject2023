@@ -71,6 +71,7 @@ export default function Register() {
             <div className={style.content}>
               <label htmlFor="email">E-Mail</label>
               <input
+                className={style.input}
                 type="email"
                 name="email"
                 value={email}
@@ -83,6 +84,7 @@ export default function Register() {
               <label htmlFor="password">Password</label>
               <div className={style.iconVis}>
                 <input
+                  className={style.input}
                   type={show ? "text" : "password"}
                   name="password"
                   value={password}

@@ -96,6 +96,7 @@ export default function Signin() {
             <div className={style.content}>
               <label htmlFor="email">E-Mail</label>
               <input
+                className={style.input}
                 type="email"
                 name="email"
                 value={email}
@@ -108,6 +109,7 @@ export default function Signin() {
               <label htmlFor="password">Password</label>
               <div className={style.iconVis}>
                 <input
+                  className={style.input}
                   type={show ? "text" : "password"}
                   name="password"
                   value={password}
@@ -126,7 +128,7 @@ export default function Signin() {
           </div>
           <div className={style.submitWrap}>
             <button type="submit" disabled={isLoading}>
-              {isLoading ? "ログイン中..." : "ログイン"}
+              {isLoading ? "Loading..." : "Login"}
             </button>
           </div>
         </div>
