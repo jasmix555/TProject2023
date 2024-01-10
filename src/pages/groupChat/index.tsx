@@ -67,6 +67,7 @@ type MessageProps = {
 type DictionaryItem = {
   message: string;
   timestamp: number;
+  saved: boolean;
 };
 
 const Message = ({
@@ -111,6 +112,7 @@ const Message = ({
       const dictionaryItem: DictionaryItem = {
         message,
         timestamp,
+        saved: !isBookmarked,
       };
 
       // Check if the message already exists in the dictionary
@@ -126,7 +128,7 @@ const Message = ({
           dictionary: arrayUnion(dictionaryItem),
         });
 
-        setIsBookmarked(true); // Update state to indicate bookmarking
+        setIsBookmarked(!isBookmarked); // Update state to indicate bookmarking
         console.log("Message saved to dictionary!");
       } else {
         console.log("Message already exists in the dictionary.");

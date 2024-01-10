@@ -4,9 +4,13 @@ import type { AppProps } from "next/app";
 import { initializeFirebaseApp } from "@/lib/firebase/firebase";
 import { AuthProvider } from "@/feature/provider/AuthProvider";
 import { useEffect, useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
+import { useRouter } from "next/router";
+import Image from "next/image";
 
 function App({ Component, pageProps }: AppProps) {
   const [isFirebaseInitialized, setFirebaseInitialized] = useState(false);
+  const router = useRouter();
 
   useEffect(() => {
     const initializeApp = async () => {
@@ -28,7 +32,9 @@ function App({ Component, pageProps }: AppProps) {
 
   return (
     <AuthProvider>
-      <Component {...pageProps} />
+      <motion.div key={router.pathname}>
+        <Component {...pageProps} />
+      </motion.div>
     </AuthProvider>
   );
 }

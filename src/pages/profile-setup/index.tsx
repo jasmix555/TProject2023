@@ -161,8 +161,8 @@ export default function ProfileSetup() {
                   className={style.input}
                   type="text"
                   name="name"
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
+                  value={nickname}
+                  onChange={(e) => setNickname(e.target.value)}
                   required
                 />
               </div>
