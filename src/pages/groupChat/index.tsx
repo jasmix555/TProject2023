@@ -42,6 +42,8 @@ import LayoutPage from "@/component/LayoutPage";
 import Image from "next/image";
 import Background from "@/component/Background";
 import { usePresence } from "@/component/presenceUtils";
+import LinkBox from "@/component/LinkBox";
+import { AiFillHome } from "react-icons/ai";
 
 const menus = {
   icon: <RiMenu3Line />,
@@ -219,10 +221,10 @@ export const Page = () => {
     }
   };
 
-  // Toggle group chat
-  const toggleGroupChat = () => {
-    setShowGroupChat(!showGroupChat);
-  };
+  // // Toggle group chat
+  // const toggleGroupChat = () => {
+  //   setShowGroupChat(!showGroupChat);
+  // };
 
   // Listen for new messages
   const [chats, setChats] = useState<MessageProps[]>([]);
@@ -351,7 +353,7 @@ export const Page = () => {
     return () => clearInterval(intervalId); // Cleanup on component unmount
   }, [groupInfo.expirationTime]);
 
-  /// Listen for changes in user count and presence
+  // Listen for changes in user count and presence
   useEffect(() => {
     const fetchUserCount = () => {
       if (groupId) {
@@ -385,12 +387,16 @@ export const Page = () => {
     };
   }, [groupId]);
 
+  // When user enter page, show user avatar image and speech bubble
+  useEffect(() => {});
+
   return (
     <LayoutPage>
       <AuthGuard>
         <Background />
         <div className={style.body}>
-          <Header contents={menus} />
+          {/* <Header contents={menus} /> */}
+          <LinkBox link={"../"} icon={<AiFillHome />} />
 
           <div className={style.title}>
             <h1>{groupInfo.title || "ロード中..."}</h1>
@@ -403,6 +409,8 @@ export const Page = () => {
             )}
           </div>
 
+          <div className={style.avatarGrid}></div>
+
           <div className={style.capacity}>
             <div className={style.currentUsers}>
               <FaUsers />
@@ -410,38 +418,18 @@ export const Page = () => {
             </div>
           </div>
 
-          <div className={style.chatlog}>
-            <button className={style.groupChatButton} onClick={toggleGroupChat}>
-              <FaComments />
-            </button>
-          </div>
-
-          <div
-            className={`${style.groupChatWrap} ${
-              showGroupChat ? style.showChat : ""
-            }`}
-          >
-            <div className={style.groupChatContent}>
-              <div className={style.header}>
-                <div className={style.groupTitle}>
-                  <button className={style.closeBtn} onClick={toggleGroupChat}>
-                    <FaXmark />
-                  </button>
-                  <h1>{groupInfo.title || "ロード中..."}</h1>
-                </div>
-              </div>
-              <div className={style.showMessage} ref={messagesElementRef}>
-                {chats.map((chat, index) => (
-                  <Message
-                    message={chat.message}
-                    userId={chat.userId}
-                    userNickname={chat.userNickname}
-                    timestamp={chat.timestamp}
-                    character={chat.character}
-                    key={`ChatMessage_${index}`}
-                  />
-                ))}
-              </div>
+          <div className={`${style.groupChatWrap}`}>
+            <div className={style.showMessage} ref={messagesElementRef}>
+              {chats.map((chat, index) => (
+                <Message
+                  message={chat.message}
+                  userId={chat.userId}
+                  userNickname={chat.userNickname}
+                  timestamp={chat.timestamp}
+                  character={chat.character}
+                  key={`ChatMessage_${index}`}
+                />
+              ))}
             </div>
           </div>
 

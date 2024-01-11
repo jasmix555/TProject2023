@@ -82,6 +82,7 @@ export default function Book() {
         <div className="format date">{currentDateNumber}</div>
         <div className="format month">{currentMonth}</div>
       </CurrentDate>
+
       <BookContent />
     </Layout>
   );

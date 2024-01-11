@@ -43,20 +43,22 @@
 
 .capacity {
   position: absolute;
-  bottom: 10rem;
+  top: 2rem;
   right: 2rem;
   border: var(--border-stroke);
   font-size: 1.6rem;
-  padding: 0.6rem 2rem;
+  width: 6rem;
+  height: 6rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   border-radius: 5px;
   box-shadow: var(--border-shadow);
   background: rgba(15, 37, 79, 0.5);
   backdrop-filter: blur(10px);
   .currentUsers {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 1rem;
+    text-align: center;
+    line-height: 1.8rem;
     p {
       font-family: "Play", sans-serif;
       color: var(--accent-color);
@@ -65,165 +67,115 @@
 }
 
 .groupChatWrap {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  height: 100vh;
+  position: fixed;
+  bottom: 8rem;
+  border: solid 1px tomato;
   width: 100%;
   overflow-y: scroll;
-  transform: translateY(100%);
-  transition: transform 200ms ease-in-out;
   z-index: 1000;
+  height: 78%;
+  // transform: translateY(100%);
+  // transition: transform 200ms ease-in-out;
 
-  .groupChatContent {
-    height: 91%;
+  .showMessage {
     width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    z-index: 10;
 
-    .header {
-      position: absolute;
-      width: 100%;
-      height: 7rem;
-      background: var(--footer-color);
-
-      .groupTitle {
-        color: var(--white);
-        padding: 1.3rem 2rem;
-        margin: 1.4rem 0;
-        text-align: center;
-
-        h1 {
-          font-weight: 700;
-          font-size: 2rem;
-          margin: 0 auto;
-          width: 70%;
-          text-overflow: ellipsis;
-          overflow: hidden;
-          white-space: nowrap;
-        }
-
-        .closeBtn {
-          position: absolute;
-          left: 4rem;
-          top: 3rem;
-          font-size: 2rem;
-          color: var(--white);
+    .timestamp {
+      font-size: 1rem;
+      font-weight: 500;
+      display: flex;
+      margin: 0 0.8rem;
+      &:has(.bookmark) {
+        display: flex;
+        flex-direction: column;
+        .bookmark {
+          button {
+            display: inline-block;
+            margin: 0;
+            padding: 0;
+            svg {
+              width: 2rem;
+              height: 2rem;
+            }
+          }
         }
       }
     }
 
-    .showMessage {
-      width: 100%;
-      height: 100%;
-      padding-top: 7rem;
-      overflow-x: scroll;
-      background: var(--footer-color);
-      z-index: 10;
-
+    .wrapper {
+      display: flex;
+      justify-content: flex-end;
+      height: fit-content;
       .timestamp {
-        font-size: 1rem;
-        font-weight: 500;
-        display: flex;
-        margin: 0 0.8rem;
-        &:has(.bookmark) {
-          display: flex;
-          flex-direction: column;
-          .bookmark {
-            button {
-              display: inline-block;
-              margin: 0;
-              padding: 0;
-              svg {
-                width: 2rem;
-                height: 2rem;
-              }
-            }
-          }
-        }
+        align-self: flex-end;
       }
+    }
 
-      .wrapper {
-        display: flex;
-        justify-content: flex-end;
-        height: fit-content;
-        .timestamp {
-          align-self: flex-end;
-        }
+    .messageContentWrap {
+      color: var(--white);
+      overflow-wrap: break-word;
+      display: flex;
+      border-radius: 1rem;
+      .message {
+        padding: 0.6rem 1rem;
+        max-inline-size: 260px;
+        font-size: 1.6rem;
+        font-weight: 800;
+        margin: 0.4rem 0;
       }
+    }
+
+    .messageWrap {
+      display: flex;
+      margin-bottom: 1rem;
+      padding: 0.4rem 0.8rem;
 
       .messageContentWrap {
-        color: var(--white);
-        overflow-wrap: break-word;
-        display: flex;
-        border-radius: 1rem;
-        .message {
-          padding: 0.6rem 1rem;
-          max-inline-size: 260px;
-          font-size: 1.6rem;
-          font-weight: 800;
-          margin: 0.4rem 0;
-        }
+        flex-direction: column;
+        border: var(--chat-bg) solid 3px;
+        height: fit-content;
       }
 
-      .messageWrap {
-        display: flex;
-        margin-bottom: 1rem;
-        padding: 0.4rem 0.8rem;
+      .avatarWrap {
+        margin-right: 1.2rem;
+        text-align: center;
+        font-size: 1rem;
 
-        .messageContentWrap {
-          flex-direction: column;
-          border: var(--chat-bg) solid 3px;
-          height: fit-content;
-        }
+        .avatar {
+          width: 5rem;
+          height: 5rem;
+          border-radius: 50%;
+          margin: 0 auto;
+          background: url("/25.svg") no-repeat center center;
+          overflow: hidden;
 
-        .avatarWrap {
-          margin-right: 1.2rem;
-          text-align: center;
-          font-size: 1rem;
-
-          .avatar {
-            width: 5rem;
-            height: 5rem;
-            border-radius: 50%;
-            margin: 0 auto;
-            background: url("/25.svg") no-repeat center center;
-            overflow: hidden;
-
-            img {
-              width: 100%;
-              height: 100%;
-              object-fit: cover;
-              margin-top: 0.6rem;
-            }
+          img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            margin-top: 0.6rem;
           }
         }
       }
+    }
 
-      .messageWrapUser {
-        display: flex;
-        justify-content: flex-end;
-        margin-bottom: 1rem;
-        padding: 0.4rem 3rem 0.4rem 0.8rem;
+    .messageWrapUser {
+      display: flex;
+      justify-content: flex-end;
+      margin-bottom: 1rem;
+      padding: 0.4rem 3rem 0.4rem 0.8rem;
 
-        .messageContentWrap {
-          background: var(--chat-bg);
-          align-items: flex-end;
-          flex-direction: column;
-        }
+      .messageContentWrap {
+        background: var(--chat-bg);
+        align-items: flex-end;
+        flex-direction: column;
       }
     }
   }
-}
-
-.showChat {
-  transform: translateY(0%);
-}
-
-.groupChatButton {
-  font-size: 3rem;
-  left: 3rem;
-  position: absolute;
-  bottom: 10rem;
-  @include Box.btnStyle($borderR: 50%);
 }
 
 .inputWrap {
@@ -236,7 +188,7 @@
   align-items: center;
   width: 100%;
   height: 8rem;
-  z-index: 2000;
+  z-index: 100;
 
   .input {
     word-wrap: break-word;
