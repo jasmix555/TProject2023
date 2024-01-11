@@ -8,10 +8,7 @@
     bottom: 13rem;
     left: 50%;
     transform: translateX(-50%);
-    width: 340px;
     height: 390px;
-    // height: auto;
-    // min-height: 10rem;
     font-size: 1.6rem;
     overflow-y: scroll;
     padding: 0.2rem 0.4rem;
@@ -63,10 +60,38 @@
   .messagesWrap {
     width: 100%;
     height: auto;
+
     .message {
       border-bottom: 1px solid #cfcfcf80;
-      width: 100%;
-      padding: 0.8rem 0.2rem;
+      padding: 1.2rem 0.2rem;
+      position: relative;
+      width: auto;
+      display: flex;
+      justify-content: space-between;
+
+      .text {
+        width: 80%;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+
+      .newLabel {
+        position: absolute;
+        padding: 0.2rem 0.4rem;
+        right: 2.4rem;
+        top: 50%;
+        transform: translateY(-50%);
+        border-radius: 5px;
+        background: var(--border-clr);
+        border: 1px solid var(--border-bg);
+        box-shadow: var(--border-shadow);
+        font-family: "Play", sans-serif;
+      }
+
+      .edit {
+        display: block;
+      }
     }
   }
 }

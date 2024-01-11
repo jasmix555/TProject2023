@@ -16,6 +16,7 @@ type Props = {
 
 export default function SavedWords({ date, userId }: Props) {
   const [savedMessages, setSavedMessages] = useState<JSX.Element[]>([]);
+  const [prevDate, setPrevDate] = useState<Date | null>(null);
 
   // Fetch saved messages for the selected date
   const fetchSavedInfo = async (selectedDate: Date | null) => {
@@ -46,20 +47,29 @@ export default function SavedWords({ date, userId }: Props) {
             wordDate.setHours(0, 0, 0, 0);
             const isNew = wordDate.getTime() === today.getTime();
 
+            // Check if the date has changed since the last check
+            const dateChanged =
+              prevDate !== null && wordDate.getTime() !== prevDate.getTime();
+
+            // Update isNew based on date change
+            const updatedIsNew = dateChanged ? false : isNew;
+
             // Apply the "new" class if the word was added today
-            const messageClass = isNew
+            const messageClass = updatedIsNew
               ? `${style.message} ${style.new}`
               : style.message;
 
             return (
               <div key={`SavedMessage_${index}`} className={messageClass}>
-                {isNew && <span className={style.newLabel}>New </span>}
-                {entry.message}
+                <p className={style.text}>{entry.message}</p>
+                {updatedIsNew && <div className={style.newLabel}>New!</div>}
+                <button className={style.edit}>{">"}</button>
               </div>
             );
           });
 
         setSavedMessages(savedWords);
+        setPrevDate(today); // Update the previous date
       } else {
         console.error("User document not found for userId:", userId);
       }
@@ -77,11 +87,7 @@ export default function SavedWords({ date, userId }: Props) {
       <div>
         {
           // Display saved messages
-          savedMessages.map((message, index) => (
-            <div key={`SavedMessage_${index}`} className={style.message}>
-              {message}
-            </div>
-          ))
+          savedMessages.map((message, index) => message)
         }
       </div>
     </div>

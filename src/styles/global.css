@@ -2,12 +2,6 @@
 
 :root {
   font-family: "Inter", sans-serif;
-  line-height: 1.5;
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  -webkit-text-size-adjust: 100%;
   --main-color: #536b99;
   --accent-color: #ffbe15;
   --red: #ff4040;
