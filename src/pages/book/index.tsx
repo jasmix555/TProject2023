@@ -13,6 +13,8 @@ import Calendar from "@/component/Calendar";
 import Background from "@/component/Background";
 import { useAuthContext } from "@/feature/provider/AuthProvider";
 import styled from "styled-components";
+import { useState } from "react";
+import style from "@/styles/book.module.scss";
 
 const menus = {
   icon: <RiMenu3Line />,
@@ -26,12 +28,53 @@ const menus = {
   ],
 };
 
-const BookContent: React.FC = () => {
+export function BookContent() {
   const { user } = useAuthContext();
   const userId = user?.uid || ""; // Replace with your actual user ID retrieval logic
 
-  return <Calendar userId={userId} />;
-};
+  const [tab, setTab] = useState(1);
+
+  const First = () => {
+    return <>First</>;
+  };
+
+  const Second = () => {
+    return (
+      <>
+        <Calendar userId={userId} />
+      </>
+    );
+  };
+
+  return (
+    <div className={style.wrapper}>
+      <div className={style.tabWrapper}>
+        <div className={style.tabBtns}>
+          <button
+            className={tab === 1 ? style.active : ""}
+            onClick={() => setTab(1)}
+          >
+            <span>All</span>
+          </button>
+          <button
+            className={tab === 2 ? style.active : ""}
+            onClick={() => setTab(2)}
+          >
+            <span>Month</span>
+          </button>
+        </div>
+      </div>
+
+      {tab === 1 ? (
+        <div className={style.tabContent}>
+          <First />
+        </div>
+      ) : (
+        <Second />
+      )}
+    </div>
+  );
+}
 
 const CurrentDate = styled.div`
   display: flex;

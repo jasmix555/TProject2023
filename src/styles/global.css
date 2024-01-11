@@ -20,7 +20,7 @@
   --border-clr: #2745e1;
   --border-stroke: 2px solid var(--border-clr);
   --border-shadow: 0px 0px 4px 0px #4070cb; /* box-shadow */
-  --glass-background: rgba(255, 255, 255, 0.3);
+  --glass-background: rgba(255, 255, 255, 0.1);
   --glass-effect: 0px 0px 5px 5px rgba(255, 255, 255, 0.2); /* box-shadow */
   --glass-filter: blur(1px); /* backdrop-filter */
   --radial-gradient: radial-gradient(

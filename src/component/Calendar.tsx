@@ -7,29 +7,15 @@ import style from "@/styles/calendar.module.scss";
 import { motion, useAnimation, AnimationControls } from "framer-motion"; // Import motion and useAnimation
 
 const StyledCalendarContainer = styled.div`
-  .wrapper {
-    position: relative;
-    width: 100vw;
-    height: 100vh;
-  }
-
   .react-calendar {
-    width: 350px;
-    height: 460px;
-    max-width: 100%;
-    font-family: "Play", sans-serif;
-    line-height: 4rem;
-    background: var(--glass-background);
-    box-shadow: var(--glass-effect);
-    border: solid 1px #fff;
-    border-radius: 1rem;
-    margin: 0 auto;
     position: absolute;
     bottom: 13rem;
     left: 50%;
     transform: translateX(-50%);
-    font-size: 2rem;
-    padding: 0.8rem 1.6rem;
+    width: 340px;
+    height: 390px;
+    font-size: 1.6rem;
+    line-height: 2.6;
   }
 
   .react-calendar button {
@@ -262,22 +248,20 @@ const CalendarComponent: React.FC<{ userId: string }> = ({ userId }) => {
 
   return (
     <StyledCalendarContainer>
-      <div className="wrapper">
-        <Calendar
-          maxDetail="month"
-          onChange={onChange}
-          onClickDay={handleDateClick}
-          value={value}
+      <Calendar
+        maxDetail="month"
+        onChange={onChange}
+        onClickDay={handleDateClick}
+        value={value}
+      />
+      {selectedDate && (
+        <DateInfo
+          date={selectedDate}
+          userId={userId}
+          onClose={handleClose}
+          controls={controls} // Pass the controls to the DateInfo component
         />
-        {selectedDate && (
-          <DateInfo
-            date={selectedDate}
-            userId={userId}
-            onClose={handleClose}
-            controls={controls} // Pass the controls to the DateInfo component
-          />
-        )}
-      </div>
+      )}
     </StyledCalendarContainer>
   );
 };
