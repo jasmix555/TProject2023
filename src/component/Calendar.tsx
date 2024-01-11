@@ -107,17 +107,12 @@ const StyledCalendarContainer = styled.div`
     background: #2745e1;
   }
 
-  // .react-calendar__tile--active {
-  //   background: red;
-  //   color: white;
-  // }
-
-  // .react-calendar__tile--active:enabled:focus {
-  //   background: #1087ff;
-  // }
-
   .react-calendar--selectRange .react-calendar__tile--hover {
     background-color: #e6e6e6;
+  }
+
+  .hasSavedMessages {
+    color: #ffbe15;
   }
 `;
 
@@ -139,7 +134,8 @@ const DateInfo: React.FC<{
   userId: string;
   onClose: () => void;
   controls: AnimationControls;
-}> = ({ date, userId, onClose, controls }) => {
+  hasSavedMessages: boolean;
+}> = ({ date, userId, onClose, controls, hasSavedMessages }) => {
   const [savedMessages, setSavedMessages] = useState<string[]>([]);
   const [isEditMode, setIsEditMode] = useState<boolean>(false);
 
@@ -230,20 +226,49 @@ const DateInfo: React.FC<{
 const CalendarComponent: React.FC<{ userId: string }> = ({ userId }) => {
   const [value, onChange] = useState<Value>(new Date());
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
-  const controls = useAnimation(); // Move the controls outside the component
+  const controls = useAnimation();
+  const [hasSavedMessages, setHasSavedMessages] = useState<boolean>(false);
 
-  const handleDateClick = (date: Date | Date[]) => {
+  const handleDateClick = async (date: Date | Date[]) => {
     if (Array.isArray(date)) {
-      // Range selection is not supported in this example
       return;
     }
 
     setSelectedDate(date);
-    controls.start("visible"); // Trigger the animation when a date is clicked
+
+    // Fetch saved messages for the selected date
+    try {
+      const db = getFirestore();
+      const usersCollection = collection(db, "users");
+      const userDoc = doc(usersCollection, userId);
+
+      const userDocSnapshot = await getDoc(userDoc);
+      if (userDocSnapshot.exists()) {
+        const userData = userDocSnapshot.data();
+        const dictionary = userData?.dictionary || [];
+
+        // Check if there are saved messages for the selected date
+        const messagesForDate: Message[] = dictionary.filter(
+          (message: Message) => {
+            const messageDate = new Date(message.timestamp);
+            return messageDate.toDateString() === date.toDateString();
+          }
+        );
+
+        setHasSavedMessages(messagesForDate.length > 0);
+      } else {
+        console.error("User document not found for userId:", userId);
+      }
+    } catch (error) {
+      console.error("Error fetching saved messages:", error);
+    }
+
+    controls.start("visible");
   };
 
   const handleClose = () => {
     setSelectedDate(null);
+    setHasSavedMessages(false); // Reset the saved messages state when closing
   };
 
   return (
@@ -253,13 +278,15 @@ const CalendarComponent: React.FC<{ userId: string }> = ({ userId }) => {
         onChange={onChange}
         onClickDay={handleDateClick}
         value={value}
+        className={hasSavedMessages ? style.hasSavedMessages : ""}
       />
       {selectedDate && (
         <DateInfo
           date={selectedDate}
           userId={userId}
           onClose={handleClose}
-          controls={controls} // Pass the controls to the DateInfo component
+          controls={controls}
+          hasSavedMessages={hasSavedMessages} // Pass the information to DateInfo
         />
       )}
     </StyledCalendarContainer>
