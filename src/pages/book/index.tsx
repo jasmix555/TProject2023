@@ -15,6 +15,7 @@ import { useAuthContext } from "@/feature/provider/AuthProvider";
 import styled from "styled-components";
 import { useState } from "react";
 import style from "@/styles/book.module.scss";
+import SavedWords from "@/component/SavedWords";
 
 const menus = {
   icon: <RiMenu3Line />,
@@ -35,7 +36,11 @@ export function BookContent() {
   const [tab, setTab] = useState(1);
 
   const First = () => {
-    return <>First</>;
+    return (
+      <>
+        <SavedWords userId={userId} />
+      </>
+    );
   };
 
   const Second = () => {
