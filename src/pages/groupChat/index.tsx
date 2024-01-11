@@ -199,6 +199,7 @@ export const Page = () => {
   const { groupId, planet } = router.query; // No need to extract 'title' from the router query
   const [groupInfo, setGroupInfo] = useState({ title: "", expirationTime: "" });
   const [dictionary, setDictionary] = useState<DictionaryItem[]>([]);
+  const chatBottomRef = useRef<HTMLDivElement | null>(null);
 
   // Send message
   const handleSendMessage = async (e: FormEvent<HTMLFormElement>) => {
@@ -312,6 +313,13 @@ export const Page = () => {
           ...prev,
           { message, userId, userNickname, timestamp, character },
         ]);
+
+        // Scroll to the bottom when a new message is added, using optional chaining
+        setTimeout(() => {
+          chatBottomRef.current?.scrollTo({
+            top: chatBottomRef.current?.scrollHeight,
+          });
+        }, 0);
       });
     } catch (e) {
       if (e instanceof FirebaseError) {
@@ -395,7 +403,6 @@ export const Page = () => {
       <AuthGuard>
         <Background />
         <div className={style.body}>
-          {/* <Header contents={menus} /> */}
           <LinkBox link={"../"} icon={<AiFillHome />} />
 
           <div className={style.title}>
@@ -418,18 +425,20 @@ export const Page = () => {
             </div>
           </div>
 
-          <div className={`${style.groupChatWrap}`}>
-            <div className={style.showMessage} ref={messagesElementRef}>
-              {chats.map((chat, index) => (
-                <Message
-                  message={chat.message}
-                  userId={chat.userId}
-                  userNickname={chat.userNickname}
-                  timestamp={chat.timestamp}
-                  character={chat.character}
-                  key={`ChatMessage_${index}`}
-                />
-              ))}
+          <div className={`${style.groupChatWrap}`} ref={chatBottomRef}>
+            <div className={style.chatBottom}>
+              <div className={style.showMessage} ref={messagesElementRef}>
+                {chats.map((chat, index) => (
+                  <Message
+                    message={chat.message}
+                    userId={chat.userId}
+                    userNickname={chat.userNickname}
+                    timestamp={chat.timestamp}
+                    character={chat.character}
+                    key={`ChatMessage_${index}`}
+                  />
+                ))}
+              </div>
             </div>
           </div>
 

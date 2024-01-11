@@ -69,110 +69,116 @@
 .groupChatWrap {
   position: fixed;
   bottom: 8rem;
-  border: solid 1px tomato;
   width: 100%;
-  overflow-y: scroll;
   z-index: 1000;
   height: 78%;
+  overflow-y: scroll;
   // transform: translateY(100%);
   // transition: transform 200ms ease-in-out;
 
-  .showMessage {
+  .chatBottom {
+    position: relative;
+    height: auto;
     width: 100%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    z-index: 10;
+    bottom: 0;
 
-    .timestamp {
-      font-size: 1rem;
-      font-weight: 500;
+    .showMessage {
+      width: 100%;
+      height: auto;
       display: flex;
-      margin: 0 0.8rem;
-      &:has(.bookmark) {
+      flex-direction: column;
+      z-index: 10;
+
+      .timestamp {
+        font-size: 1rem;
+        font-weight: 500;
         display: flex;
-        flex-direction: column;
-        .bookmark {
-          button {
-            display: inline-block;
-            margin: 0;
-            padding: 0;
-            svg {
-              width: 2rem;
-              height: 2rem;
+        margin: 0 0.8rem;
+        &:has(.bookmark) {
+          display: flex;
+          flex-direction: column;
+          .bookmark {
+            button {
+              display: inline-block;
+              margin: 0;
+              padding: 0;
+              svg {
+                width: 2rem;
+                height: 2rem;
+              }
             }
           }
         }
       }
-    }
 
-    .wrapper {
-      display: flex;
-      justify-content: flex-end;
-      height: fit-content;
-      .timestamp {
-        align-self: flex-end;
+      .wrapper {
+        display: flex;
+        justify-content: flex-end;
+        height: fit-content;
+        .timestamp {
+          align-self: flex-end;
+        }
       }
-    }
-
-    .messageContentWrap {
-      color: var(--white);
-      overflow-wrap: break-word;
-      display: flex;
-      border-radius: 1rem;
-      .message {
-        padding: 0.6rem 1rem;
-        max-inline-size: 260px;
-        font-size: 1.6rem;
-        font-weight: 800;
-        margin: 0.4rem 0;
-      }
-    }
-
-    .messageWrap {
-      display: flex;
-      margin-bottom: 1rem;
-      padding: 0.4rem 0.8rem;
 
       .messageContentWrap {
-        flex-direction: column;
-        border: var(--chat-bg) solid 3px;
-        height: fit-content;
+        color: var(--white);
+        overflow-wrap: break-word;
+        display: flex;
+        border-radius: 1rem;
+        .message {
+          padding: 0.6rem 1rem;
+          max-inline-size: 260px;
+          font-size: 1.6rem;
+          font-weight: 800;
+          margin: 0.4rem 0;
+        }
       }
 
-      .avatarWrap {
-        margin-right: 1.2rem;
-        text-align: center;
-        font-size: 1rem;
+      .messageWrap {
+        display: flex;
+        margin-bottom: 1rem;
+        padding: 0.4rem 0.8rem;
 
-        .avatar {
-          width: 5rem;
-          height: 5rem;
-          border-radius: 50%;
-          margin: 0 auto;
-          background: url("/25.svg") no-repeat center center;
-          overflow: hidden;
+        .messageContentWrap {
+          flex-direction: column;
+          border: var(--chat-bg) solid 3px;
+          height: fit-content;
+        }
 
-          img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            margin-top: 0.6rem;
+        .avatarWrap {
+          margin-right: 1.2rem;
+          text-align: center;
+          font-size: 1rem;
+
+          .avatar {
+            width: 5rem;
+            height: 5rem;
+            border-radius: 50%;
+            margin: 0 auto;
+            background: url("/25.svg") no-repeat center center;
+            overflow: hidden;
+
+            img {
+              width: 100%;
+              height: 100%;
+              object-fit: cover;
+              margin-top: 0.6rem;
+            }
           }
         }
       }
-    }
 
-    .messageWrapUser {
-      display: flex;
-      justify-content: flex-end;
-      margin-bottom: 1rem;
-      padding: 0.4rem 3rem 0.4rem 0.8rem;
+      .messageWrapUser {
+        display: flex;
+        justify-content: flex-end;
+        margin-bottom: 1rem;
+        padding: 0.4rem 3rem 0.4rem 0.8rem;
 
-      .messageContentWrap {
-        background: var(--chat-bg);
-        align-items: flex-end;
-        flex-direction: column;
+        .messageContentWrap {
+          background: var(--chat-bg);
+          align-items: flex-end;
+          flex-direction: column;
+        }
       }
     }
   }
