@@ -29,3 +29,9 @@
     }
   }
 }
+
+.react-calendar.hasSavedMessages {
+  .react-calendar__tile--now {
+    color: #ffbe15 !important;
+  }
+}

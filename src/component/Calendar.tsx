@@ -1,12 +1,16 @@
 import { collection, doc, getDoc, getFirestore } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import Calendar from "react-calendar";
-import styled from "styled-components";
+import styled, { CSSObject } from "styled-components";
 import { FaTimes } from "react-icons/fa";
 import style from "@/styles/calendar.module.scss";
 import { motion, useAnimation, AnimationControls } from "framer-motion"; // Import motion and useAnimation
 
-const StyledCalendarContainer = styled.div`
+interface StyledCalendarContainerProps {
+  hasSavedMessages?: boolean;
+}
+
+const StyledCalendarContainer = styled.div<StyledCalendarContainerProps>`
   .react-calendar {
     position: absolute;
     bottom: 13rem;
@@ -111,9 +115,14 @@ const StyledCalendarContainer = styled.div`
     background-color: #e6e6e6;
   }
 
-  .hasSavedMessages {
-    color: #ffbe15;
-  }
+  ${(props) =>
+    props.hasSavedMessages &&
+    `
+      .react-calendar__tile--now,
+      .react-calendar__tile--hasSavedMessages {
+        color: #ffbe15 !important;
+      }
+    `}
 `;
 
 type ValuePiece = Date | null;
@@ -134,8 +143,8 @@ const DateInfo: React.FC<{
   userId: string;
   onClose: () => void;
   controls: AnimationControls;
-  hasSavedMessages: boolean;
-}> = ({ date, userId, onClose, controls, hasSavedMessages }) => {
+  hasSavedMessages?: boolean;
+}> = ({ date, userId, onClose, controls }) => {
   const [savedMessages, setSavedMessages] = useState<string[]>([]);
   const [isEditMode, setIsEditMode] = useState<boolean>(false);
 
@@ -226,9 +235,14 @@ const DateInfo: React.FC<{
 const CalendarComponent: React.FC<{ userId: string }> = ({ userId }) => {
   const [value, onChange] = useState<Value>(new Date());
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
-  const controls = useAnimation();
+  const controls = useAnimation(); // Move the controls outside the component
   const [hasSavedMessages, setHasSavedMessages] = useState<boolean>(false);
 
+  const handleClose = () => {
+    setSelectedDate(null);
+  };
+
+  // Check if the user has saved messages for the selected date
   const handleDateClick = async (date: Date | Date[]) => {
     if (Array.isArray(date)) {
       return;
@@ -266,27 +280,21 @@ const CalendarComponent: React.FC<{ userId: string }> = ({ userId }) => {
     controls.start("visible");
   };
 
-  const handleClose = () => {
-    setSelectedDate(null);
-    setHasSavedMessages(false); // Reset the saved messages state when closing
-  };
-
   return (
-    <StyledCalendarContainer>
+    <StyledCalendarContainer hasSavedMessages={hasSavedMessages}>
       <Calendar
         maxDetail="month"
         onChange={onChange}
         onClickDay={handleDateClick}
         value={value}
-        className={hasSavedMessages ? style.hasSavedMessages : ""}
       />
       {selectedDate && (
         <DateInfo
           date={selectedDate}
           userId={userId}
           onClose={handleClose}
-          controls={controls}
-          hasSavedMessages={hasSavedMessages} // Pass the information to DateInfo
+          controls={controls} // Pass the controls to the DateInfo component
+          hasSavedMessages={hasSavedMessages}
         />
       )}
     </StyledCalendarContainer>
