@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { useRouter } from "next/router";
 import Image from "next/image";
+import Head from "next/head";
 
 function App({ Component, pageProps }: AppProps) {
   const [isFirebaseInitialized, setFirebaseInitialized] = useState(false);
@@ -32,6 +33,10 @@ function App({ Component, pageProps }: AppProps) {
 
   return (
     <AuthProvider>
+      <Head>
+        <title>SpaceLang</title>
+        <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+      </Head>
       <motion.div key={router.pathname}>
         <Component {...pageProps} />
       </motion.div>

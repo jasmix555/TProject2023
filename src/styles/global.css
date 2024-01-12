@@ -3,7 +3,7 @@
 :root {
   font-family: "Inter", sans-serif;
   --main-color: #536b99;
-  --accent-color: #ffbe15;
+  --accent-clr: #ffbe15;
   --red: #ff4040;
   --white: #fbfbfb;
   --background-color: #192743;
@@ -30,12 +30,9 @@ html,
 body {
   box-sizing: border-box;
   overflow-y: scroll; /* All browsers without overlaying scrollbars */
-  -webkit-text-size-adjust: 100%; /* iOS 8+ */
+  -webkit-text-size-adjust: 100%;
   font-size: 62.5%;
   max-width: 600px;
-  height: 100%;
-  overflow: hidden;
-  background-color: var(--background-color) !important;
   color: var(--white) !important;
 }
 

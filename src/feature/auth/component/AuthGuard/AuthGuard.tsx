@@ -1,4 +1,3 @@
-import Background from "@/component/Background";
 import { useAuthContext } from "@/feature/provider/AuthProvider";
 import { useRouter } from "next/router";
 import type { ReactNode } from "react";
@@ -24,7 +23,6 @@ export const AuthGuard = ({ children }: Props) => {
           alignItems: "center",
         }}
       >
-        <Background />
         読み込み中...
       </div>
     );

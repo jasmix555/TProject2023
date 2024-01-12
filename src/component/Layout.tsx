@@ -26,7 +26,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <AuthGuard>
       <Motion>{children}</Motion>
-      <div className={style.footerWrap}>
+      <div className={style.footerWrap} style={{ zIndex: 1 }}>
         {footerArray.map((e, idx) => {
           if (pathStat == e.path) {
             return (

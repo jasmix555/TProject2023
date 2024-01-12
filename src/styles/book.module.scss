@@ -3,6 +3,14 @@
   width: 100vw;
   height: 100vh;
 
+  .title {
+    position: absolute;
+    top: 19rem;
+    font-size: 1.2rem;
+    font-weight: 400;
+    left: 2.2rem;
+  }
+
   .tabContent {
     position: absolute;
     bottom: 13rem;
@@ -51,7 +59,7 @@
       }
       .active {
         background: var(--border-bg);
-        color: var(--accent-color);
+        color: var(--accent-clr);
         border: var(--border-stroke);
       }
     }

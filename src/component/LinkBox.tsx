@@ -12,7 +12,7 @@ type Props = {
 export default function LinkBox({ icon, link, query, planet }: Props) {
   return (
     <>
-      <button className={style.homeBtn}>
+      <button className={style.homeBtn} style={{ zIndex: 1 }}>
         <Link
           href={{
             pathname: link,

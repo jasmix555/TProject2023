@@ -1,16 +1,18 @@
+@use "Box.module" as Box;
+
 .wrapper {
   position: relative;
   left: 0;
   width: 100vw;
   height: 100vh;
   backdrop-filter: blur(5px);
+  z-index: 999;
 
   .container {
-    padding: 3rem 2rem;
+    padding: 4rem 2rem 3rem 2rem;
     position: fixed;
     bottom: 0;
     width: 100vw;
-    min-height: 20rem;
     height: auto;
     margin: 0 auto;
     background: var(--border-bg);
@@ -30,8 +32,9 @@
   }
 }
 
-.react-calendar.hasSavedMessages {
-  .react-calendar__tile--now {
-    color: #ffbe15 !important;
-  }
+.messageBox {
+  width: 100%;
+  height: auto;
+  padding: 0.2rem 0.6rem;
+  @include Box.glassBox($fS: 1.2rem);
 }

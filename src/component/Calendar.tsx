@@ -214,7 +214,9 @@ const DateInfo: React.FC<{
             {savedMessages.length > 0 ? (
               // Display saved messages
               savedMessages.map((message, index) => (
-                <div key={`SavedMessage_${index}`}>{message}</div>
+                <div key={`SavedMessage_${index}`} className={style.messageBox}>
+                  {message}
+                </div>
               ))
             ) : (
               <p>No messages saved for this date.</p>
@@ -249,7 +251,6 @@ const CalendarComponent: React.FC<{ userId: string }> = ({ userId }) => {
           const savedDatesArray = dictionary.map(
             (message: Message) => new Date(message.timestamp)
           );
-          console.log("Dates with saved messages:", savedDatesArray);
 
           // Set the state with dates that have saved messages
           setSavedDates(savedDatesArray);

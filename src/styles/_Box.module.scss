@@ -77,8 +77,10 @@
   $bR: 1rem,
   $b: 1px solid #ccc,
   $p: 0.8rem 1.2rem,
+  $fC: var(--white),
   $fS: 1.6rem
 ) {
+  color: $fC;
   font-size: $fS;
   width: $w;
   height: $h;

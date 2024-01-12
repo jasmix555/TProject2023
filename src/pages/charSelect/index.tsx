@@ -58,12 +58,7 @@ export default function CharSelect() {
         await setDoc(userDocRef, userData);
 
         // Check if necessary fields exist in the user profile
-        if (
-          userData &&
-          "name" in userData &&
-          "nickname" in userData &&
-          "language" in userData
-        ) {
+        if (userData && "name" in userData && "nickname" in userData) {
           router.push("/");
         } else {
           router.push("/profile-setup");

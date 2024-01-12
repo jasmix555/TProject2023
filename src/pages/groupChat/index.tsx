@@ -20,17 +20,8 @@ import {
   Firestore,
 } from "firebase/firestore";
 import { getAuth, User } from "firebase/auth";
-import { RiMenu3Line } from "react-icons/ri";
-import {
-  FaRegCircleXmark,
-  FaBell,
-  FaUserAstronaut,
-  FaBook,
-  FaGear,
-  FaUsers,
-} from "react-icons/fa6";
+import { FaUsers } from "react-icons/fa6";
 import { PiBookBookmark, PiBookBookmarkFill } from "react-icons/pi";
-import { FaEdit } from "react-icons/fa";
 import { BsSend } from "react-icons/bs";
 import { format, differenceInSeconds, addHours } from "date-fns";
 import { useRouter } from "next/router";
@@ -69,7 +60,6 @@ const Message = ({
   const isCurrentUser = userId === user?.uid;
   const [isInteracted, setIsInteracted] = useState(false);
   const [isBookmarked, setIsBookmarked] = useState(false);
-  const userDictionary: DictionaryItem[] = []; // Replace with actual user dictionary
 
   useEffect(() => {
     const checkIfMessageSaved = async () => {
