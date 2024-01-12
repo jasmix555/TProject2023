@@ -1,16 +1,13 @@
 import { collection, doc, getDoc, getFirestore } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import Calendar from "react-calendar";
-import styled, { CSSObject } from "styled-components";
+import styled, { css, CSSObject } from "styled-components";
 import { FaTimes } from "react-icons/fa";
 import style from "@/styles/calendar.module.scss";
-import { motion, useAnimation, AnimationControls } from "framer-motion"; // Import motion and useAnimation
+import { motion, useAnimation, AnimationControls, color } from "framer-motion"; // Import motion and useAnimation
+import { isSameDay } from "date-fns";
 
-interface StyledCalendarContainerProps {
-  hasSavedMessages?: boolean;
-}
-
-const StyledCalendarContainer = styled.div<StyledCalendarContainerProps>`
+const StyledCalendarContainer = styled.div`
   .react-calendar {
     position: absolute;
     bottom: 13rem;
@@ -115,14 +112,13 @@ const StyledCalendarContainer = styled.div<StyledCalendarContainerProps>`
     background-color: #e6e6e6;
   }
 
-  ${(props) =>
-    props.hasSavedMessages &&
-    `
-      .react-calendar__tile--now,
-      .react-calendar__tile--hasSavedMessages {
-        color: #ffbe15 !important;
-      }
-    `}
+  .react-calendar__tile--now {
+    background: #2745e1;
+  }
+
+  .hasSaved {
+    color: #ffbe15 !important;
+  }
 `;
 
 type ValuePiece = Date | null;
@@ -143,7 +139,6 @@ const DateInfo: React.FC<{
   userId: string;
   onClose: () => void;
   controls: AnimationControls;
-  hasSavedMessages?: boolean;
 }> = ({ date, userId, onClose, controls }) => {
   const [savedMessages, setSavedMessages] = useState<string[]>([]);
   const [isEditMode, setIsEditMode] = useState<boolean>(false);
@@ -234,67 +229,68 @@ const DateInfo: React.FC<{
 
 const CalendarComponent: React.FC<{ userId: string }> = ({ userId }) => {
   const [value, onChange] = useState<Value>(new Date());
+  const [savedDates, setSavedDates] = useState<Date[]>([]);
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
-  const controls = useAnimation(); // Move the controls outside the component
-  const [hasSavedMessages, setHasSavedMessages] = useState<boolean>(false);
+  const controls = useAnimation();
+
+  useEffect(() => {
+    const fetchDatesWithSavedMessages = async () => {
+      try {
+        const db = getFirestore();
+        const usersCollection = collection(db, "users");
+        const userDoc = doc(usersCollection, userId);
+
+        const userDocSnapshot = await getDoc(userDoc);
+        if (userDocSnapshot.exists()) {
+          const userData = userDocSnapshot.data();
+          const dictionary = userData?.dictionary || [];
+
+          // Find and log dates with saved messages
+          const savedDatesArray = dictionary.map(
+            (message: Message) => new Date(message.timestamp)
+          );
+          console.log("Dates with saved messages:", savedDatesArray);
+
+          // Set the state with dates that have saved messages
+          setSavedDates(savedDatesArray);
+        } else {
+          console.error("User document not found for userId:", userId);
+        }
+      } catch (error) {
+        console.error("Error fetching saved messages:", error);
+      }
+    };
+
+    // Call the function to fetch and log dates with saved messages
+    fetchDatesWithSavedMessages();
+  }, [userId]); // Re-run when userId changes
 
   const handleClose = () => {
     setSelectedDate(null);
   };
 
-  // Check if the user has saved messages for the selected date
-  const handleDateClick = async (date: Date | Date[]) => {
-    if (Array.isArray(date)) {
-      return;
-    }
-
-    setSelectedDate(date);
-
-    // Fetch saved messages for the selected date
-    try {
-      const db = getFirestore();
-      const usersCollection = collection(db, "users");
-      const userDoc = doc(usersCollection, userId);
-
-      const userDocSnapshot = await getDoc(userDoc);
-      if (userDocSnapshot.exists()) {
-        const userData = userDocSnapshot.data();
-        const dictionary = userData?.dictionary || [];
-
-        // Check if there are saved messages for the selected date
-        const messagesForDate: Message[] = dictionary.filter(
-          (message: Message) => {
-            const messageDate = new Date(message.timestamp);
-            return messageDate.toDateString() === date.toDateString();
-          }
-        );
-
-        setHasSavedMessages(messagesForDate.length > 0);
-      } else {
-        console.error("User document not found for userId:", userId);
-      }
-    } catch (error) {
-      console.error("Error fetching saved messages:", error);
-    }
-
-    controls.start("visible");
-  };
-
   return (
-    <StyledCalendarContainer hasSavedMessages={hasSavedMessages}>
+    <StyledCalendarContainer>
       <Calendar
         maxDetail="month"
         onChange={onChange}
-        onClickDay={handleDateClick}
+        onClickDay={(date) => {
+          setSelectedDate(date);
+          controls.start("visible");
+        }}
         value={value}
+        tileClassName={({ date, view }) =>
+          savedDates.some((savedDate) => isSameDay(date, savedDate))
+            ? "hasSaved"
+            : ""
+        }
       />
       {selectedDate && (
         <DateInfo
           date={selectedDate}
           userId={userId}
           onClose={handleClose}
-          controls={controls} // Pass the controls to the DateInfo component
-          hasSavedMessages={hasSavedMessages}
+          controls={controls}
         />
       )}
     </StyledCalendarContainer>

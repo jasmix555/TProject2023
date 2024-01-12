@@ -1,7 +1,6 @@
 .wrapper {
   height: 6rem;
   width: 26rem;
-  border-radius: 1rem;
   position: absolute;
   top: 2rem;
   left: 2rem;
@@ -9,8 +8,11 @@
   border: var(--border-stroke);
   box-shadow: var(--border-shadow);
   border-radius: 10px;
-  backdrop-filter: var(--glass-filter);
   padding: 0.6rem 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: space-evenly;
 
   .languages {
     h1 {

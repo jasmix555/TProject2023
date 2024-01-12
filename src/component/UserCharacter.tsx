@@ -65,6 +65,7 @@ export default function UserCharacter() {
               alt={`UserCharacter ${character}`}
               width={200}
               height={200}
+              priority
             />
           </Link>
         )}

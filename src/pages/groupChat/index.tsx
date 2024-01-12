@@ -20,17 +20,14 @@ import {
   Firestore,
 } from "firebase/firestore";
 import { getAuth, User } from "firebase/auth";
-import Header from "@/component/Header";
 import { RiMenu3Line } from "react-icons/ri";
 import {
-  FaXmark,
   FaRegCircleXmark,
   FaBell,
   FaUserAstronaut,
   FaBook,
   FaGear,
   FaUsers,
-  FaComments,
 } from "react-icons/fa6";
 import { PiBookBookmark, PiBookBookmarkFill } from "react-icons/pi";
 import { FaEdit } from "react-icons/fa";
@@ -44,19 +41,6 @@ import Background from "@/component/Background";
 import { usePresence } from "@/component/presenceUtils";
 import LinkBox from "@/component/LinkBox";
 import { AiFillHome } from "react-icons/ai";
-
-const menus = {
-  icon: <RiMenu3Line />,
-  options: [
-    { icon: <FaRegCircleXmark />, link: "/#" },
-    { icon: <FaBell />, link: "/#" },
-    { icon: <FaUserAstronaut />, link: "/#" },
-    { icon: <FaUsers />, link: "/#" },
-    { icon: <FaEdit />, link: "/#" },
-    { icon: <FaBook />, link: "/#" },
-    { icon: <FaGear />, link: "/../settings" },
-  ],
-};
 
 type MessageProps = {
   message: string;
@@ -81,30 +65,45 @@ const Message = ({
 }: MessageProps) => {
   const formattedTimestamp = format(new Date(timestamp), "HH:mm");
   const auth = getAuth();
-  const isCurrentUser = userId === auth.currentUser?.uid;
+  const user = auth.currentUser;
+  const isCurrentUser = userId === user?.uid;
   const [isInteracted, setIsInteracted] = useState(false);
   const [isBookmarked, setIsBookmarked] = useState(false);
-
-  // Assume dictionary is an array of DictionaryItem
   const userDictionary: DictionaryItem[] = []; // Replace with actual user dictionary
 
   useEffect(() => {
-    // Check if the message is already saved in the dictionary when the component mounts
-    const isMessageSaved = userDictionary.some(
-      (existingMessage) => existingMessage.message === message
-    );
-    setIsBookmarked(isMessageSaved);
-  }, []); // Empty dependency array ensures that this effect runs only once when the component mounts
+    const checkIfMessageSaved = async () => {
+      try {
+        if (!user) {
+          return;
+        }
+
+        const db = getFirestore();
+        const usersCollection = collection(db, "users");
+        const userDocRef = doc(usersCollection, user.uid);
+
+        const userData = (await getDoc(userDocRef)).data();
+        const existingMessages: DictionaryItem[] = userData?.dictionary || [];
+
+        const isMessageSaved = existingMessages.some(
+          (existingMessage) => existingMessage.message === message
+        );
+
+        setIsBookmarked(isMessageSaved);
+      } catch (error) {
+        console.error("Error checking if message is saved:", error);
+      }
+    };
+
+    checkIfMessageSaved();
+  }, [user, message]); // Dependency on user and message ensures the effect runs when either changes
 
   const handleBookmarkClick = async () => {
     setIsInteracted(true);
 
     try {
-      const auth = getAuth();
-      const user: User | null = auth.currentUser;
-
       if (!user) {
-        return; // Exit if there is no user
+        return;
       }
 
       const db = getFirestore();
@@ -117,7 +116,6 @@ const Message = ({
         saved: !isBookmarked,
       };
 
-      // Check if the message already exists in the dictionary
       const userData = (await getDoc(userDocRef)).data();
       const existingMessages: DictionaryItem[] = userData?.dictionary || [];
       const isMessageExists = existingMessages.some(
@@ -125,12 +123,11 @@ const Message = ({
       );
 
       if (!isMessageExists) {
-        // Only save the message if it doesn't exist in the dictionary
         await updateDoc(userDocRef, {
           dictionary: arrayUnion(dictionaryItem),
         });
 
-        setIsBookmarked(!isBookmarked); // Update state to indicate bookmarking
+        setIsBookmarked(!isBookmarked);
         console.log("Message saved to dictionary!");
       } else {
         console.log("Message already exists in the dictionary.");
@@ -143,7 +140,6 @@ const Message = ({
   return (
     <div className={isCurrentUser ? style.messageWrapUser : style.messageWrap}>
       {isCurrentUser ? (
-        // Display this when the message is sent by the current user
         <>
           <div className={style.wrapper}>
             <div className={style.timestamp}>
@@ -155,7 +151,6 @@ const Message = ({
           </div>
         </>
       ) : (
-        // Display this when the message is sent by someone else
         <>
           <div className={style.avatarWrap}>
             <div className={style.avatar}>
@@ -164,6 +159,7 @@ const Message = ({
                 alt={`UserCharacter ${character}`}
                 width={50}
                 height={50}
+                priority
               />
             </div>
             <p>{userNickname}</p>
@@ -194,7 +190,6 @@ export const Page = () => {
   const [userCharacter, setUserCharacter] = useState<number>(1); // Initialize with a default value
   const auth = getAuth();
   const user: User | null = auth.currentUser;
-  const [showGroupChat, setShowGroupChat] = useState(false);
   const router = useRouter();
   const { groupId, planet } = router.query; // No need to extract 'title' from the router query
   const [groupInfo, setGroupInfo] = useState({ title: "", expirationTime: "" });
@@ -221,11 +216,6 @@ export const Page = () => {
       }
     }
   };
-
-  // // Toggle group chat
-  // const toggleGroupChat = () => {
-  //   setShowGroupChat(!showGroupChat);
-  // };
 
   // Listen for new messages
   const [chats, setChats] = useState<MessageProps[]>([]);
@@ -394,9 +384,6 @@ export const Page = () => {
       }
     };
   }, [groupId]);
-
-  // When user enter page, show user avatar image and speech bubble
-  useEffect(() => {});
 
   return (
     <LayoutPage>
