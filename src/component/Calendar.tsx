@@ -219,7 +219,7 @@ const DateInfo: React.FC<{
                 </div>
               ))
             ) : (
-              <p>No messages saved for this date.</p>
+              <p>冒険の記録はありません。</p>
             )}
             {/* <button onClick={handleEditClick}>Edit</button> */}
           </div>
