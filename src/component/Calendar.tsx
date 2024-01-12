@@ -1,7 +1,7 @@
 import { collection, doc, getDoc, getFirestore } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import Calendar from "react-calendar";
-import styled, { css, CSSObject } from "styled-components";
+import styled from "styled-components";
 import { FaTimes } from "react-icons/fa";
 import style from "@/styles/calendar.module.scss";
 import { motion, useAnimation, AnimationControls, color } from "framer-motion"; // Import motion and useAnimation
