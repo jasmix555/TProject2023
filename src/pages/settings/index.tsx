@@ -13,28 +13,10 @@ import {
 import { FaEdit } from "react-icons/fa";
 import Header from "@/component/Header";
 import Layout from "@/component/Layout";
-import Toast, { ToastProps } from "@/component/Toast";
 import style from "@/styles/settings.module.scss";
 
 export default function Settings() {
   const { user } = useAuthContext();
-  const [toast, setToast] = useState<ToastProps>({
-    message: "",
-    status: "info",
-    onClose: () => {},
-  });
-
-  const showToast = (
-    message: string,
-    status: "success" | "error" | "warning" | "info"
-  ) => {
-    setToast({
-      message,
-      status,
-      onClose: () =>
-        setToast({ message: "", status: "info", onClose: () => {} }),
-    });
-  };
 
   const handleSignOut = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault(); // Prevent the default behavior of the button
@@ -45,9 +27,7 @@ export default function Settings() {
         const auth = getAuth();
         await signOut(auth);
         // Use your custom Toast component for the logout message
-        showToast("ログアウトしました。", "success");
       } catch (e) {
-        showToast("ログアウト失敗しました。エラーがあります。", "error");
         if (e instanceof FirebaseError) {
           console.log(e);
         }
