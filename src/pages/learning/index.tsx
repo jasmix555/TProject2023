@@ -88,7 +88,6 @@ export default function Learning() {
   return (
     <Layout>
       <Header contents={menus} />
-      <UserCharacter />
       <div className={style.body}>
         <div className={style.wrapper}>
           <div className={style.title}>
@@ -101,52 +100,56 @@ export default function Learning() {
               新しい単語を見つける旅に出よう！
             </p>
           </div>
-          <form onSubmit={handleSubmit} className={style.contentWrapper}>
-            <div className={style.selection}>
-              <label htmlFor="language">言語</label>
-              <select
-                required
-                id="language"
-                value={selectedLanguage}
-                onChange={handleLanguageChange}
-              >
-                <option value="" disabled className={style.disabled}>
-                  選択してください
-                </option>
-                <option value="english">English</option>
-                <option value="日本語">日本語</option>
-                <option value="한국어">한국어</option>
-                <option value="中文">中文</option>
-                <option value="Bahasa Indonesia">Bahasa Indonesia</option>
-                <option value="español">español</option>
-              </select>
-            </div>
+          <form onSubmit={handleSubmit}>
+            <div className={style.contentWrapper}>
+              <div className={style.selection}>
+                <label htmlFor="language">言語</label>
+                <select
+                  required
+                  id="language"
+                  value={selectedLanguage}
+                  onChange={handleLanguageChange}
+                >
+                  <option value="" disabled className={style.disabled}>
+                    選択してください
+                  </option>
+                  <option value="english">English</option>
+                  <option value="日本語">日本語</option>
+                  <option value="한국어">한국어</option>
+                  <option value="中文">中文</option>
+                  <option value="Bahasa Indonesia">Bahasa Indonesia</option>
+                  <option value="español">español</option>
+                </select>
+              </div>
 
-            <div className={style.selection}>
-              <label htmlFor="genre">ジャンル</label>
-              <select
-                required
-                id="genre"
-                value={selectedGenre}
-                onChange={handleGenreChange}
-              >
-                <option value="" disabled>
-                  選択してください
-                </option>
-                <option value="日常会話">日常会話</option>
-                <option value="フォーマール">フォーマール</option>
-              </select>
+              <div className={style.selection}>
+                <label htmlFor="genre">ジャンル</label>
+                <select
+                  required
+                  id="genre"
+                  value={selectedGenre}
+                  onChange={handleGenreChange}
+                >
+                  <option value="" disabled>
+                    選択してください
+                  </option>
+                  <option value="日常会話">日常会話</option>
+                  <option value="フォーマール">フォーマール</option>
+                </select>
+              </div>
+
+              <div className={style.memo}>
+                <label htmlFor="memo">メモ</label>
+                <textarea
+                  id="memo"
+                  value={memo}
+                  onChange={handleMemoChange}
+                  placeholder="例：方言を教えてください"
+                />
+              </div>
+
+              <button type="submit">学びに行く</button>
             </div>
-            <div className={style.memo}>
-              <label htmlFor="memo">メモ</label>
-              <textarea
-                id="memo"
-                value={memo}
-                onChange={handleMemoChange}
-                placeholder="例：方言を教えてください"
-              />
-            </div>
-            <button type="submit">学びに行く</button>
           </form>
         </div>
       </div>

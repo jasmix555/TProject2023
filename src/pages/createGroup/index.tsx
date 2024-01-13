@@ -69,20 +69,20 @@ export default function CreateGroup() {
     <LayoutPage>
       <form onSubmit={handleSubmit} className={style.form}>
         <div className={style.contentWrap}>
-          <p>あなただけの小惑星の名前を決めてね！</p>
+          <p>タイトル</p>
           <input
             className={style.input + " " + style.title}
             type="text"
-            placeholder="タイトル"
+            placeholder="タイトルを入力してください..."
             value={title}
             onChange={(e) => setTitle(e.target.value)}
           />
         </div>
         <div className={style.contentWrap}>
-          <p>どんな小惑星か詳しく教えてね！</p>
+          <p>詳細</p>
           <textarea
             className={style.input + " " + style.textarea}
-            placeholder="例）新しく覚えた単語をみんなに披露したい！！単語の意味やスラングがわからないから教えて欲しい！コミュニケーションをしたい！"
+            placeholder="詳細を入力してください..."
             value={description}
             onChange={(e) => setDescription(e.target.value)}
           />
@@ -96,7 +96,7 @@ export default function CreateGroup() {
             disabled={isSubmitDisabled}
             className={style.create}
           >
-            惑星をつくる
+            ここに展開する！
           </button>
           <BackBtn link={`/createdGroups?planet=${planet}`} />
         </div>

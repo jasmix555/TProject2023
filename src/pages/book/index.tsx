@@ -75,7 +75,6 @@ export function BookContent() {
           </button>
         </div>
       </div>
-
       {tab === 1 ? (
         <div className={style.tabContent}>
           <First />

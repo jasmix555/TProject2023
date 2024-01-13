@@ -149,7 +149,7 @@ export default function ProfileSetup() {
           <div className={style.contentWrap}>
             <div className={style.inputWrap}>
               <div className={style.frame}>
-                <img src="/inputFrameL.svg" alt="logo" />
+                <img src="/inputFrame2.svg" alt="logo" />
               </div>
               <div className={style.title}>Sign Up</div>
               <div className={style.content}>
