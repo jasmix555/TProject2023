@@ -24,7 +24,6 @@ import { useRouter } from "next/router";
 import style from "@/styles/createdGroups.module.scss";
 import BackBtn from "@/component/BackBtn";
 import LayoutPage from "@/component/LayoutPage";
-import Background from "@/component/Background";
 import { motion } from "framer-motion";
 import { InView } from "react-intersection-observer";
 
@@ -113,7 +112,6 @@ const CreatedGroups = () => {
 
   return (
     <LayoutPage>
-      <Background />
       <Header contents={menus} />
       <div
         className={style.currentPlanet}

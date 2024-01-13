@@ -10,7 +10,6 @@ import {
 } from "react-icons/fa6";
 import { FaEdit } from "react-icons/fa";
 import Calendar from "@/component/Calendar";
-import Background from "@/component/Background";
 import { useAuthContext } from "@/feature/provider/AuthProvider";
 import styled from "styled-components";
 import { useState } from "react";
@@ -130,7 +129,6 @@ export default function Book() {
   return (
     <Layout>
       <Header contents={menus} />
-      <Background />
 
       <CurrentDate>
         <div className="format year">{currentYear}</div>

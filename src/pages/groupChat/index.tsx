@@ -28,7 +28,6 @@ import { useRouter } from "next/router";
 import style from "@/styles/groupChat.module.scss";
 import LayoutPage from "@/component/LayoutPage";
 import Image from "next/image";
-import Background from "@/component/Background";
 import { usePresence } from "@/component/presenceUtils";
 import LinkBox from "@/component/LinkBox";
 import { AiFillHome } from "react-icons/ai";
@@ -378,7 +377,6 @@ export const Page = () => {
   return (
     <LayoutPage>
       <AuthGuard>
-        <Background />
         <div className={style.body}>
           <LinkBox link={"../"} icon={<AiFillHome />} />
 

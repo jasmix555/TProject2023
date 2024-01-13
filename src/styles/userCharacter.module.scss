@@ -1,8 +1,7 @@
 .characterWrap {
-  position: fixed;
+  position: relative;
   width: 100%;
   height: 88vh;
-  z-index: -1;
 
   .character {
     position: absolute;

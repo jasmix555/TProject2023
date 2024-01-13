@@ -23,7 +23,6 @@ import { useAuthContext } from "@/feature/provider/AuthProvider";
 import { useState, useEffect } from "react";
 import style from "@/styles/learning.module.scss";
 import UserCharacter from "@/component/UserCharacter";
-import Background from "@/component/Background";
 
 const menus = {
   icon: <RiMenu3Line />,
@@ -89,7 +88,6 @@ export default function Learning() {
   return (
     <Layout>
       <Header contents={menus} />
-      <Background />
       <UserCharacter />
       <div className={style.body}>
         <div className={style.wrapper}>

@@ -12,7 +12,6 @@ import { FaEdit } from "react-icons/fa";
 import Header from "@/component/Header";
 import style from "@/styles/adventure.module.scss";
 import Link from "next/link";
-import Background from "@/component/Background";
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { useInView, InView } from "react-intersection-observer";
@@ -78,7 +77,6 @@ export default function HomePage() {
 
   return (
     <Layout>
-      <Background />
       <Header contents={menus} />
       <div className={style.body}>
         <div className={style.worldsWrap}>

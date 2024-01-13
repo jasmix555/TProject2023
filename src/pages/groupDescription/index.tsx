@@ -5,7 +5,6 @@ import { useState, useEffect } from "react";
 import style from "@/styles/createGroup.module.scss";
 import LayoutPage from "@/component/LayoutPage";
 import BackBtn from "@/component/BackBtn";
-import Background from "@/component/Background";
 import { FaUsers } from "react-icons/fa";
 import {
   ref,
@@ -153,7 +152,6 @@ export default function GroupDescription() {
 
   return (
     <LayoutPage>
-      <Background />
       <form onSubmit={handleSubmit} className={style.form}>
         <div className={style.contentWrap}>
           <p>タイトル</p>

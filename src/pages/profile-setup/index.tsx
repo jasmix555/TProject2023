@@ -15,7 +15,6 @@ import { FirebaseError } from "@firebase/util";
 import Select from "react-select";
 import makeAnimated from "react-select/animated";
 import LayoutPage from "@/component/LayoutPage";
-import Background from "@/component/Background";
 
 type OptionType = { value: string; label: string };
 
@@ -145,7 +144,6 @@ export default function ProfileSetup() {
 
   return (
     <LayoutPage>
-      <Background />
       <div className={style.bodyWrap}>
         <form onSubmit={handleSubmit}>
           <div className={style.contentWrap}>

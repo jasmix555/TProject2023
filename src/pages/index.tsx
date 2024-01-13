@@ -23,7 +23,6 @@ import Layout from "@/component/Layout";
 import MenuBar from "@/component/MenuBar";
 import UserName from "@/component/UserName";
 import UserCharacter from "@/component/UserCharacter";
-import Background from "@/component/Background";
 
 const menus = {
   icon: <RiMenu3Line />,
@@ -70,7 +69,6 @@ export default function Home() {
       <AuthGuard>
         {user ? (
           <>
-            <Background />
             <UserName />
             <UserCharacter />
             <MenuBar contents={menus} />

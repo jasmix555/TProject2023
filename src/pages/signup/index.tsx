@@ -11,7 +11,6 @@ import { useRouter } from "next/router";
 import style from "@/styles/form.module.scss";
 import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
 import LayoutPage from "@/component/LayoutPage";
-import Background from "@/component/Background";
 import Link from "next/link";
 
 export default function Register() {
@@ -59,7 +58,6 @@ export default function Register() {
 
   return (
     <LayoutPage>
-      <Background />
       <form onSubmit={handleSubmit}>
         <div className={style.contentWrap}>
           <div className={style.logo}></div>

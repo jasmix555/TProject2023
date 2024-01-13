@@ -212,7 +212,6 @@ const DateInfo: React.FC<{
         ) : (
           <div>
             {savedMessages.length > 0 ? (
-              // Display saved messages
               savedMessages.map((message, index) => (
                 <div key={`SavedMessage_${index}`} className={style.messageBox}>
                   {message}
