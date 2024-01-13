@@ -7,7 +7,6 @@ import { useRouter } from "next/router";
 import style from "@/styles/form.module.scss";
 import { getDoc, doc, getFirestore } from "firebase/firestore/lite";
 import LayoutPage from "@/component/LayoutPage";
-import Toast, { ToastProps } from "@/component/Toast";
 import Link from "next/link";
 
 export default function Signin() {
@@ -18,13 +17,7 @@ export default function Signin() {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const { push } = useRouter();
   const auth = getAuth();
-
-  // Toast state and function
-  const [toast, setToast] = useState<ToastProps>({
-    message: "",
-    status: "info",
-    onClose: () => {},
-  });
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   // Check if the user's profile setup is complete
   const checkProfileSetup = async () => {
@@ -47,19 +40,6 @@ export default function Signin() {
     checkProfileSetup();
   }, []);
 
-  // Function to show toast messages
-  const showToast = (
-    message: string,
-    status: "success" | "error" | "warning" | "info"
-  ) => {
-    setToast({
-      message,
-      status,
-      onClose: () =>
-        setToast({ message: "", status: "info", onClose: () => {} }),
-    });
-  };
-
   // Handle form submission
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -69,15 +49,34 @@ export default function Signin() {
       await signInWithEmailAndPassword(auth, email, password);
       setEmail("");
       setPassword("");
-      showToast("ログインしました。", "success");
       checkProfileSetup();
-    } catch (e) {
-      showToast("ログインに失敗しました。", "error");
-      if (e instanceof FirebaseError) {
-        console.error("Firebase Error:", e.message);
+    } catch (error) {
+      const firebaseError = error as FirebaseError;
+      if (firebaseError) {
+        // Handle specific Firebase error codes
+        switch (firebaseError.code) {
+          case "auth/user-not-found":
+            setErrorMessage("User not found. Please check your email.");
+            break;
+
+          case "auth/wrong-password":
+            setErrorMessage("Wrong password. Please check your password.");
+            break;
+
+          default:
+            setErrorMessage("An error occurred. Please try again.");
+        }
+      } else {
+        setErrorMessage("An unexpected error occurred. Please try again.");
+        console.error("Non-Firebase Error:", error);
       }
     } finally {
       setIsLoading(false);
+
+      // Clear the error message after 2 seconds
+      setTimeout(() => {
+        setErrorMessage(null);
+      }, 4000);
     }
   };
 
@@ -87,13 +86,12 @@ export default function Signin() {
         <div className={style.contentWrap}>
           <div className={style.logo}></div>
           <div className={style.inputWrap}>
-            <div className={style.frame}>
-              <img src="/inputFrame.svg" alt="logo" />
-            </div>
+            <div className={style.frame}></div>
             <div className={style.title}>Login</div>
             <div className={style.content}>
               <label htmlFor="email">E-Mail</label>
               <input
+                id="email"
                 className={style.input}
                 type="email"
                 name="email"
@@ -107,6 +105,7 @@ export default function Signin() {
               <label htmlFor="password">Password</label>
               <div className={style.iconVis}>
                 <input
+                  id="password"
                   className={style.input}
                   type={show ? "text" : "password"}
                   name="password"
@@ -120,6 +119,9 @@ export default function Signin() {
                 </i>
               </div>
             </div>
+            <div className={style.error}>
+              {errorMessage && <p>{errorMessage}</p>}
+            </div>
             <div className={style.link}>
               <Link href="/signup">新しいアカウント作成</Link>
             </div>
@@ -131,7 +133,6 @@ export default function Signin() {
           </div>
         </div>
       </form>
-      {toast.message && <Toast {...toast} />}
     </LayoutPage>
   );
 }

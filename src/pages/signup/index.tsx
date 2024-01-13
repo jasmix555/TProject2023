@@ -5,8 +5,6 @@ import {
   UserCredential,
   sendEmailVerification,
 } from "firebase/auth";
-import { useToast } from "@chakra-ui/react";
-import { FirebaseError } from "@firebase/util";
 import { useRouter } from "next/router";
 import style from "@/styles/form.module.scss";
 import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
@@ -19,7 +17,6 @@ export default function Register() {
   const [show, setShow] = useState(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
-  const toast = useToast();
   const router = useRouter();
 
   const handleClick = () => setShow(!show);
@@ -36,21 +33,9 @@ export default function Register() {
       // Registration successful, redirect to the profile setup page
       setEmail("");
       setPassword("");
-      toast({
-        title: "確認メールを送信しました。",
-        status: "success",
-        position: "top",
-      });
       router.push("/signin");
     } catch (error) {
       console.error(error);
-
-      toast({
-        title: "Registration Error",
-        description: (error as FirebaseError).message,
-        status: "error",
-        position: "top",
-      });
     } finally {
       setIsLoading(false);
     }
@@ -62,13 +47,12 @@ export default function Register() {
         <div className={style.contentWrap}>
           <div className={style.logo}></div>
           <div className={style.inputWrap}>
-            <div className={style.frame}>
-              <img src="/inputFrame.svg" alt="logo" />
-            </div>
+            <div className={style.frame}></div>
             <div className={style.title}>Sign Up</div>
             <div className={style.content}>
               <label htmlFor="email">E-Mail</label>
               <input
+                id="email"
                 className={style.input}
                 type="email"
                 name="email"
@@ -82,6 +66,7 @@ export default function Register() {
               <label htmlFor="password">Password</label>
               <div className={style.iconVis}>
                 <input
+                  id="password"
                   className={style.input}
                   type={show ? "text" : "password"}
                   name="password"

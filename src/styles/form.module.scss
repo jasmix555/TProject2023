@@ -40,10 +40,14 @@
     position: relative;
 
     .frame {
+      background-image: url("/Frame/inputFrame.svg");
+      background-repeat: no-repeat;
+      background-size: contain;
+      background-position: center;
       position: absolute;
       width: 100%;
       height: 100%;
-      z-index: -1;
+      z-index: 0;
       pointer-events: none;
     }
 
@@ -52,8 +56,8 @@
       font-size: 2.4rem;
       color: var(--input-clr);
       position: absolute;
-      top: 1rem;
-      left: 4.6rem;
+      top: 2rem;
+      left: 5rem;
     }
 
     .content {
@@ -71,7 +75,7 @@
         border: var(--border-stroke);
         box-shadow: var(--border-shadow);
         border-radius: 10px;
-        width: 30rem;
+        width: 29rem;
         height: 5rem;
         padding: 1rem 1.5rem;
         font-weight: 600;
@@ -84,8 +88,9 @@
           background: var(--input-bg);
         }
       }
+
       .iconVis {
-        position: relative; /* Set the position to relative */
+        position: relative;
         display: flex;
         align-items: center;
 
@@ -105,6 +110,14 @@
           }
         }
       }
+    }
+
+    .error {
+      color: var(--accent-clr);
+      font-size: 1.2rem;
+      margin-top: 0.4rem;
+      position: absolute;
+      bottom: 6rem;
     }
 
     .link {
