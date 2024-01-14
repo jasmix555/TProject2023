@@ -32,7 +32,8 @@ body {
   overflow-y: scroll; /* All browsers without overlaying scrollbars */
   -webkit-text-size-adjust: 100%;
   font-size: 62.5%;
-  max-width: 600px;
+  max-width: 400px;
+  margin: 0 auto;
   height: 100vh;
   color: var(--white) !important;
   background-image: url(../../public/25.svg) !important;

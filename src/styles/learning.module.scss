@@ -34,7 +34,6 @@
     background-repeat: no-repeat;
     background-size: contain;
     background-position: center;
-    filter: drop-shadow(0px 0px 8px #353bdd);
     position: absolute;
     width: 100%;
     height: 100%;
@@ -51,6 +50,30 @@
     width: 70%;
   }
 
+  .caret {
+    position: relative;
+
+    &::after {
+      content: "";
+      position: absolute;
+      z-index: 2;
+      right: 0.8rem;
+      top: 2.6rem;
+      width: 2.2rem;
+      height: 2.2rem;
+      background-image: url("/Frame/caret-down.svg");
+      background-repeat: no-repeat;
+      background-size: contain;
+      background-position: center;
+      transition: all 150ms ease-in-out;
+    }
+    select {
+      &:focus {
+        color: var(--accent-clr);
+      }
+    }
+  }
+
   textarea {
     word-wrap: break-word;
     max-height: 300px;
@@ -59,29 +82,15 @@
     height: 5rem;
     border: var(--border-stroke);
     border-radius: 10px;
+    background: rgba(12, 26, 52, 0.7);
   }
 
   select {
     border-bottom: var(--border-stroke);
-
     transition: all 150ms ease-in-out;
     position: relative;
     width: 100%;
     height: 100%;
-
-    &::after {
-      content: "";
-      position: absolute;
-      top: 0;
-      right: 0;
-      z-index: 2;
-      width: 1.6rem;
-      height: 1.6rem;
-      background-image: url("/Frame/caret-down.svg");
-      background-repeat: no-repeat;
-      background-size: contain;
-      background-position: center;
-    }
   }
 
   select,
@@ -91,7 +100,6 @@
     display: flex;
     padding: 0.6rem 0.8rem;
     width: 100%;
-    background: transparent;
     outline: none;
     font-weight: 500;
     filter: drop-shadow(0px 0px 8px #353bdd);
@@ -120,8 +128,9 @@
   text-align: center;
   filter: drop-shadow(0px 0px 8px #353bdd);
   span {
-    font-size: 1.8rem;
-    margin-left: 0.4rem;
-    vertical-align: middle;
+    font-size: 2.6rem;
+    position: absolute;
+    right: 1.8rem;
+    top: 1.7rem;
   }
 }

@@ -101,7 +101,7 @@ export default function Learning() {
       <form onSubmit={handleSubmit}>
         <div className={style.contentWrapper}>
           <div className={style.frame}></div>
-          <div className={style.content}>
+          <div className={`${style.content} ${style.caret}`}>
             <label htmlFor="language">言語</label>
             <select
               required
@@ -121,7 +121,7 @@ export default function Learning() {
             </select>
           </div>
 
-          <div className={style.content}>
+          <div className={`${style.content} ${style.caret}`}>
             <label htmlFor="genre">ジャンル</label>
             <select
               required
