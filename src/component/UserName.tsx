@@ -21,8 +21,6 @@ export default function UserName() {
           if (userDocSnapshot.exists()) {
             const userData = userDocSnapshot.data();
 
-            console.log(userData); // Log the user data
-
             if (userData) {
               if (userData.nickname) {
                 setNickname(userData.nickname);

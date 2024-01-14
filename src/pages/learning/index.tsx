@@ -100,7 +100,8 @@ export default function Learning() {
       </div>
       <form onSubmit={handleSubmit}>
         <div className={style.contentWrapper}>
-          <div className={style.selection}>
+          <div className={style.frame}></div>
+          <div className={style.content}>
             <label htmlFor="language">言語</label>
             <select
               required
@@ -120,7 +121,7 @@ export default function Learning() {
             </select>
           </div>
 
-          <div className={style.selection}>
+          <div className={style.content}>
             <label htmlFor="genre">ジャンル</label>
             <select
               required
@@ -133,10 +134,14 @@ export default function Learning() {
               </option>
               <option value="日常会話">日常会話</option>
               <option value="フォーマール">フォーマール</option>
+              <option value="ビジネス">ビジネス</option>
+              <option value="方言">方言</option>
+              <option value="スラング">スラング</option>
+              <option value="その他">その他</option>
             </select>
           </div>
 
-          <div className={style.memo}>
+          <div className={style.content}>
             <label htmlFor="memo">メモ</label>
             <textarea
               id="memo"

@@ -1,4 +1,5 @@
 .title {
+  margin-top: 12rem;
   text-align: center;
   padding-bottom: 1.8rem;
   h1 {
@@ -16,50 +17,88 @@
 }
 
 .contentWrapper {
-  background-image: url("/Frame/inputFrame3.svg");
+  position: relative;
   padding: 2rem 0;
-  border: solid 1px tomato;
   width: 100%;
-  min-height: 50vh;
-
+  min-height: 44vh;
   margin: 0 auto;
   display: flex;
   flex-direction: column;
+  align-items: center;
+  justify-content: center;
   gap: 2rem;
+  z-index: 1;
+
+  .frame {
+    background-image: url("/Frame/inputFrame3.svg");
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+    filter: drop-shadow(0px 0px 8px #353bdd);
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    pointer-events: none;
+  }
 
   label {
     font-weight: 700;
-    font-size: 1.8rem;
+    font-size: 1.6rem;
   }
 
-  .selection,
-  .memo {
-    border-bottom: solid 1px var(--white);
-    padding-bottom: 0.4rem;
+  .content {
+    width: 70%;
   }
 
   textarea {
     word-wrap: break-word;
-    max-height: 200px;
+    max-height: 300px;
     overflow: auto;
-    padding: 0.8rem 1rem;
     resize: none;
-    height: 4.2rem;
+    height: 5rem;
+    border: var(--border-stroke);
+    border-radius: 10px;
+  }
+
+  select {
+    border-bottom: var(--border-stroke);
+
+    transition: all 150ms ease-in-out;
+    position: relative;
+    width: 100%;
+    height: 100%;
+
+    &::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      right: 0;
+      z-index: 2;
+      width: 1.6rem;
+      height: 1.6rem;
+      background-image: url("/Frame/caret-down.svg");
+      background-repeat: no-repeat;
+      background-size: contain;
+      background-position: center;
+    }
   }
 
   select,
   textarea,
   input {
-    font-size: 1.8rem;
+    font-size: 1.4rem;
     display: flex;
-    padding: 0.6rem 0;
+    padding: 0.6rem 0.8rem;
     width: 100%;
     background: transparent;
     outline: none;
     font-weight: 500;
+    filter: drop-shadow(0px 0px 8px #353bdd);
+
     &:invalid,
     &::placeholder {
-      color: #bec3cc;
+      color: var(--input-clr);
     }
   }
 }
@@ -67,7 +106,7 @@
 .submit {
   position: absolute;
   right: 1.6rem;
-  bottom: 1.8rem;
+  top: 35rem;
   display: block;
   color: var(--accent-clr);
   width: 17rem;
