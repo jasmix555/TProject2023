@@ -127,6 +127,11 @@ type Value = ValuePiece | [ValuePiece, ValuePiece];
 type Message = {
   message: string;
   timestamp: number;
+  languages: string[];
+  word?: string;
+  meaning?: string;
+  pronunciation?: string;
+  genre?: string;
 };
 
 const containerVariants = {
@@ -165,7 +170,11 @@ const DateInfo: React.FC<{
           }
         );
 
-        setSavedMessages(messagesForDate.map((message) => message.message));
+        setSavedMessages(
+          messagesForDate.map(
+            (message) => message.message || message.word || ""
+          )
+        );
       } else {
         console.error("User document not found for userId:", userId);
       }
@@ -214,7 +223,7 @@ const DateInfo: React.FC<{
             {savedMessages.length > 0 ? (
               savedMessages.map((message, index) => (
                 <div key={`SavedMessage_${index}`} className={style.messageBox}>
-                  {message}
+                  {message || "No message"}
                 </div>
               ))
             ) : (

@@ -8,7 +8,12 @@ interface DictionaryEntry {
   saved: boolean;
   timestamp: number;
   languages: string[];
+  word: string;
+  meaning?: string;
+  pronunciation?: string;
+  genre?: string;
 }
+
 type Props = {
   date?: Date | null;
   userId: string;
@@ -17,10 +22,13 @@ type Props = {
 export default function SavedWords({ date, userId }: Props) {
   const [savedMessages, setSavedMessages] = useState<JSX.Element[]>([]);
   const [prevDate, setPrevDate] = useState<Date | null>(null);
+  const [loading, setLoading] = useState<boolean>(true);
 
   // Fetch saved messages for the selected date
   const fetchSavedInfo = async (selectedDate: Date | null) => {
     try {
+      setLoading(true);
+
       const db = getFirestore();
       const usersCollection = collection(db, "users");
       const userDoc = doc(usersCollection, userId);
@@ -34,14 +42,18 @@ export default function SavedWords({ date, userId }: Props) {
         // Annotate the type of dictionary entries
         const dictionary: DictionaryEntry[] = userData?.dictionary || [];
 
+        // Sort the dictionary array by timestamp in descending order
+        const sortedDictionary = dictionary.sort(
+          (a, b) => b.timestamp - a.timestamp
+        );
+
         // Get today's date for comparison
         const today = new Date();
         today.setHours(0, 0, 0, 0);
 
         // Extract saved messages from the dictionary
-        const savedWords = dictionary
-          .filter((entry: DictionaryEntry) => entry.saved === true)
-          .map((entry: DictionaryEntry, index) => {
+        const savedWords = sortedDictionary.map(
+          (entry: DictionaryEntry, index) => {
             // Check if the word was added today
             const wordDate = new Date(entry.timestamp);
             wordDate.setHours(0, 0, 0, 0);
@@ -61,12 +73,13 @@ export default function SavedWords({ date, userId }: Props) {
 
             return (
               <div key={`SavedMessage_${index}`} className={messageClass}>
-                <p className={style.text}>{entry.message}</p>
+                <p className={style.text}> {entry.message || entry.word}</p>
                 {updatedIsNew && <div className={style.newLabel}>New!</div>}
                 <button className={style.edit}>{">"}</button>
               </div>
             );
-          });
+          }
+        );
 
         setSavedMessages(savedWords);
         setPrevDate(today); // Update the previous date
@@ -75,6 +88,8 @@ export default function SavedWords({ date, userId }: Props) {
       }
     } catch (error) {
       console.error("Error fetching saved messages:", error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -84,11 +99,14 @@ export default function SavedWords({ date, userId }: Props) {
 
   return (
     <div className={style.messagesWrap}>
-      <div>
-        {
-          // Display saved messages
-          savedMessages.map((message, index) => message)
-        }
+      <div className={style.messagesWrap}>
+        {loading ? (
+          <p>Loading...</p>
+        ) : savedMessages.length > 0 ? (
+          <>{savedMessages}</>
+        ) : (
+          <p>No saved messages found.</p>
+        )}
       </div>
     </div>
   );

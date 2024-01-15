@@ -1,4 +1,5 @@
 import { useAuthContext } from "@/feature/provider/AuthProvider";
+import { Spinner } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import type { ReactNode } from "react";
 
@@ -23,7 +24,13 @@ export const AuthGuard = ({ children }: Props) => {
           alignItems: "center",
         }}
       >
-        読み込み中...
+        <Spinner
+          thickness="4px"
+          speed="0.65s"
+          emptyColor="gray.200"
+          color="blue.500"
+          size="xl"
+        />
       </div>
     );
   }
