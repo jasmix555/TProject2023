@@ -57,10 +57,31 @@ export default function Learning() {
             // If user data is not found, navigate to the Welcome page
             router.push("/welcome");
           } else {
-            // User data found, set isFetching to false
-            setIsFetching(false);
             // Retrieve fetched words from user data
-            setFetchedWords(userData.dictionary || []);
+            const userDictionary = userData.dictionary || [];
+
+            // Check if there are words for today's date
+            const todayTimestamp = new Date().setHours(0, 0, 0, 0);
+            const wordsForToday = userDictionary.filter(
+              (entry: { timestamp: number }) => {
+                const entryTimestamp = new Date(entry.timestamp).setHours(
+                  0,
+                  0,
+                  0,
+                  0
+                );
+                return entryTimestamp === todayTimestamp;
+              }
+            );
+
+            if (wordsForToday.length > 0) {
+              // If there are words for today's date, switch to Fetched component
+              setIsFetching(false);
+              setFetchedWords(wordsForToday);
+            } else {
+              // If not, stay in Fetch component
+              setIsFetching(true);
+            }
           }
         }
       } catch (error) {
