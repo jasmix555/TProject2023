@@ -65,8 +65,9 @@
         box-shadow: var(--border-shadow);
         z-index: -1;
       }
+
       a {
-        z-index: 10;
+        z-index: 2;
         width: 7rem;
         height: 7rem;
         color: var(--footer-color);
