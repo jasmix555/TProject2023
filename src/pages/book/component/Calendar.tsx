@@ -18,6 +18,7 @@ const StyledCalendarContainer = styled.div`
     height: 390px;
     font-size: 1.6rem;
     line-height: 2.6;
+    overflow-y: scroll;
   }
 
   .react-calendar button {
@@ -241,7 +242,7 @@ const DateInfo: React.FC<{
                 </Motion>
               ))
             ) : (
-              <p>冒険の記録はありません。</p>
+              <p style={{ fontSize: "1.6rem" }}>冒険の記録はありません。</p>
             )}
             {/* <button onClick={handleEditClick}>Edit</button> */}
           </div>
