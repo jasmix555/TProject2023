@@ -6,7 +6,7 @@
   width: 100vw;
   height: 100vh;
   backdrop-filter: blur(5px);
-  z-index: 999;
+  z-index: 10;
 
   .container {
     padding: 4rem 2rem 3rem 2rem;
@@ -32,9 +32,23 @@
   }
 }
 
-.messageBox {
-  width: 100%;
-  height: auto;
-  padding: 0.2rem 0.6rem;
-  @include Box.glassBox($fS: 1.2rem);
+.messageWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+
+  .messageBox {
+    width: 100%;
+    height: auto;
+    padding: 0.2rem 0.6rem;
+    @include Box.glassBox($fS: 1.6rem);
+    .text {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      .word {
+        color: var(--accent-clr);
+      }
+    }
+  }
 }

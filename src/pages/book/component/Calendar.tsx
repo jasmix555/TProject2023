@@ -4,7 +4,7 @@ import Calendar from "react-calendar";
 import styled from "styled-components";
 import { FaTimes } from "react-icons/fa";
 import style from "@/styles/calendar.module.scss";
-import { motion, useAnimation, AnimationControls, color } from "framer-motion"; // Import motion and useAnimation
+import { motion, useAnimation, AnimationControls } from "framer-motion"; // Import motion and useAnimation
 import { isSameDay } from "date-fns";
 
 const StyledCalendarContainer = styled.div`
@@ -125,9 +125,9 @@ type ValuePiece = Date | null;
 type Value = ValuePiece | [ValuePiece, ValuePiece];
 
 type Message = {
-  message: string;
+  message?: string;
   timestamp: number;
-  languages: string[];
+  languages?: string;
   word?: string;
   meaning?: string;
   pronunciation?: string;
@@ -145,7 +145,7 @@ const DateInfo: React.FC<{
   onClose: () => void;
   controls: AnimationControls;
 }> = ({ date, userId, onClose, controls }) => {
-  const [savedMessages, setSavedMessages] = useState<string[]>([]);
+  const [savedMessages, setSavedMessages] = useState<Message[]>([]);
   const [isEditMode, setIsEditMode] = useState<boolean>(false);
 
   // Fetch saved messages for the selected date
@@ -170,11 +170,7 @@ const DateInfo: React.FC<{
           }
         );
 
-        setSavedMessages(
-          messagesForDate.map(
-            (message) => message.message || message.word || ""
-          )
-        );
+        setSavedMessages(messagesForDate);
       } else {
         console.error("User document not found for userId:", userId);
       }
@@ -219,11 +215,24 @@ const DateInfo: React.FC<{
         {isEditMode ? (
           <div>{/* Edit mode UI */}</div>
         ) : (
-          <div>
+          <div className={style.messageWrapper}>
             {savedMessages.length > 0 ? (
               savedMessages.map((message, index) => (
                 <div key={`SavedMessage_${index}`} className={style.messageBox}>
-                  {message || "No message"}
+                  <div className={style.text}>
+                    <div className={style.word}>
+                      {message.word || message.message || "No Words"}
+                    </div>
+                    <div className={style.genre}>
+                      [{message.genre || "ジャンル登録してません。"}]
+                    </div>
+                  </div>
+                  <div className={style.pronunciation}>
+                    {message.pronunciation || "読み方登録してません。"}
+                  </div>
+                  <div className={style.meaning}>
+                    {message.meaning || "意味登録してません。"}
+                  </div>
                 </div>
               ))
             ) : (

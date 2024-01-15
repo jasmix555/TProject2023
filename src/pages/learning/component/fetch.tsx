@@ -48,7 +48,7 @@ export const Fetch: FC<FetchProps> = ({
   const getWords = (
     language: string,
     genre: string,
-    count: number = 2
+    count: number = 4
   ): WordType[] => {
     let filteredWords = words.filter((word) => word.language === language);
     if (genre) {

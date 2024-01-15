@@ -9,12 +9,12 @@ import {
   FaUsers,
 } from "react-icons/fa6";
 import { FaEdit } from "react-icons/fa";
-import Calendar from "@/component/Calendar";
 import { useAuthContext } from "@/feature/provider/AuthProvider";
 import styled from "styled-components";
 import { useState } from "react";
 import style from "@/styles/book.module.scss";
-import SavedWords from "@/component/SavedWords";
+import Calendar from ".component/Calendar";
+import SavedWords from ".component/SavedWords";
 
 const menus = {
   icon: <RiMenu3Line />,
