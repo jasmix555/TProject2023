@@ -39,17 +39,6 @@
       padding-right: 0.3rem;
     }
 
-    .border {
-      bottom: 2.3rem;
-      right: 1.4rem;
-      position: absolute;
-      background: linear-gradient(180deg, #0e244e 0%, #245bc3 100%);
-      height: 9rem;
-      width: 9rem;
-      border: var(--border-stroke);
-      box-shadow: var(--border-shadow);
-    }
-
     a {
       display: inline-block;
       border-radius: 50%;
@@ -63,9 +52,21 @@
 
     .active {
       position: relative;
-      top: -3rem;
-      transition: 100ms ease-in-out;
+      top: -4rem;
+
+      .border {
+        top: -1rem;
+        right: -1rem;
+        position: absolute;
+        background: linear-gradient(180deg, #0e244e 0%, #245bc3 100%);
+        height: 9rem;
+        width: 9rem;
+        border: var(--border-stroke);
+        box-shadow: var(--border-shadow);
+        z-index: -1;
+      }
       a {
+        z-index: 10;
         width: 7rem;
         height: 7rem;
         color: var(--footer-color);

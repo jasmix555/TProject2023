@@ -3,7 +3,7 @@ import Link from "next/link";
 import { useState, useEffect } from "react";
 import { footerArray } from "@/lib/nav/footerTypes";
 import { Icon } from "@chakra-ui/react";
-import Motion from "./Motion";
+import { cubicBezier, motion } from "framer-motion";
 import { AuthGuard } from "@/feature/auth/component/AuthGuard/AuthGuard";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
@@ -23,21 +23,42 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     }
   }, []);
 
+  const variant = {
+    hidden: {
+      opacity: 0,
+      y: 20,
+    },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.3,
+        cubicBezier: cubicBezier(0.25, 0.1, 0.25, 1),
+      },
+    },
+  };
+
   return (
     <AuthGuard>
-      <Motion>{children}</Motion>
+      <>{children}</>
       <div className={style.footerWrap} style={{ zIndex: 1 }}>
         {footerArray.map((e, idx) => {
           if (pathStat == e.path) {
             return (
-              <div className={style.footerItem} key={idx}>
-                <div className={style.border}></div>
+              <motion.div
+                className={style.footerItem}
+                key={idx}
+                variants={variant}
+                initial="hidden"
+                animate="visible"
+              >
                 <button className={style.active}>
+                  <div className={style.border}></div>
                   <Link href={e.path} className={style.button}>
                     <Icon as={e.icon} />
                   </Link>
                 </button>
-              </div>
+              </motion.div>
             );
           } else {
             return (
