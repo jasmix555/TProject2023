@@ -1,3 +1,5 @@
+import React, { useEffect, useState } from "react";
+import style from "@/styles/learning.module.scss";
 import { RiMenu3Line } from "react-icons/ri";
 import {
   FaRegCircleXmark,
@@ -19,9 +21,8 @@ import {
   Firestore,
 } from "firebase/firestore/lite";
 import { useAuthContext } from "@/feature/provider/AuthProvider";
-import { useEffect, useState } from "react";
 import Fetch, { FetchProps } from "./component/fetch";
-import Fetched from "./component/fetched"; // Import the Fetched component
+import Fetched from "./component/fetched";
 import { WordType } from "@/lib/words/words";
 
 const menus = {
@@ -40,8 +41,8 @@ const menus = {
 export default function Learning() {
   const { user } = useAuthContext();
   const router = useRouter();
-  const [isFetching, setIsFetching] = useState(true);
-  const [fetchedWords, setFetchedWords] = useState<WordType[]>([]); // Track fetched words
+  const [isLoading, setIsLoading] = useState(true);
+  const [fetchedWords, setFetchedWords] = useState<WordType[]>([]);
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -76,17 +77,18 @@ export default function Learning() {
 
             if (wordsForToday.length > 0) {
               // If there are words for today's date, switch to Fetched component
-              setIsFetching(false);
               setFetchedWords(wordsForToday);
-            } else {
-              // If not, stay in Fetch component
-              setIsFetching(true);
             }
           }
         }
       } catch (error) {
         console.error(error);
         // Handle error as needed
+      } finally {
+        // Introduce a 5-second delay using setTimeout
+        setTimeout(() => {
+          setIsLoading(false);
+        }, 5000);
       }
     };
 
@@ -97,7 +99,6 @@ export default function Learning() {
     onLanguageChange: (language: string) => {},
     onGenreChange: (genre: string) => {},
     onFormSubmit: (words: WordType[]) => {
-      console.log("Fetched Words:", words);
       setFetchedWords(words);
     },
   };
@@ -105,10 +106,10 @@ export default function Learning() {
   return (
     <Layout>
       <Header contents={menus} />
-      {isFetching ? (
-        <Fetch {...fetchProps} />
+      {fetchedWords.length > 0 ? (
+        <Fetched fetchedWords={fetchedWords} />
       ) : (
-        <Fetched fetchedWords={fetchedWords} /> // Pass fetchedWords to the Fetched component
+        <Fetch {...fetchProps} />
       )}
     </Layout>
   );

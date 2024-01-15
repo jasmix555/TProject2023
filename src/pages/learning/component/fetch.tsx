@@ -1,4 +1,4 @@
-import React, { ChangeEvent, FC, useState, FormEvent } from "react";
+import React, { ChangeEvent, FC, useState, FormEvent, useEffect } from "react";
 import style from "@/styles/learning.module.scss";
 import { MdOutlineKeyboardDoubleArrowRight } from "react-icons/md";
 import { words, WordType, languageMap, genreMap } from "@/lib/words/words";
