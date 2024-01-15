@@ -13,8 +13,8 @@ import { useAuthContext } from "@/feature/provider/AuthProvider";
 import styled from "styled-components";
 import { useState } from "react";
 import style from "@/styles/book.module.scss";
-import Calendar from ".component/Calendar";
-import SavedWords from ".component/SavedWords";
+import Calendar from "./component/Calendar";
+import SavedWords from "./component/SavedWords";
 
 const menus = {
   icon: <RiMenu3Line />,

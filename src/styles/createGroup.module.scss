@@ -9,6 +9,7 @@
   height: 100vh;
   text-align: center;
   gap: 2rem;
+
   .contentWrap {
     display: flex;
     flex-direction: column;
@@ -29,26 +30,6 @@
     }
   }
 
-  .capacity {
-    border: var(--border-stroke);
-    font-size: 1.6rem;
-    padding: 0.6rem 2rem;
-    border-radius: 5px;
-    box-shadow: var(--border-shadow);
-    background: rgba(15, 37, 79, 0.5);
-    backdrop-filter: blur(10px);
-    .currentUsers {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 1rem;
-      p {
-        font-family: "Play", sans-serif;
-        color: var(--accent-clr);
-      }
-    }
-  }
-
   .buttons {
     position: relative;
     bottom: -4rem;
@@ -61,6 +42,31 @@
 
     .create {
       @include Box.btnStyle($w: 18rem, $fontS: 1.8rem);
+    }
+  }
+}
+
+.capacity {
+  position: absolute;
+  right: 0;
+  font-size: 1.8rem;
+  background-image: url("/Frame/buttonFrame.svg");
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
+  width: 15rem;
+  height: 5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  .currentUsers {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    p {
+      font-family: "Play", sans-serif;
+      color: var(--accent-clr);
     }
   }
 }

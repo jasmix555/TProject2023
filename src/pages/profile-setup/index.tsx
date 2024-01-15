@@ -147,11 +147,12 @@ export default function ProfileSetup() {
       <div className={style.bodyWrap}>
         <form onSubmit={handleSubmit}>
           <div className={style.contentWrap}>
+            <div className={style.logo}></div>
             <div className={style.inputWrap}>
-              <div className={style.frame}>
-                <img src="/inputFrame2.svg" alt="logo" />
+              <div className={style.frame}></div>
+              <div className={style.title}>
+                {getAuth().currentUser ? "Edit Profile" : "Create Profile"}
               </div>
-              <div className={style.title}>Sign Up</div>
               <div className={style.content}>
                 <label htmlFor="name">Username</label>
                 <input
