@@ -31,7 +31,8 @@ export default function Layout({ children }: { children: React.ReactNode }) {
           if (pathStat == e.path) {
             return (
               <div className={style.footerItem} key={idx}>
-                <button className={style.active + " " + style.border}>
+                <div className={style.border}></div>
+                <button className={style.active}>
                   <Link href={e.path} className={style.button}>
                     <Icon as={e.icon} />
                   </Link>
