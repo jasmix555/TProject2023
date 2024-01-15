@@ -36,7 +36,7 @@ body {
   margin: 0 auto;
   height: 100vh;
   color: var(--white) !important;
-  background-image: url(../../public/25.svg) !important;
+  background-image: url(/25.svg) !important;
   background-repeat: no-repeat !important;
   background-position: center !important;
   background-size: cover !important;
