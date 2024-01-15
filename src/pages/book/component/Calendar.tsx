@@ -6,6 +6,7 @@ import { FaTimes } from "react-icons/fa";
 import style from "@/styles/calendar.module.scss";
 import { motion, useAnimation, AnimationControls } from "framer-motion"; // Import motion and useAnimation
 import { isSameDay } from "date-fns";
+import Motion from "@/component/Motion";
 
 const StyledCalendarContainer = styled.div`
   .react-calendar {
@@ -218,7 +219,11 @@ const DateInfo: React.FC<{
           <div className={style.messageWrapper}>
             {savedMessages.length > 0 ? (
               savedMessages.map((message, index) => (
-                <div key={`SavedMessage_${index}`} className={style.messageBox}>
+                <Motion
+                  key={`SavedMessage_${index}`}
+                  index={index}
+                  classname={style.messageBox}
+                >
                   <div className={style.text}>
                     <div className={style.word}>
                       {message.word || message.message || "No Words"}
@@ -233,7 +238,7 @@ const DateInfo: React.FC<{
                   <div className={style.meaning}>
                     {message.meaning || "意味登録してません。"}
                   </div>
-                </div>
+                </Motion>
               ))
             ) : (
               <p>冒険の記録はありません。</p>

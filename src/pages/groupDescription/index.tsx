@@ -21,7 +21,6 @@ import {
   FaUsers,
 } from "react-icons/fa6";
 import { FaEdit } from "react-icons/fa";
-import Layout from "@/component/Layout";
 import LayoutPage from "@/component/LayoutPage";
 import Header from "@/component/Header";
 
@@ -178,7 +177,7 @@ export default function GroupDescription() {
             disabled
             className={style.title}
             type="text"
-            defaultValue={group.title}
+            value={group.title}
           />
           <textarea
             className={style.description}
@@ -186,6 +185,7 @@ export default function GroupDescription() {
             disabled
             onChange={(e) => setDescriptionValue(e.target.value)}
           />
+
           <div className={style.capacity}>
             <div className={style.currentUsers}>
               <FaUsers />
@@ -195,9 +195,9 @@ export default function GroupDescription() {
         </div>
 
         <div className={style.buttons}>
-          <div className={style.expirationTag}>
-            <p>※惑星は6時間経つと消滅してしまうよ!</p>
-          </div>
+          <p className={style.expirationTag}>
+            ※惑星は6時間経つと消滅してしまうよ!
+          </p>
           <button type="submit" className={style.create}>
             着陸する！
           </button>
