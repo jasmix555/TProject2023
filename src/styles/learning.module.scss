@@ -1,3 +1,5 @@
+@use "Box.module" as Box;
+
 .title {
   margin-top: 12rem;
   text-align: center;
@@ -132,5 +134,25 @@
     position: absolute;
     right: 1.8rem;
     top: 1.7rem;
+  }
+}
+
+.fetchedWords {
+  width: 90%;
+  margin: 0 auto;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  .wordContainer {
+    @include Box.glassBox($fS: 1.6rem);
+    .text {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      .word {
+        color: var(--accent-clr);
+      }
+    }
   }
 }

@@ -2,11 +2,11 @@ import React, { FC } from "react";
 import style from "@/styles/learning.module.scss";
 import { WordType } from "@/lib/words/words";
 
-interface FetchingProps {
+interface FetchedProps {
   fetchedWords: WordType[];
 }
 
-const Fetching: FC<FetchingProps> = ({ fetchedWords }) => {
+const Fetched: FC<FetchedProps> = ({ fetchedWords }) => {
   return (
     <>
       <div className={style.title}>
@@ -17,7 +17,11 @@ const Fetching: FC<FetchingProps> = ({ fetchedWords }) => {
       <div className={style.fetchedWords}>
         {fetchedWords.map((word, index) => (
           <div key={index} className={style.wordContainer}>
-            <div className={style.word}>{word.word}</div>
+            <div className={style.text}>
+              <div className={style.word}>{word.word}</div>
+              <div className={style.genre}>[{word.genre}]</div>
+            </div>
+            <div className={style.pronunciation}>{word.pronunciation}</div>
             <div className={style.meaning}>{word.meaning}</div>
           </div>
         ))}
@@ -26,4 +30,4 @@ const Fetching: FC<FetchingProps> = ({ fetchedWords }) => {
   );
 };
 
-export default Fetching;
+export default Fetched;

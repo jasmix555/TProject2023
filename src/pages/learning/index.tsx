@@ -21,8 +21,8 @@ import {
 import { useAuthContext } from "@/feature/provider/AuthProvider";
 import { useEffect, useState } from "react";
 import Fetch, { FetchProps } from "./component/fetch";
+import Fetched from "./component/fetched"; // Import the Fetched component
 import { WordType } from "@/lib/words/words";
-import Fetching from "./component/fetching";
 
 const menus = {
   icon: <RiMenu3Line />,
@@ -40,6 +40,8 @@ const menus = {
 export default function Learning() {
   const { user } = useAuthContext();
   const router = useRouter();
+  const [isFetching, setIsFetching] = useState(true);
+  const [fetchedWords, setFetchedWords] = useState<WordType[]>([]); // Track fetched words
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -54,6 +56,11 @@ export default function Learning() {
           if (!userData) {
             // If user data is not found, navigate to the Welcome page
             router.push("/welcome");
+          } else {
+            // User data found, set isFetching to false
+            setIsFetching(false);
+            // Retrieve fetched words from user data
+            setFetchedWords(userData.dictionary || []);
           }
         }
       } catch (error) {
@@ -70,13 +77,18 @@ export default function Learning() {
     onGenreChange: (genre: string) => {},
     onFormSubmit: (words: WordType[]) => {
       console.log("Fetched Words:", words);
+      setFetchedWords(words);
     },
   };
 
   return (
     <Layout>
       <Header contents={menus} />
-      <Fetch {...fetchProps} />
+      {isFetching ? (
+        <Fetch {...fetchProps} />
+      ) : (
+        <Fetched fetchedWords={fetchedWords} /> // Pass fetchedWords to the Fetched component
+      )}
     </Layout>
   );
 }

@@ -12,20 +12,18 @@ import {
   setDoc,
 } from "firebase/firestore";
 import { getAuth } from "firebase/auth";
-import { format } from "date-fns";
 
 export interface FetchProps {
   onLanguageChange: (language: string) => void;
   onGenreChange: (genre: string) => void;
   onFormSubmit: (words: WordType[]) => void;
-  timestamp: number;
+  timestamp?: number;
 }
 
 export const Fetch: FC<FetchProps> = ({
   onLanguageChange,
   onGenreChange,
   onFormSubmit,
-  timestamp,
 }) => {
   const [selectedLanguage, setSelectedLanguage] = useState("");
   const [selectedGenre, setSelectedGenre] = useState("");
