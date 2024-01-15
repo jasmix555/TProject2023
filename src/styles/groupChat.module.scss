@@ -73,8 +73,6 @@
   z-index: 1000;
   height: 78%;
   overflow-y: scroll;
-  // transform: translateY(100%);
-  // transition: transform 200ms ease-in-out;
 
   .chatBottom {
     position: relative;
@@ -129,7 +127,7 @@
           padding: 0.6rem 1rem;
           max-inline-size: 260px;
           font-size: 1.6rem;
-          font-weight: 800;
+          font-weight: 500;
           margin: 0.4rem 0;
         }
       }
@@ -195,6 +193,12 @@
   width: 100%;
   height: 8rem;
   z-index: 100;
+
+  p {
+    margin: 0 auto;
+    margin-top: 1.4rem;
+    font-size: 1.3rem;
+  }
 
   .input {
     word-wrap: break-word;

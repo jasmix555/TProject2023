@@ -417,23 +417,29 @@ export const Page = () => {
             </div>
           </div>
 
-          <form onSubmit={handleSendMessage}>
+          {countdown !== null ? (
+            <form onSubmit={handleSendMessage}>
+              <div className={style.inputWrap}>
+                <textarea
+                  value={message}
+                  onChange={(e) => setMessage(e.target.value)}
+                  className={style.input}
+                  placeholder="入力してください。"
+                />
+                <button
+                  type={"submit"}
+                  disabled={message === ""}
+                  className={style.sendButton}
+                >
+                  <BsSend />
+                </button>
+              </div>
+            </form>
+          ) : (
             <div className={style.inputWrap}>
-              <textarea
-                value={message}
-                onChange={(e) => setMessage(e.target.value)}
-                className={style.input}
-                placeholder="入力してください。"
-              />
-              <button
-                type={"submit"}
-                disabled={message === ""}
-                className={style.sendButton}
-              >
-                <BsSend />
-              </button>
+              <p>時間終了しましたので、メッセージの送信はできません。</p>
             </div>
-          </form>
+          )}
         </div>
       </AuthGuard>
     </LayoutPage>
