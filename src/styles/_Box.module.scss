@@ -97,6 +97,32 @@
   }
 }
 
+@mixin futuristic(
+  $w: auto,
+  $h: auto,
+  $bR: 1rem,
+  $b: 1px solid var(--border-clr),
+  $p: 0.8rem 1.2rem,
+  $fC: var(--white),
+  $fS: 1.6rem
+) {
+  color: $fC;
+  font-size: $fS;
+  width: $w;
+  height: $h;
+  border-radius: $bR;
+  border: $b;
+  padding: $p;
+  background: rgba(9, 30, 68, 0.7);
+  box-shadow: var(--border-shadow);
+  &:focus {
+    outline: none;
+  }
+  &::placeholder {
+    color: #a5aeff;
+  }
+}
+
 @keyframes appear {
   to {
     transform: translateY(0);

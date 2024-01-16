@@ -20,6 +20,7 @@ import {
   FaUsers,
 } from "react-icons/fa6";
 import { FaEdit } from "react-icons/fa";
+import Motion from "@/component/Motion";
 
 const menus = {
   icon: <RiMenu3Line />,
@@ -92,23 +93,25 @@ export default function CreateGroup() {
       <Header contents={menus} />
       <form onSubmit={handleSubmit} className={style.form}>
         <div className={style.contentWrap}>
-          <p>タイトル</p>
-          <input
-            className={style.input + " " + style.title}
-            type="text"
-            placeholder="タイトルを入力してください..."
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-          />
-        </div>
-        <div className={style.contentWrap}>
-          <p>詳細</p>
-          <textarea
-            className={style.input + " " + style.textarea}
-            placeholder="詳細を入力してください..."
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
-          />
+          <Motion classname={style.content} delay={0.1}>
+            <p>タイトル</p>
+            <input
+              className={style.input + " " + style.title}
+              type="text"
+              placeholder="タイトルを入力してください..."
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+            />
+          </Motion>
+          <Motion classname={style.content} delay={0.2}>
+            <p>詳細</p>
+            <textarea
+              className={style.input + " " + style.textarea}
+              placeholder="詳細を入力してください..."
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+            />
+          </Motion>
         </div>
         <div className={style.buttons}>
           <div className={style.expirationTag}>

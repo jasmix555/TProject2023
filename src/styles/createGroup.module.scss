@@ -11,28 +11,45 @@
   gap: 2rem;
 
   .contentWrap {
+    background-image: url("/Frame/inputFrame4.svg");
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+    width: 100%;
+    min-height: 50rem;
+    margin: 0 auto;
     display: flex;
+    gap: 4rem;
     flex-direction: column;
-    gap: 0.6rem;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    padding: 2rem;
 
-    p {
-      font-weight: 600;
-      font-size: 1.6rem;
-    }
+    .content {
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
 
-    .textarea {
-      height: 20rem !important;
-      resize: none;
-    }
+      p {
+        font-weight: 600;
+        font-size: 1.6rem;
+      }
 
-    .input {
-      @include Box.glassBox($w: 30rem);
+      .textarea {
+        height: 20rem !important;
+        resize: none;
+      }
+
+      .input {
+        @include Box.futuristic($w: 30rem);
+      }
     }
   }
 
   .buttons {
     position: relative;
-    bottom: -4rem;
+    bottom: -2rem;
 
     .expirationTag {
       font-size: 1.2rem;
