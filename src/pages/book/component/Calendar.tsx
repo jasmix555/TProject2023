@@ -11,13 +11,10 @@ import Motion from "@/component/Motion";
 const StyledCalendarContainer = styled.div`
   .react-calendar {
     position: absolute;
-    bottom: 18%;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 33rem;
-    height: 38rem;
+    z-index: 1;
     font-size: 1.6rem;
     line-height: 2.6;
+    margin-top: 2rem;
     overflow-y: scroll;
   }
 
@@ -72,8 +69,9 @@ const StyledCalendarContainer = styled.div`
   .react-calendar__year-view .react-calendar__tile,
   .react-calendar__decade-view .react-calendar__tile,
   .react-calendar__century-view .react-calendar__tile {
-    padding: 2.8rem 0.5em;
+    padding: 2.2rem 0;
     border-radius: 1rem;
+    background: #fefefe10;
   }
 
   .react-calendar__month-view__days__day {
@@ -148,7 +146,6 @@ const DateInfo: React.FC<{
   controls: AnimationControls;
 }> = ({ date, userId, onClose, controls }) => {
   const [savedMessages, setSavedMessages] = useState<Message[]>([]);
-  const [isEditMode, setIsEditMode] = useState<boolean>(false);
 
   // Fetch saved messages for the selected date
   const fetchSavedInfo = async (selectedDate: Date | null) => {
@@ -205,39 +202,35 @@ const DateInfo: React.FC<{
       onClick={handleClick}
     >
       <div className={style.container}>
-        <FaTimes className={style.closeButton} onClick={onClose} />
-        {isEditMode ? (
-          <div>{/* Edit mode UI */}</div>
-        ) : (
-          <div className={style.messageWrapper}>
-            {savedMessages.length > 0 ? (
-              savedMessages.map((message, index) => (
-                <Motion
-                  key={`SavedMessage_${index}`}
-                  index={index}
-                  classname={style.messageBox}
-                >
-                  <div className={style.text}>
-                    <div className={style.word}>
-                      {message.word || message.message || "No Words"}
-                    </div>
-                    <div className={style.genre}>
-                      [{message.genre || "ジャンル登録してません。"}]
-                    </div>
+        <div className={style.closeButton} onClick={onClose}></div>
+        <div className={style.messageWrapper}>
+          {savedMessages.length > 0 ? (
+            savedMessages.map((message, index) => (
+              <Motion
+                key={`SavedMessage_${index}`}
+                index={index}
+                classname={style.messageBox}
+              >
+                <div className={style.text}>
+                  <div className={style.word}>
+                    {message.word || message.message || "No Words"}
                   </div>
-                  <div className={style.pronunciation}>
-                    {message.pronunciation || "読み方登録してません。"}
+                  <div className={style.genre}>
+                    [{message.genre || "ジャンル登録してません。"}]
                   </div>
-                  <div className={style.meaning}>
-                    {message.meaning || "意味登録してません。"}
-                  </div>
-                </Motion>
-              ))
-            ) : (
-              <p style={{ fontSize: "1.6rem" }}>冒険の記録はありません。</p>
-            )}
-          </div>
-        )}
+                </div>
+                <div className={style.pronunciation}>
+                  {message.pronunciation || "読み方登録してません。"}
+                </div>
+                <div className={style.meaning}>
+                  {message.meaning || "意味登録してません。"}
+                </div>
+              </Motion>
+            ))
+          ) : (
+            <p style={{ fontSize: "1.6rem" }}>冒険の記録はありません。</p>
+          )}
+        </div>
       </div>
     </motion.div>
   );
@@ -285,21 +278,23 @@ const CalendarComponent: React.FC<{ userId: string }> = ({ userId }) => {
   };
 
   return (
-    <StyledCalendarContainer>
-      <Calendar
-        maxDetail="month"
-        onChange={onChange}
-        onClickDay={(date) => {
-          setSelectedDate(date);
-          controls.start("visible");
-        }}
-        value={value}
-        tileClassName={({ date, view }) =>
-          savedDates.some((savedDate) => isSameDay(date, savedDate))
-            ? "hasSaved"
-            : ""
-        }
-      />
+    <>
+      <StyledCalendarContainer>
+        <Calendar
+          maxDetail="month"
+          onChange={onChange}
+          onClickDay={(date) => {
+            setSelectedDate(date);
+            controls.start("visible");
+          }}
+          value={value}
+          tileClassName={({ date, view }) =>
+            savedDates.some((savedDate) => isSameDay(date, savedDate))
+              ? "hasSaved"
+              : ""
+          }
+        />
+      </StyledCalendarContainer>
       {selectedDate && (
         <DateInfo
           date={selectedDate}
@@ -308,7 +303,7 @@ const CalendarComponent: React.FC<{ userId: string }> = ({ userId }) => {
           controls={controls}
         />
       )}
-    </StyledCalendarContainer>
+    </>
   );
 };
 

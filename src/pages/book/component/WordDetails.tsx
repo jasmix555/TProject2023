@@ -171,7 +171,7 @@ const WordDetails: React.FC<WordDetailsProps> = ({
   }, [saveClicked]);
 
   return (
-    <>
+    <div className={style.wrapper}>
       <div className={style.header}>
         <button onClick={onClose}>
           <FaChevronLeft />
@@ -217,23 +217,21 @@ const WordDetails: React.FC<WordDetailsProps> = ({
         </button>
       </div>
       {wordInfo.meaning && (
-        <div className={style.wrapper}>
+        <div className={style.content}>
           <h3>意味</h3>
-          <div className={style.content}>
-            {editing ? (
-              <textarea
-                name="meaning"
-                value={editedDetails.meaning}
-                onChange={handleInputChange}
-              />
-            ) : (
-              <p>・{wordInfo.meaning}</p>
-            )}
-          </div>
+          {editing ? (
+            <textarea
+              name="meaning"
+              value={editedDetails.meaning}
+              onChange={handleInputChange}
+            />
+          ) : (
+            <p>・{wordInfo.meaning}</p>
+          )}
         </div>
       )}
       {wordInfo.timestamp && (
-        <div className={style.wrapper}>
+        <div className={style.content}>
           <h3>情報</h3>
           <div className={style.time}>
             {editing ? (
@@ -276,7 +274,7 @@ const WordDetails: React.FC<WordDetailsProps> = ({
           </button>
         </Motion>
       )}
-    </>
+    </div>
   );
 };
 

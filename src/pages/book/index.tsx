@@ -52,12 +52,12 @@ export function BookContent() {
 
   return (
     <div className={style.wrapper}>
-      <div className={style.title}>
-        保存した単語が保存されます。
-        <br />
-        たくさん交流をして冒険の記録を更新しよう！
-      </div>
       <div className={style.tabWrapper}>
+        <div className={style.title}>
+          保存した単語が保存されます。
+          <br />
+          たくさん交流をして冒険の記録を更新しよう！
+        </div>
         <div className={style.tabBtns}>
           <button
             className={tab === 1 ? style.active : ""}
@@ -72,14 +72,14 @@ export function BookContent() {
             <span>Month</span>
           </button>
         </div>
+        {tab === 1 ? (
+          <div className={style.tabContent}>
+            <First />
+          </div>
+        ) : (
+          <Second />
+        )}
       </div>
-      {tab === 1 ? (
-        <div className={style.tabContent}>
-          <First />
-        </div>
-      ) : (
-        <Second />
-      )}
     </div>
   );
 }

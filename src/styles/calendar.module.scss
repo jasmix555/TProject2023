@@ -1,33 +1,35 @@
 @use "Box.module" as Box;
 
+//DateInfo
 .wrapper {
-  position: relative;
+  position: fixed;
+  bottom: 0;
   left: 0;
-  width: 100vw;
-  height: 100vh;
   backdrop-filter: blur(5px);
   z-index: 10;
+  width: 100vw;
+  height: 100vh;
 
   .container {
-    padding: 4rem 2rem 3rem 2rem;
-    position: fixed;
+    padding: 1rem 2rem 2rem 2rem;
+    position: absolute;
+    width: 100%;
     bottom: 0;
-    width: 100vw;
-    height: auto;
+    left: 0;
     margin: 0 auto;
     background: var(--border-bg);
     box-shadow: var(--border-shadow);
     border-top: var(--border-stroke);
     border-top-right-radius: 20px;
     border-top-left-radius: 20px;
+    z-index: 1;
 
     .closeButton {
-      position: absolute;
-      top: 1rem;
-      right: 1.8rem;
-      cursor: pointer;
-      color: #fff;
-      font-size: 2rem;
+      margin: 0 auto;
+      border-radius: 10px;
+      width: 15rem;
+      height: 5px;
+      background: var(--border-clr);
     }
   }
 }
@@ -36,19 +38,32 @@
   display: flex;
   flex-direction: column;
   gap: 2rem;
+  margin-top: 2rem;
 
   .messageBox {
     width: 100%;
-    height: auto;
-    padding: 0.2rem 0.6rem;
-    @include Box.glassBox($fS: 1.6rem);
+    padding: 0.2rem 0.8rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+    @include Box.glassBox($fS: 1.6rem, $w: 100%, $h: fit-content);
     .text {
       display: flex;
       align-items: flex-start;
       justify-content: space-between;
       .word {
         color: var(--accent-clr);
+        font-size: 1.4rem;
       }
+      .genre {
+        font-size: 1.4rem;
+      }
+    }
+    .pronunciation {
+      font-size: 1.2rem;
+    }
+    .meaning {
+      font-size: 1.6rem;
     }
   }
 }

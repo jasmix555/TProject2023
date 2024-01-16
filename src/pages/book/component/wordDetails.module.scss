@@ -1,11 +1,19 @@
 @use "@/styles/Box.module" as Box;
 
+.wrapper {
+  width: 100%;
+  height: 100%;
+  overflow-y: scroll;
+  position: relative;
+}
+
 .header {
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 0 2rem 1rem 2rem;
   border-bottom: 1px solid #cfcfcf;
+  width: 100%;
   .title {
     display: flex;
     flex-direction: column;
@@ -24,9 +32,10 @@
   }
 }
 
-.wrapper {
-  padding: 0.4rem 2rem 4rem 2rem;
-  border-bottom: 1px solid #cfcfcf60;
+.content {
+  padding: 0.4rem 2rem 3rem 2rem;
+  border-bottom: 1px solid #cfcfcf50;
+
   h3 {
     font-size: 1.4rem;
     padding: 0.6rem 0;
@@ -38,7 +47,7 @@
 
 .confirmationDialog {
   position: absolute;
-  top: 4rem;
+  top: 3rem;
   right: 0;
   display: flex;
   flex-direction: column;
@@ -72,14 +81,12 @@
     font-weight: 500;
     @include Box.glassBox($fS: 1.6rem, $p: 0.4rem 1.2rem);
     display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
     span {
+      border: solid 1px tomato;
       display: block;
-      svg {
-        vertical-align: middle;
-      }
-    }
-    &:nth-child(1) {
-      background: var(--secondary);
     }
   }
 }
