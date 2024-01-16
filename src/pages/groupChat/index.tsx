@@ -38,7 +38,7 @@ type MessageProps = {
   userNickname: string;
   timestamp: number;
   character: number; // Add character field to MessageProps
-  key: string;
+  messageKey: string;
 };
 
 type DictionaryItem = {
@@ -53,7 +53,7 @@ const Message = ({
   timestamp,
   character,
   userId,
-  key,
+  messageKey,
 }: MessageProps) => {
   const formattedTimestamp = format(new Date(timestamp), "HH:mm");
   const auth = getAuth();
@@ -246,15 +246,17 @@ const GroupChat = () => {
         const userNickname = String(snapshot.val()["userNickname"] ?? "");
         const timestamp = Number(snapshot.val()["timestamp"] ?? 0);
         const character = Number(snapshot.val()["character"] ?? 1);
-        const key = snapshot.key; // Use the message key from Firebase as a unique identifier
+        const messageKey = snapshot.key; // Use the message key from Firebase as a unique identifier
 
         // Check if the message already exists in the state
-        const isMessageExists = chats.some((chat) => chat.key === key);
+        const isMessageExists = chats.some(
+          (chat) => chat.messageKey === messageKey
+        );
 
         if (!isMessageExists) {
           setChats((prev) => [
             ...prev,
-            { message, userId, userNickname, timestamp, character, key },
+            { message, userId, userNickname, timestamp, character, messageKey },
           ]);
 
           // Scroll to the bottom when a new message is added
@@ -283,20 +285,18 @@ const GroupChat = () => {
       if (groupInfo.expirationTime) {
         const now = new Date();
         const expirationTime = new Date(groupInfo.expirationTime);
-        const remainingTime = intervalToDuration({
-          start: now,
-          end: expirationTime,
-        });
 
-        if (
-          remainingTime.hours ||
-          remainingTime.minutes ||
-          remainingTime.seconds
-        ) {
-          setCountdown(remainingTime);
-        } else {
-          // The countdown has reached zero
+        if (now >= expirationTime) {
+          // Set the countdown to null when the current time is greater than or equal to the expiration time
           setCountdown(null);
+        } else {
+          const remainingTime = intervalToDuration({
+            start: now,
+            end: expirationTime,
+          });
+
+          // Set the countdown only if there is remaining time
+          setCountdown(remainingTime);
         }
       }
     };
@@ -395,14 +395,15 @@ const GroupChat = () => {
           <div className={`${style.groupChatWrap}`} ref={chatBottomRef}>
             <div className={style.chatBottom}>
               <div className={style.showMessage} ref={messagesElementRef}>
-                {chats.map((chat) => (
+                {chats.map((chat, idx) => (
                   <Message
                     message={chat.message}
                     userId={chat.userId}
                     userNickname={chat.userNickname}
                     timestamp={chat.timestamp}
                     character={chat.character}
-                    key={`${chat.key}`}
+                    messageKey={chat.messageKey}
+                    key={idx}
                   />
                 ))}
               </div>
