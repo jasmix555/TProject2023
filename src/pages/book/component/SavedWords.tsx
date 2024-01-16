@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import style from "@/styles/book.module.scss";
 import WordDetails from "./WordDetails";
 import { collection, doc, getDoc, getFirestore } from "firebase/firestore";
+import { FaChevronRight } from "react-icons/fa";
 
 export interface DictionaryEntry {
   message: string;
@@ -77,7 +78,7 @@ export default function SavedWords({ date, userId }: Props) {
                   className={style.more}
                   onClick={() => handleMoreClick(entry)}
                 >
-                  {">"}
+                  <FaChevronRight />
                 </button>
               </div>
             );

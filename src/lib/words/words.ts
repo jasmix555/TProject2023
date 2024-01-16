@@ -18,7 +18,7 @@ export const languageMap: { [key: string]: string } = {
 
 export const genreMap: { [key: string]: string } = {
   daily: "日常会話",
-  formal: "フォーマール",
+  formal: "フォーマル",
   business: "ビジネス",
   dialect: "方言",
   slang: "スラング",
