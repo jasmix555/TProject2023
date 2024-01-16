@@ -190,7 +190,7 @@ export const words: WordType[] = [
     pronunciation: "oo-keh-roo",
   },
   {
-    word: "気合(きあい)入れて(いれて)",
+    word: "気合入れて",
     meaning: "Put effort into it",
     genre: "slang",
     language: "JP",
@@ -204,7 +204,7 @@ export const words: WordType[] = [
     pronunciation: "mah-ji-kee-chi",
   },
   {
-    word: "モテ期(き)",
+    word: "モテ期",
     meaning: "Popular period with the opposite sex",
     genre: "slang",
     language: "JP",
@@ -218,7 +218,7 @@ export const words: WordType[] = [
     pronunciation: "shin-doh-ee",
   },
   {
-    word: "お疲れ様(おつかれさま)",
+    word: "お疲れ様",
     meaning: "Good job",
     genre: "slang",
     language: "JP",
@@ -232,7 +232,7 @@ export const words: WordType[] = [
     pronunciation: "kee-moh-ee",
   },
   {
-    word: "リア充(じゅう)",
+    word: "リア充",
     meaning: "Someone with a fulfilling real-life",
     genre: "slang",
     language: "JP",
@@ -260,7 +260,7 @@ export const words: WordType[] = [
     pronunciation: "gah-chi",
   },
   {
-    word: "チャラ男(おとこ)",
+    word: "チャラ男",
     meaning: "Playboy",
     genre: "slang",
     language: "JP",

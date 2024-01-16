@@ -5,6 +5,7 @@ type MotionProps = {
   delay?: number;
   index?: number; // Add index prop
   classname?: any;
+  translate?: number;
 };
 
 export default function Motion({
@@ -12,11 +13,12 @@ export default function Motion({
   delay,
   index = 1,
   classname,
+  translate,
 }: MotionProps) {
   const variant = {
     hidden: {
       opacity: 0,
-      y: 40,
+      y: translate || 20,
     },
     visible: {
       opacity: 1,

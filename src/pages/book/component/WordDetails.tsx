@@ -18,6 +18,7 @@ import {
   updateDoc,
 } from "firebase/firestore";
 import { getAuth } from "firebase/auth";
+import Motion from "@/component/Motion";
 
 type WordDetails = {
   word: string;
@@ -108,7 +109,7 @@ const WordDetails: React.FC<WordDetailsProps> = ({
 
       setEditing(false);
       setSaveClicked(true);
-      onSave;
+      onSave();
     } catch (error) {
       console.error("Error updating document:", error);
     }
@@ -244,7 +245,7 @@ const WordDetails: React.FC<WordDetailsProps> = ({
         </div>
       )}
       {editing && (
-        <div className={style.editButtons}>
+        <Motion classname={style.editButtons}>
           <button onClick={handleSaveClick}>
             <span>
               <FaSave />
@@ -257,10 +258,10 @@ const WordDetails: React.FC<WordDetailsProps> = ({
             </span>
             Cancel
           </button>
-        </div>
+        </Motion>
       )}
       {showConfirmation && (
-        <div className={style.confirmationDialog}>
+        <Motion classname={style.confirmationDialog} translate={-40}>
           <button onClick={handleEditConfirmation}>
             <span>
               <FaEdit />
@@ -273,7 +274,7 @@ const WordDetails: React.FC<WordDetailsProps> = ({
             </span>
             Delete
           </button>
-        </div>
+        </Motion>
       )}
     </>
   );

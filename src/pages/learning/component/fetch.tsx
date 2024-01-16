@@ -77,6 +77,7 @@ export const Fetch: FC<FetchProps> = ({
     const data = fetchedWords
       .filter((word) => word && word.word) // Filter out items without 'word' property
       .map((word) => ({
+        language: word.language || "",
         word: word.word || "", // Provide a default value if 'word' is undefined
         meaning: word.meaning || "",
         genre: word.genre || "",

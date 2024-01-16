@@ -189,6 +189,7 @@ export default function SavedWords({ date, userId }: Props) {
           <p>Loading...</p>
         ) : selectedWord ? (
           <WordDetails
+            key={selectedWord ? selectedWord.key : "defaultKey"}
             wordInfo={selectedWord}
             onClose={() => setSelectedWord(null)}
             onUpdate={handleUpdate}
