@@ -38,6 +38,7 @@ type MessageProps = {
   userNickname: string;
   timestamp: number;
   character: number; // Add character field to MessageProps
+  key: string;
 };
 
 type DictionaryItem = {
@@ -52,6 +53,7 @@ const Message = ({
   timestamp,
   character,
   userId,
+  key,
 }: MessageProps) => {
   const formattedTimestamp = format(new Date(timestamp), "HH:mm");
   const auth = getAuth();
@@ -287,10 +289,11 @@ export const Page = () => {
         const userNickname = String(snapshot.val()["userNickname"] ?? "");
         const timestamp = Number(snapshot.val()["timestamp"] ?? 0);
         const character = Number(snapshot.val()["character"] ?? 1);
+        const key = Math.random().toString(36);
 
         setChats((prev) => [
           ...prev,
-          { message, userId, userNickname, timestamp, character },
+          { message, userId, userNickname, timestamp, character, key },
         ]);
 
         // Scroll to the bottom when a new message is added, using optional chaining
@@ -410,7 +413,7 @@ export const Page = () => {
                     userNickname={chat.userNickname}
                     timestamp={chat.timestamp}
                     character={chat.character}
-                    key={`ChatMessage_${index}`}
+                    key={`ChatMessage_${index} ${chat.key}`}
                   />
                 ))}
               </div>
