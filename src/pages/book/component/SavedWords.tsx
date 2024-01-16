@@ -1,9 +1,11 @@
-import { collection, doc, getDoc, getFirestore } from "firebase/firestore";
+// SavedWords.tsx
+
 import React, { useEffect, useState } from "react";
 import style from "@/styles/book.module.scss";
+import WordDetails from "./WordDetails";
+import { collection, doc, getDoc, getFirestore } from "firebase/firestore";
 
-// Define an interface for the dictionary entry
-interface DictionaryEntry {
+export interface DictionaryEntry {
   message: string;
   saved: boolean;
   timestamp: number;
@@ -23,8 +25,18 @@ export default function SavedWords({ date, userId }: Props) {
   const [savedMessages, setSavedMessages] = useState<JSX.Element[]>([]);
   const [prevDate, setPrevDate] = useState<Date | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
+  const [selectedWord, setSelectedWord] = useState<DictionaryEntry | null>(
+    null
+  );
 
-  // Fetch saved messages for the selected date
+  const handleMoreClick = (wordInfo: DictionaryEntry) => {
+    setSelectedWord(wordInfo);
+  };
+
+  const handleCloseClick = () => {
+    setSelectedWord(null);
+  };
+
   const fetchSavedInfo = async (selectedDate: Date | null) => {
     try {
       setLoading(true);
@@ -33,56 +45,47 @@ export default function SavedWords({ date, userId }: Props) {
       const usersCollection = collection(db, "users");
       const userDoc = doc(usersCollection, userId);
 
-      // Check if user document exists
       const userDocSnapshot = await getDoc(userDoc);
 
       if (userDocSnapshot.exists()) {
         const userData = userDocSnapshot.data();
-
-        // Annotate the type of dictionary entries
         const dictionary: DictionaryEntry[] = userData?.dictionary || [];
-
-        // Sort the dictionary array by timestamp in descending order
         const sortedDictionary = dictionary.sort(
           (a, b) => b.timestamp - a.timestamp
         );
 
-        // Get today's date for comparison
         const today = new Date();
         today.setHours(0, 0, 0, 0);
 
-        // Extract saved messages from the dictionary
         const savedWords = sortedDictionary.map(
           (entry: DictionaryEntry, index) => {
-            // Check if the word was added today
             const wordDate = new Date(entry.timestamp);
             wordDate.setHours(0, 0, 0, 0);
             const isNew = wordDate.getTime() === today.getTime();
-
-            // Check if the date has changed since the last check
             const dateChanged =
               prevDate !== null && wordDate.getTime() !== prevDate.getTime();
-
-            // Update isNew based on date change
             const updatedIsNew = dateChanged ? false : isNew;
-
-            // Apply the "new" class if the word was added today
             const messageClass = updatedIsNew
               ? `${style.message} ${style.new}`
               : style.message;
 
             return (
               <div key={`SavedMessage_${index}`} className={messageClass}>
-                <p className={style.text}> {entry.message || entry.word}</p>
+                <p className={style.text}>{entry.message || entry.word}</p>
                 {updatedIsNew && <div className={style.newLabel}>New!</div>}
-                <button className={style.edit}>{">"}</button>
+                <button
+                  className={style.more}
+                  onClick={() => handleMoreClick(entry)}
+                >
+                  {">"}
+                </button>
               </div>
             );
           }
         );
 
         setSavedMessages(savedWords);
-        setPrevDate(today); // Update the previous date
+        setPrevDate(today);
       } else {
         console.error("User document not found for userId:", userId);
       }
@@ -95,13 +98,15 @@ export default function SavedWords({ date, userId }: Props) {
 
   useEffect(() => {
     fetchSavedInfo(date || null);
-  }, [date, userId]); // Call fetchSavedInfo whenever date or userId changes
+  }, [date, userId]);
 
   return (
     <div className={style.messagesWrap}>
       <div className={style.messagesWrap}>
         {loading ? (
           <p>Loading...</p>
+        ) : selectedWord ? (
+          <WordDetails wordInfo={selectedWord} onClose={handleCloseClick} />
         ) : savedMessages.length > 0 ? (
           <>{savedMessages}</>
         ) : (

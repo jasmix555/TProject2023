@@ -151,7 +151,6 @@ export const Fetch: FC<FetchProps> = ({
           <div className={`${style.content} ${style.caret}`}>
             <label htmlFor="genre">ジャンル</label>
             <select
-              required
               id="genre"
               value={selectedGenre}
               onChange={handleGenreChange}
