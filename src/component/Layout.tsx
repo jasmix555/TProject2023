@@ -1,7 +1,7 @@
 import style from "@/styles/Footer.module.scss";
 import Link from "next/link";
 import { useState, useEffect } from "react";
-import { footerArray } from "@/lib/nav/footerTypes";
+import { footerArray } from "@/utils/footerTypes";
 import { Icon } from "@chakra-ui/react";
 import { cubicBezier, motion } from "framer-motion";
 import { AuthGuard } from "@/feature/auth/component/AuthGuard/AuthGuard";

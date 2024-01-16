@@ -1,7 +1,7 @@
 import React, { ChangeEvent, FC, useState, FormEvent, useEffect } from "react";
 import style from "@/styles/learning.module.scss";
 import { MdOutlineKeyboardDoubleArrowRight } from "react-icons/md";
-import { words, WordType, languageMap, genreMap } from "@/lib/words/words";
+import { words, WordType, languageMap, genreMap } from "@/utils/words";
 import {
   doc,
   getDoc,

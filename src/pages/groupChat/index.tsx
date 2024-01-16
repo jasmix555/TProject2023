@@ -17,13 +17,12 @@ import {
   collection,
   updateDoc,
   arrayUnion,
-  Firestore,
 } from "firebase/firestore";
 import { getAuth, User } from "firebase/auth";
 import { FaUsers } from "react-icons/fa6";
 import { PiBookBookmark, PiBookBookmarkFill } from "react-icons/pi";
 import { BsSend } from "react-icons/bs";
-import { format, differenceInSeconds, addHours } from "date-fns";
+import { format, intervalToDuration, formatDuration } from "date-fns";
 import { useRouter } from "next/router";
 import style from "@/styles/groupChat.module.scss";
 import LayoutPage from "@/component/LayoutPage";
@@ -31,6 +30,7 @@ import Image from "next/image";
 import { usePresence } from "@/component/presenceUtils";
 import LinkBox from "@/component/LinkBox";
 import { AiFillHome } from "react-icons/ai";
+import { formatRemainingTime } from "@/utils/formatTime";
 
 type MessageProps = {
   message: string;
@@ -186,9 +186,8 @@ const GroupChat = () => {
   const [groupInfo, setGroupInfo] = useState({ title: "", expirationTime: "" });
   const [dictionary, setDictionary] = useState<DictionaryItem[]>([]);
   const chatBottomRef = useRef<HTMLDivElement | null>(null);
-
   const [chats, setChats] = useState<MessageProps[]>([]);
-  const [countdown, setCountdown] = useState<number | null>(null);
+  const [countdown, setCountdown] = useState<Duration | null>(null);
   const [userCount, setUserCount] = useState(0);
 
   usePresence(groupId as string);
@@ -283,12 +282,18 @@ const GroupChat = () => {
     const calculateCountdown = () => {
       if (groupInfo.expirationTime) {
         const now = new Date();
-        const sixHoursLater = addHours(new Date(groupInfo.expirationTime), 6);
+        const expirationTime = new Date(groupInfo.expirationTime);
+        const remainingTime = intervalToDuration({
+          start: now,
+          end: expirationTime,
+        });
 
-        const secondsRemaining = differenceInSeconds(sixHoursLater, now);
-
-        if (secondsRemaining > 0) {
-          setCountdown(secondsRemaining);
+        if (
+          remainingTime.hours ||
+          remainingTime.minutes ||
+          remainingTime.seconds
+        ) {
+          setCountdown(remainingTime);
         } else {
           // The countdown has reached zero
           setCountdown(null);
@@ -367,7 +372,9 @@ const GroupChat = () => {
             <h1>{groupInfo.title || "ロード中..."}</h1>
             {countdown !== null ? (
               <p className={style.number}>
-                {format(new Date(countdown * 1000), "hh:mm:ss")}
+                {countdown !== null
+                  ? formatRemainingTime(countdown)
+                  : "00:00:00"}
               </p>
             ) : (
               <p className={style.number}>時間終了です！</p>

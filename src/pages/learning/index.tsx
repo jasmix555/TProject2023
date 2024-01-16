@@ -23,7 +23,7 @@ import {
 import { useAuthContext } from "@/feature/provider/AuthProvider";
 import Fetch, { FetchProps } from "./component/fetch";
 import Fetched from "./component/fetched";
-import { WordType } from "@/lib/words/words";
+import { WordType } from "@/utils/words";
 
 const menus = {
   icon: <RiMenu3Line />,

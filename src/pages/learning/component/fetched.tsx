@@ -1,6 +1,6 @@
 import React, { FC } from "react";
 import style from "@/styles/learning.module.scss";
-import { WordType } from "@/lib/words/words";
+import { WordType } from "@/utils/words";
 import Motion from "@/component/Motion";
 
 interface FetchedProps {
