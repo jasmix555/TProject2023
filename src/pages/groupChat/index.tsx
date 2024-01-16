@@ -178,12 +178,12 @@ const GroupChat = () => {
   const messagesElementRef = useRef<HTMLDivElement | null>(null);
   const [message, setMessage] = useState<string>("");
   const [nickname, setNickname] = useState<string>("");
+  const [groupInfo, setGroupInfo] = useState({ title: "", expirationTime: "" });
   const [userCharacter, setUserCharacter] = useState<number>(1); // Initialize with a default value
   const auth = getAuth();
   const user: User | null = auth.currentUser;
   const router = useRouter();
   const { groupId, planet } = router.query; // No need to extract 'title' from the router query
-  const [groupInfo, setGroupInfo] = useState({ title: "", expirationTime: "" });
   const [dictionary, setDictionary] = useState<DictionaryItem[]>([]);
   const chatBottomRef = useRef<HTMLDivElement | null>(null);
   const [chats, setChats] = useState<MessageProps[]>([]);
@@ -380,8 +380,6 @@ const GroupChat = () => {
               <p className={style.number}>時間終了です！</p>
             )}
           </div>
-
-          <div></div>
 
           <div className={style.avatarGrid}></div>
 
