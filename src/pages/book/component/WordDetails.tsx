@@ -33,6 +33,7 @@ interface WordDetailsProps {
   onClose: () => void;
   onDelete: () => void; // Add onDelete prop to handle word deletion
   onUpdate: (updatedWord: DictionaryEntry) => void; // Add onUpdate prop to handle word update
+  onSave: () => void;
 }
 
 const WordDetails: React.FC<WordDetailsProps> = ({
@@ -40,6 +41,7 @@ const WordDetails: React.FC<WordDetailsProps> = ({
   onClose,
   onDelete,
   onUpdate,
+  onSave,
 }) => {
   const [editing, setEditing] = useState(false);
   const [editedDetails, setEditedDetails] = useState({
@@ -106,6 +108,7 @@ const WordDetails: React.FC<WordDetailsProps> = ({
 
       setEditing(false);
       setSaveClicked(true);
+      onSave;
     } catch (error) {
       console.error("Error updating document:", error);
     }

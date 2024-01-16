@@ -41,10 +41,6 @@ export default function SavedWords({ date, userId }: Props) {
     setSelectedWord(wordInfo);
   };
 
-  const handleCloseClick = () => {
-    setSelectedWord(null);
-  };
-
   const fetchSavedInfo = async (selectedDate: Date | null) => {
     try {
       setLoading(true);
@@ -170,6 +166,10 @@ export default function SavedWords({ date, userId }: Props) {
     }
   };
 
+  const handleSaveChange = () => {
+    setDataChanged(true);
+  };
+
   useEffect(() => {
     fetchSavedInfo(date || null);
   }, [date, userId, dataChanged, resetDataChanged]);
@@ -193,6 +193,7 @@ export default function SavedWords({ date, userId }: Props) {
             onClose={() => setSelectedWord(null)}
             onUpdate={handleUpdate}
             onDelete={handleDelete}
+            onSave={handleSaveChange}
           />
         ) : savedMessages.length > 0 ? (
           <>{savedMessages}</>
