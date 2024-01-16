@@ -46,8 +46,7 @@ export default function CreateGroup() {
   const isSubmitDisabled = !title || title.length < 5 || !description;
 
   const calculateExpirationTimestamp = () => {
-    const hours = parseInt(expirationTime, 10);
-    return Timestamp.fromMillis(Date.now() + hours * 60 * 60 * 1000);
+    return Timestamp.fromMillis(Date.now() + 6 * 60 * 60 * 1000);
   };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {

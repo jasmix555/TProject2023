@@ -388,14 +388,14 @@ const GroupChat = () => {
           <div className={`${style.groupChatWrap}`} ref={chatBottomRef}>
             <div className={style.chatBottom}>
               <div className={style.showMessage} ref={messagesElementRef}>
-                {chats.map((chat, index) => (
+                {chats.map((chat) => (
                   <Message
                     message={chat.message}
                     userId={chat.userId}
                     userNickname={chat.userNickname}
                     timestamp={chat.timestamp}
                     character={chat.character}
-                    key={`ChatMessage_${index} ${chat.key}`}
+                    key={`${chat.key}`}
                   />
                 ))}
               </div>
