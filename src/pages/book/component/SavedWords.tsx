@@ -1,20 +1,25 @@
-// SavedWords.tsx
-
 import React, { useEffect, useState } from "react";
 import style from "@/styles/book.module.scss";
 import WordDetails from "./WordDetails";
-import { collection, doc, getDoc, getFirestore } from "firebase/firestore";
+import {
+  collection,
+  doc,
+  getDoc,
+  getFirestore,
+  setDoc,
+} from "firebase/firestore";
 import { FaChevronRight } from "react-icons/fa";
 
 export interface DictionaryEntry {
-  message: string;
-  saved: boolean;
+  message?: string;
+  saved?: boolean;
   timestamp: number;
-  languages: string[];
-  word: string;
+  languages?: string[];
+  word?: string;
   meaning?: string;
   pronunciation?: string;
   genre?: string;
+  key?: string;
 }
 
 type Props = {
@@ -29,6 +34,8 @@ export default function SavedWords({ date, userId }: Props) {
   const [selectedWord, setSelectedWord] = useState<DictionaryEntry | null>(
     null
   );
+  const [dataChanged, setDataChanged] = useState<boolean>(false);
+  const [resetDataChanged, setResetDataChanged] = useState<boolean>(false);
 
   const handleMoreClick = (wordInfo: DictionaryEntry) => {
     setSelectedWord(wordInfo);
@@ -97,9 +104,83 @@ export default function SavedWords({ date, userId }: Props) {
     }
   };
 
+  const handleUpdate = async (updatedWord: DictionaryEntry) => {
+    try {
+      const db = getFirestore();
+      const usersCollection = collection(db, "users");
+      const userDoc = doc(usersCollection, userId);
+
+      // Fetch user document
+      const userDocSnapshot = await getDoc(userDoc);
+
+      if (userDocSnapshot.exists()) {
+        const userData = userDocSnapshot.data();
+        const dictionary: DictionaryEntry[] = userData?.dictionary || [];
+
+        // Find the index of the word to be updated
+        const wordIndex = dictionary.findIndex(
+          (entry) => entry.key === updatedWord.key
+        );
+
+        if (wordIndex !== -1) {
+          // Update the word in the dictionary array
+          dictionary[wordIndex] = updatedWord;
+
+          // Update the user document with the modified dictionary
+          await setDoc(userDoc, { dictionary }, { merge: true });
+        }
+      }
+      setDataChanged(true);
+    } catch (error) {
+      console.error("Error updating word:", error);
+    }
+  };
+
+  const handleDelete = async () => {
+    try {
+      const db = getFirestore();
+      const usersCollection = collection(db, "users");
+      const userDoc = doc(usersCollection, userId);
+
+      // Fetch user document
+      const userDocSnapshot = await getDoc(userDoc);
+
+      if (userDocSnapshot.exists()) {
+        const userData = userDocSnapshot.data();
+        const dictionary: DictionaryEntry[] = userData?.dictionary || [];
+
+        // Find the index of the word/message to be deleted
+        const wordToDelete = selectedWord?.word || selectedWord?.message;
+        const updatedDictionary = dictionary.filter(
+          (entry) => entry.word !== wordToDelete && entry.key !== wordToDelete
+        );
+
+        // Update the user document with the modified dictionary
+        await setDoc(
+          userDoc,
+          { dictionary: updatedDictionary },
+          { merge: true }
+        );
+        setSelectedWord(null); // Close the WordDetails component after deleting
+        setResetDataChanged(true);
+      }
+      setDataChanged(true);
+    } catch (error) {
+      console.error("Error deleting word:", error);
+    }
+  };
+
   useEffect(() => {
     fetchSavedInfo(date || null);
-  }, [date, userId]);
+  }, [date, userId, dataChanged, resetDataChanged]);
+
+  useEffect(() => {
+    const timeoutId = setTimeout(() => {
+      setResetDataChanged(false);
+    }, 500); // Adjust the delay as needed
+
+    return () => clearTimeout(timeoutId);
+  }, [resetDataChanged]);
 
   return (
     <div className={style.messagesWrap}>
@@ -107,7 +188,12 @@ export default function SavedWords({ date, userId }: Props) {
         {loading ? (
           <p>Loading...</p>
         ) : selectedWord ? (
-          <WordDetails wordInfo={selectedWord} onClose={handleCloseClick} />
+          <WordDetails
+            wordInfo={selectedWord}
+            onClose={() => setSelectedWord(null)}
+            onUpdate={handleUpdate}
+            onDelete={handleDelete}
+          />
         ) : savedMessages.length > 0 ? (
           <>{savedMessages}</>
         ) : (
