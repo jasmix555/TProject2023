@@ -23,6 +23,11 @@ export default function CreateGroup() {
 
   const isSubmitDisabled = !title || title.length < 5 || !description;
 
+  const calculateExpirationTimestamp = () => {
+    const hours = parseInt(expirationTime, 10);
+    return Timestamp.fromMillis(Date.now() + hours * 60 * 60 * 1000);
+  };
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
@@ -35,17 +40,12 @@ export default function CreateGroup() {
         "groups"
       );
 
-      const hours = parseInt(expirationTime, 10);
-      const expirationTimestamp = Timestamp.fromMillis(
-        Date.now() + hours * 60 * 60 * 1000
-      );
-
       try {
         const newGroupRef = await addDoc(planetGroupsRef, {
           creatorId: user.uid,
           title,
           description,
-          expirationTime: expirationTimestamp,
+          expirationTime: calculateExpirationTimestamp(),
           createdAt: Timestamp.now(),
         });
 
@@ -61,6 +61,7 @@ export default function CreateGroup() {
         });
       } catch (error) {
         console.error("Error creating group:", error);
+        // Add logic to handle errors (e.g., display an error message to the user)
       }
     }
   };

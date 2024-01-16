@@ -174,7 +174,7 @@ const Message = ({
   );
 };
 
-export const Page = () => {
+const GroupChat = () => {
   const messagesElementRef = useRef<HTMLDivElement | null>(null);
   const [message, setMessage] = useState<string>("");
   const [nickname, setNickname] = useState<string>("");
@@ -187,195 +187,11 @@ export const Page = () => {
   const [dictionary, setDictionary] = useState<DictionaryItem[]>([]);
   const chatBottomRef = useRef<HTMLDivElement | null>(null);
 
-  // Send message
-  const handleSendMessage = async (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    try {
-      const db = getDatabase();
-      const dbRef = ref(db, `groupChatMessages/${groupId}`);
-      await push(dbRef, {
-        message,
-        userId: user ? user.uid : "",
-        userNickname: user ? nickname : "",
-        timestamp: serverTimestamp(),
-        character: userCharacter, // Pass user's character number to the message
-      });
-      setMessage("");
-    } catch (e) {
-      if (e instanceof FirebaseError) {
-        console.log(e);
-      }
-    }
-  };
-
-  // Listen for new messages
   const [chats, setChats] = useState<MessageProps[]>([]);
-
   const [countdown, setCountdown] = useState<number | null>(null);
   const [userCount, setUserCount] = useState(0);
 
-  // Increase user count when entering the group chat
   usePresence(groupId as string);
-
-  // // Fetch group information
-  // useEffect(() => {
-  //   const fetchGroupInfo = async () => {
-  //     try {
-  //       console.log("Fetching group information for groupId:", groupId);
-  //       const db = getFirestore();
-  //       const groupDocRef = doc(
-  //         collection(db, "planets", planet as string, "groups"),
-  //         groupId as string
-  //       );
-  //       const groupDocSnapshot = await getDoc(groupDocRef);
-  //       console.log("Group doc snapshot:", groupDocSnapshot);
-
-  //       if (groupDocSnapshot.exists()) {
-  //         const groupData = groupDocSnapshot.data();
-  //         // console.log("Group data:", groupData);
-
-  //         // Format the expiration time
-  //         const expirationTime = groupData.expirationTime?.toDate();
-  //         const formattedExpirationTime = expirationTime
-  //           ? format(expirationTime, "yyyy-MM-dd HH:mm:ss")
-  //           : "";
-
-  //         setGroupInfo({
-  //           title: groupData.title,
-  //           expirationTime: formattedExpirationTime,
-  //         });
-  //       } else {
-  //         console.log("Group not found.");
-  //       }
-  //     } catch (e) {
-  //       console.error("Error fetching group information:", e);
-  //     }
-  //   };
-
-  //   fetchGroupInfo();
-  // }, [groupId]);
-
-  // // Fetch user nickname and character
-  // useEffect(() => {
-  //   const fetchUserData = async () => {
-  //     try {
-  //       const user: User | null = auth.currentUser;
-  //       const db: Firestore = getFirestore();
-  //       const usersCollection = collection(db, "users");
-  //       const userDocRef = doc(usersCollection, user?.uid);
-  //       const userData = (await getDoc(userDocRef)).data();
-
-  //       if (userData) {
-  //         setNickname(userData.nickname);
-  //         setUserCharacter(userData.character);
-  //         setDictionary(userData.dictionary || []); // Assuming dictionary is an array
-  //       }
-  //     } catch (error) {
-  //       console.error("Error fetching user data:", error);
-  //     }
-  //   };
-
-  //   fetchUserData();
-  // }, [user]);
-
-  // // Listen for new messages
-  // useEffect(() => {
-  //   try {
-  //     const db = getDatabase();
-  //     const dbRef = ref(db, `groupChatMessages/${groupId}`);
-  //     return onChildAdded(dbRef, (snapshot) => {
-  //       const message = String(snapshot.val()["message"] ?? "");
-  //       const userId = String(snapshot.val()["userId"] ?? "");
-  //       const userNickname = String(snapshot.val()["userNickname"] ?? "");
-  //       const timestamp = Number(snapshot.val()["timestamp"] ?? 0);
-  //       const character = Number(snapshot.val()["character"] ?? 1);
-  //       const key = Math.random().toString(36);
-
-  //       setChats((prev) => [
-  //         ...prev,
-  //         { message, userId, userNickname, timestamp, character, key },
-  //       ]);
-
-  //       // Scroll to the bottom when a new message is added, using optional chaining
-  //       setTimeout(() => {
-  //         chatBottomRef.current?.scrollTo({
-  //           top: chatBottomRef.current?.scrollHeight,
-  //         });
-  //       }, 0);
-  //     });
-  //   } catch (e) {
-  //     if (e instanceof FirebaseError) {
-  //       console.error(e);
-  //     }
-  //     return;
-  //   }
-  // }, [groupId]);
-
-  // // Scroll to the bottom of the messages when a new message is added
-  // useEffect(() => {
-  //   messagesElementRef.current?.scrollTo({
-  //     top: messagesElementRef.current.scrollHeight,
-  //   });
-  // }, [chats]);
-
-  // useEffect(() => {
-  //   const calculateCountdown = () => {
-  //     if (groupInfo.expirationTime) {
-  //       const now = new Date();
-  //       const sixHoursLater = addHours(new Date(groupInfo.expirationTime), 6);
-
-  //       const secondsRemaining = differenceInSeconds(sixHoursLater, now);
-
-  //       if (secondsRemaining > 0) {
-  //         setCountdown(secondsRemaining);
-  //       } else {
-  //         // The countdown has reached zero
-  //         setCountdown(null);
-  //       }
-  //     }
-  //   };
-
-  //   // Calculate initially and then set up interval for continuous updates
-  //   calculateCountdown();
-
-  //   const intervalId = setInterval(calculateCountdown, 1000); // Update every second
-
-  //   return () => clearInterval(intervalId); // Cleanup on component unmount
-  // }, [groupInfo.expirationTime]);
-
-  // // Listen for changes in user count and presence
-  // useEffect(() => {
-  //   const fetchUserCount = () => {
-  //     if (groupId) {
-  //       try {
-  //         const db = getDatabase();
-  //         const groupChatUsersRef = ref(db, `groupChatUsers/${groupId}`);
-
-  //         // Fetch the data once to get an initial count
-  //         get(groupChatUsersRef).then((snapshot) => {
-  //           const count = Object.keys(snapshot.val() || {}).length;
-  //           setUserCount(count);
-  //         });
-
-  //         // Use onValue to listen for changes in the user count and presence
-  //         return onValue(groupChatUsersRef, (snapshot) => {
-  //           const count = Object.keys(snapshot.val() || {}).length;
-  //           setUserCount(count);
-  //         });
-  //       } catch (error) {
-  //         console.error("Error fetching user count:", error);
-  //       }
-  //     }
-  //   };
-
-  //   const unsubscribeUserCount = fetchUserCount();
-
-  //   return () => {
-  //     if (unsubscribeUserCount) {
-  //       unsubscribeUserCount();
-  //     }
-  //   };
-  // }, [groupId]);
 
   const fetchGroupInfoAndUserData = async () => {
     try {
@@ -416,7 +232,6 @@ export const Page = () => {
     }
   };
 
-  // Use the combined function in a single useEffect
   useEffect(() => {
     fetchGroupInfoAndUserData();
   }, [groupId, user]);
@@ -432,19 +247,24 @@ export const Page = () => {
         const userNickname = String(snapshot.val()["userNickname"] ?? "");
         const timestamp = Number(snapshot.val()["timestamp"] ?? 0);
         const character = Number(snapshot.val()["character"] ?? 1);
-        const key = Math.random().toString(36);
+        const key = snapshot.key; // Use the message key from Firebase as a unique identifier
 
-        setChats((prev) => [
-          ...prev,
-          { message, userId, userNickname, timestamp, character, key },
-        ]);
+        // Check if the message already exists in the state
+        const isMessageExists = chats.some((chat) => chat.key === key);
 
-        // Scroll to the bottom when a new message is added
-        setTimeout(() => {
-          chatBottomRef.current?.scrollTo({
-            top: chatBottomRef.current?.scrollHeight,
-          });
-        }, 0);
+        if (!isMessageExists) {
+          setChats((prev) => [
+            ...prev,
+            { message, userId, userNickname, timestamp, character, key },
+          ]);
+
+          // Scroll to the bottom when a new message is added
+          setTimeout(() => {
+            chatBottomRef.current?.scrollTo({
+              top: chatBottomRef.current?.scrollHeight,
+            });
+          }, 0);
+        }
       };
 
       const unsubscribe = onChildAdded(dbRef, onNewMessage);
@@ -458,6 +278,84 @@ export const Page = () => {
       }
     }
   }, [groupId, chats]);
+
+  useEffect(() => {
+    const calculateCountdown = () => {
+      if (groupInfo.expirationTime) {
+        const now = new Date();
+        const sixHoursLater = addHours(new Date(groupInfo.expirationTime), 6);
+
+        const secondsRemaining = differenceInSeconds(sixHoursLater, now);
+
+        if (secondsRemaining > 0) {
+          setCountdown(secondsRemaining);
+        } else {
+          // The countdown has reached zero
+          setCountdown(null);
+        }
+      }
+    };
+
+    // Calculate initially and then set up interval for continuous updates
+    calculateCountdown();
+
+    const intervalId = setInterval(calculateCountdown, 1000); // Update every second
+
+    return () => clearInterval(intervalId); // Cleanup on component unmount
+  }, [groupInfo.expirationTime]);
+
+  useEffect(() => {
+    const fetchUserCount = () => {
+      if (groupId) {
+        try {
+          const db = getDatabase();
+          const groupChatUsersRef = ref(db, `groupChatUsers/${groupId}`);
+
+          // Fetch the data once to get an initial count
+          get(groupChatUsersRef).then((snapshot) => {
+            const count = Object.keys(snapshot.val() || {}).length;
+            setUserCount(count);
+          });
+
+          // Use onValue to listen for changes in the user count and presence
+          return onValue(groupChatUsersRef, (snapshot) => {
+            const count = Object.keys(snapshot.val() || {}).length;
+            setUserCount(count);
+          });
+        } catch (error) {
+          console.error("Error fetching user count:", error);
+        }
+      }
+    };
+
+    const unsubscribeUserCount = fetchUserCount();
+
+    return () => {
+      if (unsubscribeUserCount) {
+        unsubscribeUserCount();
+      }
+    };
+  }, [groupId]);
+
+  const handleSendMessage = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    try {
+      const db = getDatabase();
+      const dbRef = ref(db, `groupChatMessages/${groupId}`);
+      await push(dbRef, {
+        message,
+        userId: user ? user.uid : "",
+        userNickname: user ? nickname : "",
+        timestamp: serverTimestamp(),
+        character: userCharacter, // Pass user's character number to the message
+      });
+      setMessage("");
+    } catch (e) {
+      if (e instanceof FirebaseError) {
+        console.log(e);
+      }
+    }
+  };
 
   return (
     <LayoutPage>
@@ -475,6 +373,8 @@ export const Page = () => {
               <p className={style.number}>時間終了です！</p>
             )}
           </div>
+
+          <div></div>
 
           <div className={style.avatarGrid}></div>
 
@@ -531,4 +431,4 @@ export const Page = () => {
   );
 };
 
-export default Page;
+export default GroupChat;
