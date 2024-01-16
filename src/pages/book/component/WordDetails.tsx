@@ -52,7 +52,7 @@ const WordDetails: React.FC<WordDetailsProps> = ({
     genre: wordInfo.genre || "",
     meaning: wordInfo.meaning || "",
     timestamp: wordInfo.timestamp || 0,
-    key: wordInfo.key || "",
+    messageKey: wordInfo.messageKey || "",
   });
   const [showConfirmation, setShowConfirmation] = useState(false);
   const auth = getAuth();
@@ -96,7 +96,7 @@ const WordDetails: React.FC<WordDetailsProps> = ({
         // Create a new array with the updated word and other unchanged words
         const updatedDictionary = currentDictionary.map(
           (entry: DictionaryEntry) =>
-            entry.key === wordInfo.key ? editedDetails : entry
+            entry.messageKey === wordInfo.messageKey ? editedDetails : entry
         );
 
         // Update the Firestore document with the modified dictionary

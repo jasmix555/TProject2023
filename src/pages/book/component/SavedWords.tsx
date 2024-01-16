@@ -19,7 +19,7 @@ export interface DictionaryEntry {
   meaning?: string;
   pronunciation?: string;
   genre?: string;
-  key?: string;
+  messageKey?: string;
 }
 
 type Props = {
@@ -115,7 +115,7 @@ export default function SavedWords({ date, userId }: Props) {
 
         // Find the index of the word to be updated
         const wordIndex = dictionary.findIndex(
-          (entry) => entry.key === updatedWord.key
+          (entry) => entry.messageKey === updatedWord.messageKey
         );
 
         if (wordIndex !== -1) {
@@ -148,7 +148,8 @@ export default function SavedWords({ date, userId }: Props) {
         // Find the index of the word/message to be deleted
         const wordToDelete = selectedWord?.word || selectedWord?.message;
         const updatedDictionary = dictionary.filter(
-          (entry) => entry.word !== wordToDelete && entry.key !== wordToDelete
+          (entry) =>
+            entry.word !== wordToDelete && entry.messageKey !== wordToDelete
         );
 
         // Update the user document with the modified dictionary
@@ -189,7 +190,7 @@ export default function SavedWords({ date, userId }: Props) {
           <p>Loading...</p>
         ) : selectedWord ? (
           <WordDetails
-            key={selectedWord ? selectedWord.key : "defaultKey"}
+            key={selectedWord ? selectedWord.messageKey : "defaultKey"}
             wordInfo={selectedWord}
             onClose={() => setSelectedWord(null)}
             onUpdate={handleUpdate}

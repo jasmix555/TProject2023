@@ -37,7 +37,7 @@ type MessageProps = {
   userId: string;
   userNickname: string;
   timestamp: number;
-  character: number; // Add character field to MessageProps
+  character: number;
   messageKey: string;
 };
 
@@ -45,6 +45,8 @@ type DictionaryItem = {
   message: string;
   timestamp: number;
   saved: boolean;
+  word?: string;
+  messageKey: string;
 };
 
 const Message = ({
@@ -61,6 +63,8 @@ const Message = ({
   const isCurrentUser = userId === user?.uid;
   const [isInteracted, setIsInteracted] = useState(false);
   const [isBookmarked, setIsBookmarked] = useState(false);
+  const [editedMessage, setEditedMessage] = useState(message);
+  const [editedMessageKey, setEditedMessageKey] = useState(messageKey);
 
   useEffect(() => {
     const checkIfMessageSaved = async () => {
@@ -76,22 +80,27 @@ const Message = ({
         const userData = (await getDoc(userDocRef)).data();
         const existingMessages: DictionaryItem[] = userData?.dictionary || [];
 
-        const isMessageSaved = existingMessages.some(
+        const savedMessage = existingMessages.find(
           (existingMessage) => existingMessage.message === message
         );
 
-        setIsBookmarked(isMessageSaved);
+        if (savedMessage) {
+          setIsBookmarked(savedMessage.saved);
+        }
       } catch (error) {
         console.error("Error checking if message is saved:", error);
       }
     };
 
     checkIfMessageSaved();
-  }, [user, message]); // Dependency on user and message ensures the effect runs when either changes
+  }, [user, message]);
 
-  const handleBookmarkClick = async () => {
+  const handleBookmarkClick = () => {
     setIsInteracted(true);
+    setEditedMessageKey(Math.random().toString(36));
+  };
 
+  const handleSaveEditedMessage = async () => {
     try {
       if (!user) {
         return;
@@ -102,30 +111,29 @@ const Message = ({
       const userDocRef = doc(usersCollection, user.uid);
 
       const dictionaryItem: DictionaryItem = {
-        message,
+        word: editedMessage,
+        message: editedMessage,
         timestamp,
-        saved: !isBookmarked,
+        saved: true,
+        messageKey: editedMessageKey,
       };
 
-      const userData = (await getDoc(userDocRef)).data();
-      const existingMessages: DictionaryItem[] = userData?.dictionary || [];
-      const isMessageExists = existingMessages.some(
-        (existingMessage) => existingMessage.message === message
-      );
+      await updateDoc(userDocRef, {
+        dictionary: arrayUnion(dictionaryItem),
+      });
 
-      if (!isMessageExists) {
-        await updateDoc(userDocRef, {
-          dictionary: arrayUnion(dictionaryItem),
-        });
-
-        setIsBookmarked(!isBookmarked);
-        console.log("Message saved to dictionary!");
-      } else {
-        console.log("Message already exists in the dictionary.");
-      }
+      setIsBookmarked(true);
+      setIsInteracted(false);
+      console.log("Edited message saved to dictionary!");
     } catch (error) {
-      console.error("Error saving message to dictionary:", error);
+      console.error("Error saving edited message to dictionary:", error);
     }
+  };
+
+  const handleCancelEdit = () => {
+    setEditedMessage(message);
+    setIsInteracted(false);
+    setEditedMessageKey(messageKey); // Rename 'key' to 'editedMessageKey'
   };
 
   return (
@@ -157,13 +165,30 @@ const Message = ({
           </div>
           <div className={style.wrapper}>
             <div className={style.messageContentWrap}>
-              <div className={style.message}>{message}</div>
+              {isInteracted ? (
+                <input
+                  type="text"
+                  value={editedMessage}
+                  onChange={(e) => setEditedMessage(e.target.value)}
+                  className={style.message}
+                />
+              ) : (
+                <div className={style.message}>{message}</div>
+              )}
             </div>
             <div className={style.timestamp}>
               <div className={style.bookmark}>
-                <button onClick={handleBookmarkClick}>
-                  {isBookmarked ? <PiBookBookmarkFill /> : <PiBookBookmark />}
-                </button>
+                {isInteracted && (
+                  <div className={style.interacted}>
+                    <button onClick={handleSaveEditedMessage}>Save</button>
+                    <button onClick={handleCancelEdit}>Cancel</button>
+                  </div>
+                )}
+                {!isInteracted && (
+                  <button onClick={handleBookmarkClick}>
+                    {isBookmarked ? <PiBookBookmarkFill /> : <PiBookBookmark />}
+                  </button>
+                )}
               </div>
               <p>{formattedTimestamp} </p>
             </div>

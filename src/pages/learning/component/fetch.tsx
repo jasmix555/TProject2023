@@ -83,7 +83,7 @@ export const Fetch: FC<FetchProps> = ({
         genre: word.genre || "",
         pronunciation: word.pronunciation || "",
         timestamp: Date.now(),
-        key: Math.random().toString(36), // Generate a random key for React
+        messageKey: Math.random().toString(36), // Generate a random key for React
       }));
 
     // Use Firebase to save the data into the Firestore database under the specific user
