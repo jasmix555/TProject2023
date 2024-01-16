@@ -186,10 +186,10 @@
   background: var(--radial-gradient);
   position: fixed;
   bottom: 0;
-  padding: 0.4rem 2rem 2rem 2rem;
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
+  gap: 1.6rem;
   width: 100%;
   height: 8rem;
   z-index: 100;
@@ -203,7 +203,7 @@
   .input {
     word-wrap: break-word;
     width: 100%;
-    max-width: 30rem;
+    max-width: 32rem;
     height: 4rem;
     max-height: 200px;
     overflow: auto;
@@ -219,9 +219,10 @@
 
   .sendButton {
     color: var(--white);
-    text-align: center;
     font-size: 3rem;
+    display: flex;
     align-items: center;
-    padding: 0.8rem 1rem;
+    justify-content: center;
+    // border: solid 1px tomato;
   }
 }

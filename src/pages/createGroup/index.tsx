@@ -10,6 +10,28 @@ import { useRouter } from "next/router";
 import style from "@/styles/createGroup.module.scss";
 import LayoutPage from "@/component/LayoutPage";
 import BackBtn from "@/component/BackBtn";
+import Header from "@/component/Header";
+import { RiMenu3Line } from "react-icons/ri";
+import {
+  FaRegCircleXmark,
+  FaBell,
+  FaUserAstronaut,
+  FaGear,
+  FaUsers,
+} from "react-icons/fa6";
+import { FaEdit } from "react-icons/fa";
+
+const menus = {
+  icon: <RiMenu3Line />,
+  options: [
+    { icon: <FaRegCircleXmark />, link: "/#" },
+    { icon: <FaBell />, link: "/#" },
+    { icon: <FaUserAstronaut />, link: "/profile-setup" },
+    { icon: <FaUsers />, link: "/#" },
+    { icon: <FaEdit />, link: "/#" },
+    { icon: <FaGear />, link: "/settings" },
+  ],
+};
 
 export default function CreateGroup() {
   const [title, setTitle] = useState("");
@@ -68,6 +90,7 @@ export default function CreateGroup() {
 
   return (
     <LayoutPage>
+      <Header contents={menus} />
       <form onSubmit={handleSubmit} className={style.form}>
         <div className={style.contentWrap}>
           <p>タイトル</p>

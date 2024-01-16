@@ -11,11 +11,11 @@ import Motion from "@/component/Motion";
 const StyledCalendarContainer = styled.div`
   .react-calendar {
     position: absolute;
-    bottom: 13rem;
+    bottom: 18%;
     left: 50%;
     transform: translateX(-50%);
-    width: 340px;
-    height: 390px;
+    width: 33rem;
+    height: 38rem;
     font-size: 1.6rem;
     line-height: 2.6;
     overflow-y: scroll;
@@ -185,14 +185,6 @@ const DateInfo: React.FC<{
     fetchSavedInfo(date);
   }, [date]);
 
-  const handleEditClick = () => {
-    setIsEditMode(true);
-  };
-
-  const handleSaveClick = () => {
-    setIsEditMode(false);
-  };
-
   const handleClick = (event: React.MouseEvent<HTMLDivElement>) => {
     if (event.target === event.currentTarget) {
       // Close the DateInfo component only if the click is on the .wrapper itself
@@ -244,7 +236,6 @@ const DateInfo: React.FC<{
             ) : (
               <p style={{ fontSize: "1.6rem" }}>冒険の記録はありません。</p>
             )}
-            {/* <button onClick={handleEditClick}>Edit</button> */}
           </div>
         )}
       </div>

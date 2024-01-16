@@ -13,7 +13,7 @@
 
   .tabContent {
     position: absolute;
-    bottom: 13rem;
+    bottom: 18%;
     left: 50%;
     transform: translateX(-50%);
     height: 390px;
@@ -34,14 +34,13 @@
     border-radius: 1rem;
     margin: 0 auto;
     position: absolute;
-    bottom: 13rem;
+    bottom: 18%;
     left: 50%;
     transform: translateX(-50%);
     padding: 0.8rem 1.6rem;
-    font-size: 2rem;
 
     .tabBtns {
-      font-size: 1.6rem;
+      font-size: clamp(1.4rem, 2.5vw, 1.8rem);
       line-height: 3.6rem;
       display: flex;
       gap: 0.2rem;
@@ -80,16 +79,13 @@
 
       .text {
         width: 70%;
+        font-size: clamp(1.4rem, 2.5vw, 2rem);
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
       }
 
       .newLabel {
-        // position: absolute;
-        // right: 2.4rem;
-        // top: 50%;
-        // transform: translateY(-50%);
         padding: 0.2rem 0.4rem;
         border-radius: 5px;
         background: var(--border-clr);
