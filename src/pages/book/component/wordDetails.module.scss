@@ -55,22 +55,28 @@
 .confirmationDialog {
   position: absolute;
   top: 3rem;
-  right: 0;
+  right: 1rem;
   display: flex;
   flex-direction: column;
-  border-radius: 5px;
-  padding: 0.2rem 0.4rem;
-  background: var(--white);
-  color: #000;
+  width: 10rem;
+
+  border-radius: 10px;
+  background: rgba(93, 93, 93, 0.4);
+  box-shadow: 0px 0px 84px 0px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(17.668832778930664px);
+
+  .delete {
+    color: #e2453b;
+  }
+
   button {
     &:nth-child(1) {
-      span {
-        padding-left: 0.2rem;
-      }
+      border-bottom: 1px solid #898989;
     }
     display: flex;
     gap: 0.4rem;
-    padding: 0.2rem 0.4rem;
+    padding: 1rem 1rem;
+    justify-content: space-between;
     span {
       display: block;
     }

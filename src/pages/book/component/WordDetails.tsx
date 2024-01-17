@@ -267,16 +267,16 @@ const WordDetails: React.FC<WordDetailsProps> = ({
       {showConfirmation && (
         <Motion classname={style.confirmationDialog} translate={-40}>
           <button onClick={handleEditConfirmation}>
+            Edit
             <span>
               <FaEdit />
             </span>
-            Edit
           </button>
-          <button onClick={handleDeleteConfirmation}>
+          <button onClick={handleDeleteConfirmation} className={style.delete}>
+            Delete
             <span>
               <FaTrash />
             </span>
-            Delete
           </button>
         </Motion>
       )}
