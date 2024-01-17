@@ -23,7 +23,8 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    position: relative;
+    position: fixed;
+    top: 12rem;
     padding: 2rem;
 
     .content {
@@ -48,8 +49,8 @@
   }
 
   .buttons {
-    position: relative;
-    bottom: -2rem;
+    position: fixed;
+    bottom: 7rem;
 
     .expirationTag {
       font-size: 1.2rem;
