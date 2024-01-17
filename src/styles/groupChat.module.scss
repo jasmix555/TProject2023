@@ -124,14 +124,14 @@
         border: var(--chat-bg) solid 3px;
         .message {
           padding: 0.6rem 1rem;
-          max-inline-size: 260px;
           font-size: 1.6rem;
           font-weight: 500;
           margin: 0.4rem 0;
         }
         input {
-          border-top: transparent solid 3px;
-          border-bottom: transparent solid 3px;
+          border-top: transparent solid 2.4px;
+          width: 260px;
+          border-bottom: transparent solid 2.4px;
         }
       }
 
@@ -225,4 +225,10 @@
     align-items: center;
     justify-content: center;
   }
+}
+
+.interacted {
+  display: flex;
+  flex-direction: column;
+  font-size: 2rem;
 }

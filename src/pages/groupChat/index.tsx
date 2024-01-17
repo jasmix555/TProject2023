@@ -181,11 +181,11 @@ const Message = ({
               <div className={style.bookmark}>
                 {isInteracted && (
                   <div className={style.interacted}>
-                    <button onClick={handleSaveEditedMessage}>
-                      <FaSave />
-                    </button>
                     <button onClick={handleCancelEdit}>
                       <FaXmark />
+                    </button>
+                    <button onClick={handleSaveEditedMessage}>
+                      <FaSave />
                     </button>
                   </div>
                 )}
