@@ -20,6 +20,7 @@ export interface DictionaryEntry {
   pronunciation?: string;
   genre?: string;
   messageKey?: string;
+  usage?: string;
 }
 
 type Props = {

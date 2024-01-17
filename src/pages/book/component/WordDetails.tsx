@@ -27,6 +27,7 @@ type WordDetails = {
   genre: string;
   meaning: string;
   timestamp: number;
+  usage?: string;
 };
 
 interface WordDetailsProps {
@@ -53,6 +54,7 @@ const WordDetails: React.FC<WordDetailsProps> = ({
     meaning: wordInfo.meaning || "",
     timestamp: wordInfo.timestamp || 0,
     messageKey: wordInfo.messageKey || "",
+    usage: wordInfo.usage || "",
   });
   const [showConfirmation, setShowConfirmation] = useState(false);
   const auth = getAuth();
@@ -223,6 +225,12 @@ const WordDetails: React.FC<WordDetailsProps> = ({
         </button>
       </div>
       <div className={style.contentWrapper}>
+        {!wordInfo.meaning && !wordInfo.usage && (
+          <div className={style.content}>
+            <h3>意味</h3>
+            <li>入力されていません。</li>
+          </div>
+        )}
         {wordInfo.meaning && (
           <div className={style.content}>
             <h3>意味</h3>
@@ -233,12 +241,13 @@ const WordDetails: React.FC<WordDetailsProps> = ({
                 onChange={handleInputChange}
               />
             ) : (
-              <p>・{wordInfo.meaning}</p>
+              <li>・{wordInfo.meaning}</li>
             )}
           </div>
         )}
         <div className={style.content}>
           <h3>使い方</h3>
+          <p>Word Usage</p>
         </div>
         {wordInfo.timestamp && (
           <div className={style.content}>
