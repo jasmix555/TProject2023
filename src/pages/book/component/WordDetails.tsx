@@ -275,16 +275,16 @@ const WordDetails: React.FC<WordDetailsProps> = ({
           translate={-40}
           transition={0.1}
         >
-          <button onClick={handleEditConfirmation}>
-            Edit
-            <span>
-              <FaEdit />
-            </span>
-          </button>
           <button onClick={handleDeleteConfirmation} className={style.delete}>
             Delete
             <span>
               <FaTrash />
+            </span>
+          </button>
+          <button onClick={handleEditConfirmation}>
+            Edit
+            <span>
+              <FaEdit />
             </span>
           </button>
         </Motion>
