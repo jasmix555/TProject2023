@@ -222,32 +222,37 @@ const WordDetails: React.FC<WordDetailsProps> = ({
           {showConfirmation ? <FaTimes /> : <FaEllipsisH />}
         </button>
       </div>
-      {wordInfo.meaning && (
-        <div className={style.content}>
-          <h3>意味</h3>
-          {editing ? (
-            <textarea
-              name="meaning"
-              value={editedDetails.meaning}
-              onChange={handleInputChange}
-            />
-          ) : (
-            <p>・{wordInfo.meaning}</p>
-          )}
-        </div>
-      )}
-      {wordInfo.timestamp && (
-        <div className={style.content}>
-          <h3>情報</h3>
-          <div className={style.time}>
+      <div className={style.contentWrapper}>
+        {wordInfo.meaning && (
+          <div className={style.content}>
+            <h3>意味</h3>
             {editing ? (
-              <p>登録日 : {formatDate(editedDetails.timestamp)}</p>
+              <textarea
+                name="meaning"
+                value={editedDetails.meaning}
+                onChange={handleInputChange}
+              />
             ) : (
-              <p>登録日 : {formatDate(wordInfo.timestamp)}</p>
+              <p>・{wordInfo.meaning}</p>
             )}
           </div>
+        )}
+        <div className={style.content}>
+          <h3>使い方</h3>
         </div>
-      )}
+        {wordInfo.timestamp && (
+          <div className={style.content}>
+            <h3>情報</h3>
+            <div className={style.time}>
+              {editing ? (
+                <p>登録日 : {formatDate(editedDetails.timestamp)}</p>
+              ) : (
+                <p>登録日 : {formatDate(wordInfo.timestamp)}</p>
+              )}
+            </div>
+          </div>
+        )}
+      </div>
       {editing && (
         <Motion classname={style.editButtons}>
           <button onClick={handleSaveClick}>
@@ -265,7 +270,11 @@ const WordDetails: React.FC<WordDetailsProps> = ({
         </Motion>
       )}
       {showConfirmation && (
-        <Motion classname={style.confirmationDialog} translate={-40}>
+        <Motion
+          classname={style.confirmationDialog}
+          translate={-40}
+          transition={0.1}
+        >
           <button onClick={handleEditConfirmation}>
             Edit
             <span>
