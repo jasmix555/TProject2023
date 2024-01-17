@@ -436,7 +436,8 @@ const GroupChat = () => {
           {countdown !== null ? (
             <form onSubmit={handleSendMessage}>
               <div className={style.inputWrap}>
-                <textarea
+                <input
+                  type="text"
                   value={message}
                   onChange={(e) => setMessage(e.target.value)}
                   className={style.input}
