@@ -45,33 +45,57 @@ export const Fetch: FC<FetchProps> = ({
     setMemo(event.target.value);
   };
 
-  const getWords = (
+  const getWords = async (
     language: string,
     genre: string,
     count: number = 4
-  ): WordType[] => {
-    let filteredWords = words.filter((word) => word.language === language);
-    if (genre) {
-      // If a genre is selected, filter the words based on the genre
-      filteredWords = filteredWords.filter((word) => word.genre === genre);
+  ): Promise<WordType[]> => {
+    try {
+      let filteredWords = words.filter((word) => word.language === language);
+
+      if (genre) {
+        // If a genre is selected, filter the words based on the genre
+        filteredWords = filteredWords.filter((word) => word.genre === genre);
+      }
+
+      // Fetch the user's current dictionary from Firestore
+      const db = getFirestore();
+      const usersCollection = collection(db, "users");
+      const userDocRef = doc(usersCollection, user?.uid);
+
+      const userDocSnapshot = await getDoc(userDocRef);
+      const userDictionary = userDocSnapshot.data()?.dictionary || [];
+
+      const fetchedWords: WordType[] = [];
+
+      // Iterate until count number of unique words are fetched
+      while (fetchedWords.length < count) {
+        const randomIndex = Math.floor(Math.random() * filteredWords.length);
+        const randomWord = filteredWords[randomIndex];
+
+        // Check if the word is not already in the user's dictionary
+        const isDuplicate = userDictionary.some(
+          (entry: WordType) => entry.word === randomWord?.word
+        );
+
+        if (!isDuplicate) {
+          fetchedWords.push(randomWord);
+        }
+
+        // Remove the fetched word from the filtered words array
+        filteredWords.splice(randomIndex, 1);
+      }
+
+      return fetchedWords;
+    } catch (error) {
+      console.error("Error fetching words:", error);
+      return [];
     }
-
-    const fetchedWords = [];
-    for (let i = 0; i < count; i++) {
-      const randomIndex = Math.floor(Math.random() * filteredWords.length);
-      const randomWord = filteredWords[randomIndex];
-      fetchedWords.push(randomWord);
-
-      // Remove the fetched word from the filtered words array
-      filteredWords.splice(randomIndex, 1);
-    }
-
-    return fetchedWords;
   };
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const fetchedWords = getWords(selectedLanguage, selectedGenre);
+    const fetchedWords = await getWords(selectedLanguage, selectedGenre);
 
     // Create an array of data objects containing words and additional information
     const data = fetchedWords
