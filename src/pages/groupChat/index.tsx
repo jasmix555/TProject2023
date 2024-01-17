@@ -19,10 +19,10 @@ import {
   arrayUnion,
 } from "firebase/firestore";
 import { getAuth, User } from "firebase/auth";
-import { FaUsers } from "react-icons/fa6";
+import { FaUsers, FaXmark } from "react-icons/fa6";
 import { PiBookBookmark, PiBookBookmarkFill } from "react-icons/pi";
 import { BsSend } from "react-icons/bs";
-import { format, intervalToDuration, formatDuration } from "date-fns";
+import { format, intervalToDuration } from "date-fns";
 import { useRouter } from "next/router";
 import style from "@/styles/groupChat.module.scss";
 import LayoutPage from "@/component/LayoutPage";
@@ -31,6 +31,7 @@ import { usePresence } from "@/component/presenceUtils";
 import LinkBox from "@/component/LinkBox";
 import { AiFillHome } from "react-icons/ai";
 import { formatRemainingTime } from "@/utils/formatTime";
+import { FaSave } from "react-icons/fa";
 
 type MessageProps = {
   message: string;
@@ -180,8 +181,12 @@ const Message = ({
               <div className={style.bookmark}>
                 {isInteracted && (
                   <div className={style.interacted}>
-                    <button onClick={handleSaveEditedMessage}>Save</button>
-                    <button onClick={handleCancelEdit}>Cancel</button>
+                    <button onClick={handleSaveEditedMessage}>
+                      <FaSave />
+                    </button>
+                    <button onClick={handleCancelEdit}>
+                      <FaXmark />
+                    </button>
                   </div>
                 )}
                 {!isInteracted && (
@@ -390,74 +395,70 @@ const GroupChat = () => {
   return (
     <LayoutPage>
       <AuthGuard>
-        <div className={style.body}>
-          <LinkBox link={"../"} icon={<AiFillHome />} />
+        <LinkBox link={"../"} icon={<AiFillHome />} />
 
-          <div className={style.title}>
-            <h1>{groupInfo.title || "ロード中..."}</h1>
-            {countdown !== null ? (
-              <p className={style.number}>
-                {countdown !== null
-                  ? formatRemainingTime(countdown)
-                  : "00:00:00"}
-              </p>
-            ) : (
-              <p className={style.number}>時間終了です！</p>
-            )}
-          </div>
-
-          <div className={style.avatarGrid}></div>
-
-          <div className={style.capacity}>
-            <div className={style.currentUsers}>
-              <FaUsers />
-              <p>{userCount}/5</p>
-            </div>
-          </div>
-
-          <div className={`${style.groupChatWrap}`} ref={chatBottomRef}>
-            <div className={style.chatBottom}>
-              <div className={style.showMessage} ref={messagesElementRef}>
-                {chats.map((chat, idx) => (
-                  <Message
-                    message={chat.message}
-                    userId={chat.userId}
-                    userNickname={chat.userNickname}
-                    timestamp={chat.timestamp}
-                    character={chat.character}
-                    messageKey={chat.messageKey}
-                    key={idx}
-                  />
-                ))}
-              </div>
-            </div>
-          </div>
-
+        <div className={style.title}>
+          <h1>{groupInfo.title || "ロード中..."}</h1>
           {countdown !== null ? (
-            <form onSubmit={handleSendMessage}>
-              <div className={style.inputWrap}>
-                <input
-                  type="text"
-                  value={message}
-                  onChange={(e) => setMessage(e.target.value)}
-                  className={style.input}
-                  placeholder="入力してください。"
-                />
-                <button
-                  type={"submit"}
-                  disabled={message === ""}
-                  className={style.sendButton}
-                >
-                  <BsSend />
-                </button>
-              </div>
-            </form>
+            <p className={style.number}>
+              {countdown !== null ? formatRemainingTime(countdown) : "00:00:00"}
+            </p>
           ) : (
-            <div className={style.inputWrap}>
-              <p>時間終了しましたので、メッセージの送信はできません。</p>
-            </div>
+            <p className={style.number}>時間終了です！</p>
           )}
         </div>
+
+        <div className={style.avatarGrid}></div>
+
+        <div className={style.capacity}>
+          <div className={style.currentUsers}>
+            <FaUsers />
+            <p>{userCount}/5</p>
+          </div>
+        </div>
+
+        <div className={`${style.groupChatWrap}`} ref={chatBottomRef}>
+          <div className={style.chatBottom}>
+            <div className={style.showMessage} ref={messagesElementRef}>
+              {chats.map((chat, idx) => (
+                <Message
+                  message={chat.message}
+                  userId={chat.userId}
+                  userNickname={chat.userNickname}
+                  timestamp={chat.timestamp}
+                  character={chat.character}
+                  messageKey={chat.messageKey}
+                  key={idx}
+                />
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {countdown !== null ? (
+          <form onSubmit={handleSendMessage}>
+            <div className={style.inputWrap}>
+              <input
+                type="text"
+                value={message}
+                onChange={(e) => setMessage(e.target.value)}
+                className={style.input}
+                placeholder="入力してください。"
+              />
+              <button
+                type={"submit"}
+                disabled={message === ""}
+                className={style.sendButton}
+              >
+                <BsSend />
+              </button>
+            </div>
+          </form>
+        ) : (
+          <div className={style.inputWrap}>
+            <p>時間終了しましたので、メッセージの送信はできません。</p>
+          </div>
+        )}
       </AuthGuard>
     </LayoutPage>
   );

@@ -157,8 +157,8 @@ const CreatedGroups = () => {
                                 ]
                               }`}
                               style={{
-                                backgroundImage: `url(../planets/${
-                                  Math.floor(Math.random() * 6) + 1
+                                backgroundImage: `url(../rocket/rocket${
+                                  Math.floor(Math.random() * 3) + 1
                                 }.svg)`,
                               }}
                             ></div>

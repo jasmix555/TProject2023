@@ -51,11 +51,10 @@
               object-fit: cover;
               background-position: center;
               background-repeat: no-repeat;
-              background-size: cover;
-              width: 90%;
-              height: 90%;
+              background-size: contain;
+              width: 100%;
+              height: 100%;
               display: inline-block;
-              filter: drop-shadow(0 0 0.5rem rgba(189, 255, 247, 0.39));
             }
             .image1 {
               animation: float1 3s linear infinite;
