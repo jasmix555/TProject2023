@@ -228,7 +228,15 @@ const WordDetails: React.FC<WordDetailsProps> = ({
         {!wordInfo.meaning && !wordInfo.usage && (
           <div className={style.content}>
             <h3>意味</h3>
-            <li>入力されていません。</li>
+            {editing ? (
+              <textarea
+                name="meaning"
+                value={"No Data Found."}
+                onChange={handleInputChange}
+              />
+            ) : (
+              <li>No Data Found.</li>
+            )}
           </div>
         )}
         {wordInfo.meaning && (
@@ -241,7 +249,7 @@ const WordDetails: React.FC<WordDetailsProps> = ({
                 onChange={handleInputChange}
               />
             ) : (
-              <li>・{wordInfo.meaning}</li>
+              <li>{wordInfo.meaning}</li>
             )}
           </div>
         )}
