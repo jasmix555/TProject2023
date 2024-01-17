@@ -170,6 +170,12 @@ const WordDetails: React.FC<WordDetailsProps> = ({
     }
   }, [saveClicked]);
 
+  useEffect(() => {
+    if (!editing && saveClicked) {
+      onClose();
+    }
+  }, [editing, saveClicked, onClose]);
+
   return (
     <div className={style.wrapper}>
       <div className={style.header}>

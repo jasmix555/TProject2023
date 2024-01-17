@@ -30,7 +30,7 @@ const menus = {
 
 export function BookContent() {
   const { user } = useAuthContext();
-  const userId = user?.uid || ""; // Replace with your actual user ID retrieval logic
+  const userId = user?.uid || "";
 
   const [tab, setTab] = useState(1);
 
@@ -119,7 +119,6 @@ const CurrentDate = styled.div`
 export default function Book() {
   const currentDate = new Date();
 
-  // Extract year, month, and date
   const currentYear = currentDate.getFullYear();
   const currentMonth = currentDate.toLocaleString("en-US", { month: "long" });
   const currentDateNumber = currentDate.getDate();

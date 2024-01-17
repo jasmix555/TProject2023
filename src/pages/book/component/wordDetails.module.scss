@@ -43,6 +43,13 @@
   .time {
     color: #b9b9b9;
   }
+
+  textarea {
+    border-bottom: 1px solid #cfcfcf;
+    word-wrap: break-word;
+    max-height: 300px;
+    width: 100%;
+  }
 }
 
 .confirmationDialog {

@@ -36,6 +36,7 @@ export default function SavedWords({ date, userId }: Props) {
   );
   const [dataChanged, setDataChanged] = useState<boolean>(false);
   const [resetDataChanged, setResetDataChanged] = useState<boolean>(false);
+  const [forceUpdate, setForceUpdate] = useState<boolean>(false); // Add this line
 
   const handleMoreClick = (wordInfo: DictionaryEntry) => {
     setSelectedWord(wordInfo);
@@ -127,6 +128,8 @@ export default function SavedWords({ date, userId }: Props) {
         }
       }
       setDataChanged(true);
+
+      setForceUpdate((prev) => !prev);
     } catch (error) {
       console.error("Error updating word:", error);
     }
@@ -160,6 +163,7 @@ export default function SavedWords({ date, userId }: Props) {
         );
         setSelectedWord(null); // Close the WordDetails component after deleting
         setResetDataChanged(true);
+        setForceUpdate((prev) => !prev); // Trigger a re-render
       }
       setDataChanged(true);
     } catch (error) {
@@ -173,7 +177,7 @@ export default function SavedWords({ date, userId }: Props) {
 
   useEffect(() => {
     fetchSavedInfo(date || null);
-  }, [date, userId, dataChanged, resetDataChanged]);
+  }, [date, userId, dataChanged, resetDataChanged, forceUpdate]);
 
   useEffect(() => {
     const timeoutId = setTimeout(() => {
