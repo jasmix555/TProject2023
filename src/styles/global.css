@@ -34,12 +34,8 @@ body {
   font-size: 62.5%;
   margin: 0 auto;
   height: 100vh;
-  color: var(--white) !important;
-  background-image: url(/25.svg) !important;
-  background-repeat: no-repeat !important;
-  background-position: center !important;
-  background-size: cover !important;
-  background-color: var(--background-color) !important;
+  color: var(--white);
+  background-image: url(/25.svg);
 }
 
 a {
