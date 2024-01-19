@@ -14,7 +14,8 @@ import styled from "styled-components";
 import { useState } from "react";
 import style from "@/styles/book.module.scss";
 import Calendar from "./component/Calendar";
-import SavedWords, { AddWord, FilterLanguage } from "./component/SavedWords";
+import SavedWords from "./component/SavedWords";
+import { BookHeader } from "./component/BookHeader";
 
 const menus = {
   icon: <RiMenu3Line />,
@@ -53,8 +54,7 @@ export function BookContent() {
   return (
     <div className={style.wrapper}>
       <div className={style.header}>
-        <FilterLanguage />
-        <AddWord />
+        <BookHeader />
       </div>
       <div className={style.tabWrapper}>
         <div className={style.tabBtns}>
