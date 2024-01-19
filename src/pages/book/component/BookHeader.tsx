@@ -1,5 +1,5 @@
 import style from "@/styles/book.module.scss";
-import { FaCaretDown, FaPlus } from "react-icons/fa";
+import { FaPlus } from "react-icons/fa";
 
 export function BookHeader() {
   return (

@@ -53,9 +53,9 @@ export function BookContent() {
 
   return (
     <div className={style.wrapper}>
-      <div className={style.header}>
+      {/* <div className={style.header}>
         <BookHeader />
-      </div>
+      </div> */}
       <div className={style.tabWrapper}>
         <div className={style.tabBtns}>
           <button
