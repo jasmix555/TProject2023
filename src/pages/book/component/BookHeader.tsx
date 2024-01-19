@@ -13,12 +13,9 @@ export function BookHeader() {
 export function FilterLanguage() {
   return (
     <>
-      <button className={style.filterLang}>
-        All
-        <span>
-          <FaCaretDown />
-        </span>
-      </button>
+      <select className={style.filterLang}>
+        <option value="">All</option>
+      </select>
     </>
   );
 }
