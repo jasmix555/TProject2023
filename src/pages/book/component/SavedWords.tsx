@@ -8,7 +8,7 @@ import {
   getFirestore,
   setDoc,
 } from "firebase/firestore";
-import { FaChevronRight } from "react-icons/fa";
+import { FaCaretDown, FaChevronRight, FaPlus } from "react-icons/fa";
 
 export interface DictionaryEntry {
   message?: string;
@@ -209,5 +209,28 @@ export default function SavedWords({ date, userId }: Props) {
         )}
       </div>
     </div>
+  );
+}
+
+export function FilterLanguage() {
+  return (
+    <>
+      <button className={style.filterLang}>
+        All
+        <span>
+          <FaCaretDown />
+        </span>
+      </button>
+    </>
+  );
+}
+
+export function AddWord() {
+  return (
+    <>
+      <button className={style.addWord}>
+        <FaPlus />
+      </button>
+    </>
   );
 }

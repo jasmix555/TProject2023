@@ -14,7 +14,7 @@ import styled from "styled-components";
 import { useState } from "react";
 import style from "@/styles/book.module.scss";
 import Calendar from "./component/Calendar";
-import SavedWords from "./component/SavedWords";
+import SavedWords, { AddWord, FilterLanguage } from "./component/SavedWords";
 
 const menus = {
   icon: <RiMenu3Line />,
@@ -52,12 +52,11 @@ export function BookContent() {
 
   return (
     <div className={style.wrapper}>
+      <div className={style.header}>
+        <FilterLanguage />
+        <AddWord />
+      </div>
       <div className={style.tabWrapper}>
-        <div className={style.title}>
-          保存した単語が保存されます。
-          <br />
-          たくさん交流をして冒険の記録を更新しよう！
-        </div>
         <div className={style.tabBtns}>
           <button
             className={tab === 1 ? style.active : ""}
@@ -89,10 +88,8 @@ const CurrentDate = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  position: absolute;
-  top: 2rem;
-  left: 50%;
-  transform: translateX(-50%);
+  margin-top: 2rem;
+  padding-bottom: 1rem;
 
   .format {
     font-weight: 900;

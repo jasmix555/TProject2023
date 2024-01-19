@@ -3,6 +3,48 @@
   align-items: center;
   justify-content: center;
 
+  .header {
+    display: grid;
+    grid-template-columns: 8fr 2fr;
+    gap: 2rem;
+    align-items: center;
+    width: 36rem;
+
+    button {
+      height: 4rem;
+      font-size: 1.6rem;
+      border-radius: 10px;
+      box-shadow: var(--border-shadow);
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+
+      svg {
+        vertical-align: middle;
+        display: inline-block;
+      }
+    }
+
+    .filterLang {
+      border: var(--border-stroke);
+      background: var(--border-bg);
+      justify-content: space-between;
+      padding: 0 1.2rem;
+      svg {
+        font-size: 2.2rem;
+      }
+      .active {
+        color: var(--accent-clr);
+      }
+    }
+
+    .addWord {
+      justify-content: center;
+      background: var(--border-clr);
+      border: 1px solid var(--border-bg);
+    }
+  }
+
   .tabContent {
     height: auto;
     font-size: 1.6rem;
@@ -11,8 +53,9 @@
 
   .tabWrapper {
     padding: 1rem 0;
-    width: 350px;
-    height: 460px;
+    width: 36rem;
+    height: 46rem;
+    overflow-y: scroll;
     max-width: 100%;
     font-family: "Play", sans-serif;
     background: var(--glass-background);
@@ -22,15 +65,6 @@
     margin: 0 auto;
     position: absolute;
     top: 22rem;
-
-    .title {
-      position: absolute;
-      top: -6rem;
-      font-size: 1.3rem;
-      font-weight: 400;
-      left: 1rem;
-      line-height: 2.2rem;
-    }
 
     .tabBtns {
       font-size: clamp(1.4rem, 2.5vw, 1.8rem);
@@ -60,7 +94,7 @@
   .messagesWrap {
     width: 100%;
     height: 37rem;
-    overflow-y: scroll;
+    // overflow-y: scroll;
     margin: 0 auto;
     padding: 0 0.4rem;
 

@@ -1,7 +1,7 @@
 // src/lib/words/words.ts
 export interface WordType {
   word: string;
-  meaning: string;
+  meaning: Array<string> | string;
   genre: "daily" | "slang" | "business" | "formal" | "etc" | "dialect";
   language: "JP" | "EN" | "CH" | "FR" | "ID" | "KR";
   pronunciation?: string;
@@ -50,7 +50,7 @@ export const words: WordType[] = [
     pronunciation: "konbanwa",
   },
   {
-    word: "ありがとう",
+    word: "ありがとうございます",
     meaning: "Thank you",
     genre: "formal",
     language: "JP",
@@ -73,7 +73,7 @@ export const words: WordType[] = [
   {
     word: "お疲れ様でした",
     meaning: "Thank you for your hard work (used at the end of the day)",
-    genre: "formal",
+    genre: "daily",
     language: "JP",
     pronunciation: "otsukaresama deshita",
   },
@@ -141,13 +141,6 @@ export const words: WordType[] = [
     pronunciation: "shain",
   },
   {
-    word: "お疲れ様でした",
-    meaning: "Thank you for your hard work",
-    genre: "business",
-    language: "JP",
-    pronunciation: "otsukaresama deshita",
-  },
-  {
     word: "プロフェッショナル",
     meaning: "Professional",
     genre: "business",
@@ -196,13 +189,6 @@ export const words: WordType[] = [
     genre: "formal",
     language: "JP",
     pronunciation: "oh-hah-yoh goh-zahy-mahs",
-  },
-  {
-    word: "お疲れ様でした",
-    meaning: "Thank you for your hard work",
-    genre: "formal",
-    language: "JP",
-    pronunciation: "oh-tsu-ka-reh-sah-mah deh-shi-tah",
   },
   {
     word: "仕事",
@@ -343,13 +329,6 @@ export const words: WordType[] = [
     genre: "slang",
     language: "JP",
     pronunciation: "shin-doh-ee",
-  },
-  {
-    word: "お疲れ様",
-    meaning: "Good job",
-    genre: "slang",
-    language: "JP",
-    pronunciation: "oh-tsu-ka-reh-sah-mah",
   },
   {
     word: "キモい",
