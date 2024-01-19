@@ -15,7 +15,6 @@ import { useState } from "react";
 import style from "@/styles/book.module.scss";
 import Calendar from "./component/Calendar";
 import SavedWords from "./component/SavedWords";
-import { BookHeader } from "./component/BookHeader";
 
 const menus = {
   icon: <RiMenu3Line />,
