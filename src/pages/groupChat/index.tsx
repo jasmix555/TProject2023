@@ -19,7 +19,7 @@ import {
   arrayUnion,
 } from "firebase/firestore";
 import { getAuth, User } from "firebase/auth";
-import { FaUsers, FaXmark } from "react-icons/fa6";
+import { FaUsers } from "react-icons/fa6";
 import { PiBookBookmark, PiBookBookmarkFill } from "react-icons/pi";
 import { BsSend } from "react-icons/bs";
 import { format, intervalToDuration } from "date-fns";
@@ -31,9 +31,9 @@ import { usePresence } from "@/component/presenceUtils";
 import LinkBox from "@/component/LinkBox";
 import { AiFillHome } from "react-icons/ai";
 import { formatRemainingTime } from "@/utils/formatTime";
-import { FaSave } from "react-icons/fa";
+import SaveMessageModal from "@/component/SaveMessageModal";
 
-export type MessageProps = {
+type MessageProps = {
   message: string;
   userId: string;
   userNickname: string;
@@ -43,11 +43,12 @@ export type MessageProps = {
 };
 
 type DictionaryItem = {
-  message: string;
+  message?: string;
   timestamp: number;
   saved: boolean;
   word?: string;
   messageKey: string;
+  meaning?: string;
 };
 
 const Message = ({
@@ -56,16 +57,13 @@ const Message = ({
   timestamp,
   character,
   userId,
-  messageKey,
 }: MessageProps) => {
   const formattedTimestamp = format(new Date(timestamp), "HH:mm");
   const auth = getAuth();
   const user = auth.currentUser;
   const isCurrentUser = userId === user?.uid;
-  const [isInteracted, setIsInteracted] = useState(false);
   const [isBookmarked, setIsBookmarked] = useState(false);
-  const [editedMessage, setEditedMessage] = useState(message);
-  const [editedMessageKey, setEditedMessageKey] = useState(messageKey);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
     const checkIfMessageSaved = async () => {
@@ -97,11 +95,10 @@ const Message = ({
   }, [user, message]);
 
   const handleBookmarkClick = () => {
-    setIsInteracted(true);
-    setEditedMessageKey(Math.random().toString(36));
+    setIsModalOpen(true);
   };
 
-  const handleSaveEditedMessage = async () => {
+  const handleSave = async (selectedWords: string[], meaning: string) => {
     try {
       if (!user) {
         return;
@@ -112,11 +109,12 @@ const Message = ({
       const userDocRef = doc(usersCollection, user.uid);
 
       const dictionaryItem: DictionaryItem = {
-        word: editedMessage,
-        message: editedMessage,
-        timestamp,
+        word: selectedWords.join(", "),
+        timestamp: Date.now(),
         saved: true,
-        messageKey: editedMessageKey,
+        meaning: meaning,
+        message: message,
+        messageKey: Math.random().toString(36), // Generate a random key for React
       };
 
       await updateDoc(userDocRef, {
@@ -124,23 +122,15 @@ const Message = ({
       });
 
       setIsBookmarked(true);
-      setIsInteracted(false);
-      console.log("Edited message saved to dictionary!");
+      setIsModalOpen(false);
+      console.log("Message saved to dictionary!");
     } catch (error) {
-      console.error("Error saving edited message to dictionary:", error);
+      console.error("Error saving message to dictionary:", error);
     }
   };
 
-  const handleCancelEdit = () => {
-    setEditedMessage(message);
-    setIsInteracted(false);
-    setEditedMessageKey(messageKey);
-  };
-
-  // New function to handle opening the modal
-  const handleOpenModal = () => {
-    setIsInteracted(true);
-    setEditedMessageKey(messageKey);
+  const handleCancel = () => {
+    setIsModalOpen(false);
   };
 
   return (
@@ -172,42 +162,24 @@ const Message = ({
           </div>
           <div className={style.wrapper}>
             <div className={style.messageContentWrap}>
-              {isInteracted ? (
-                <div className={style.interactedMessage}>
-                  <div className={style.message}>{message}</div>
-                  <div className={style.actions}>
-                    <button onClick={handleCancelEdit}>
-                      <FaXmark />
-                    </button>
-                    <button onClick={handleSaveEditedMessage}>
-                      <FaSave />
-                    </button>
-                  </div>
-                </div>
-              ) : (
-                <div className={style.message}>{message}</div>
-              )}
+              <div className={style.message}>{message}</div>
             </div>
             <div className={style.timestamp}>
               <div className={style.bookmark}>
-                {isInteracted && (
-                  <div className={style.interacted}>
-                    <button onClick={handleCancelEdit}>
-                      <FaXmark />
-                    </button>
-                    <button onClick={handleSaveEditedMessage}>
-                      <FaSave />
-                    </button>
-                  </div>
-                )}
-                {!isInteracted && (
-                  <button onClick={handleOpenModal}>
-                    {isBookmarked ? <PiBookBookmarkFill /> : <PiBookBookmark />}
-                  </button>
-                )}
+                <button onClick={handleBookmarkClick}>
+                  {isBookmarked ? <PiBookBookmarkFill /> : <PiBookBookmark />}
+                </button>
               </div>
               <p>{formattedTimestamp} </p>
             </div>
+
+            {isModalOpen && (
+              <SaveMessageModal
+                onSave={handleSave}
+                onCancel={handleCancel}
+                selectedMessage={message}
+              />
+            )}
           </div>
         </>
       )}
@@ -220,11 +192,11 @@ const GroupChat = () => {
   const [message, setMessage] = useState<string>("");
   const [nickname, setNickname] = useState<string>("");
   const [groupInfo, setGroupInfo] = useState({ title: "", expirationTime: "" });
-  const [userCharacter, setUserCharacter] = useState<number>(1);
+  const [userCharacter, setUserCharacter] = useState<number>(1); // Initialize with a default value
   const auth = getAuth();
   const user: User | null = auth.currentUser;
   const router = useRouter();
-  const { groupId, planet } = router.query;
+  const { groupId, planet } = router.query; // No need to extract 'title' from the router query
   const [dictionary, setDictionary] = useState<DictionaryItem[]>([]);
   const chatBottomRef = useRef<HTMLDivElement | null>(null);
   const [chats, setChats] = useState<MessageProps[]>([]);

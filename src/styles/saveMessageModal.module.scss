@@ -1,0 +1,66 @@
+@use "Box.module" as Box;
+
+.wrapper {
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  top: 0;
+  left: 0;
+
+  .background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: #33333080;
+  }
+
+  .content {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    min-height: 60rem;
+    background-image: url("/Frame/inputFrameSave.svg");
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    background-position: center;
+    padding-top: 5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    font-size: 1.6rem;
+    z-index: 1;
+
+    .title {
+      font-size: 1.4rem;
+      padding: 0 2rem;
+      margin: 0 auto 2rem auto;
+      color: var(--text-sub);
+    }
+
+    .input {
+      width: 85%;
+      margin: 0 auto;
+      display: flex;
+      gap: 0.4rem;
+      flex-direction: column;
+
+      input {
+        @include Box.futuristic();
+      }
+    }
+    .button {
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+      padding: 2rem 0;
+
+      .save {
+        @include Box.btnStyle($w: 40%, $fontS: 1.8rem);
+        margin: 0 auto;
+      }
+    }
+  }
+}
