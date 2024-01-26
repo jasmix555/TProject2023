@@ -33,7 +33,7 @@ import { AiFillHome } from "react-icons/ai";
 import { formatRemainingTime } from "@/utils/formatTime";
 import { FaSave } from "react-icons/fa";
 
-type MessageProps = {
+export type MessageProps = {
   message: string;
   userId: string;
   userNickname: string;
@@ -134,7 +134,13 @@ const Message = ({
   const handleCancelEdit = () => {
     setEditedMessage(message);
     setIsInteracted(false);
-    setEditedMessageKey(messageKey); // Rename 'key' to 'editedMessageKey'
+    setEditedMessageKey(messageKey);
+  };
+
+  // New function to handle opening the modal
+  const handleOpenModal = () => {
+    setIsInteracted(true);
+    setEditedMessageKey(messageKey);
   };
 
   return (
@@ -167,12 +173,17 @@ const Message = ({
           <div className={style.wrapper}>
             <div className={style.messageContentWrap}>
               {isInteracted ? (
-                <input
-                  type="text"
-                  value={editedMessage}
-                  onChange={(e) => setEditedMessage(e.target.value)}
-                  className={style.message}
-                />
+                <div className={style.interactedMessage}>
+                  <div className={style.message}>{message}</div>
+                  <div className={style.actions}>
+                    <button onClick={handleCancelEdit}>
+                      <FaXmark />
+                    </button>
+                    <button onClick={handleSaveEditedMessage}>
+                      <FaSave />
+                    </button>
+                  </div>
+                </div>
               ) : (
                 <div className={style.message}>{message}</div>
               )}
@@ -190,7 +201,7 @@ const Message = ({
                   </div>
                 )}
                 {!isInteracted && (
-                  <button onClick={handleBookmarkClick}>
+                  <button onClick={handleOpenModal}>
                     {isBookmarked ? <PiBookBookmarkFill /> : <PiBookBookmark />}
                   </button>
                 )}
@@ -209,11 +220,11 @@ const GroupChat = () => {
   const [message, setMessage] = useState<string>("");
   const [nickname, setNickname] = useState<string>("");
   const [groupInfo, setGroupInfo] = useState({ title: "", expirationTime: "" });
-  const [userCharacter, setUserCharacter] = useState<number>(1); // Initialize with a default value
+  const [userCharacter, setUserCharacter] = useState<number>(1);
   const auth = getAuth();
   const user: User | null = auth.currentUser;
   const router = useRouter();
-  const { groupId, planet } = router.query; // No need to extract 'title' from the router query
+  const { groupId, planet } = router.query;
   const [dictionary, setDictionary] = useState<DictionaryItem[]>([]);
   const chatBottomRef = useRef<HTMLDivElement | null>(null);
   const [chats, setChats] = useState<MessageProps[]>([]);
