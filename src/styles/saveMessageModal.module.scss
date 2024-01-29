@@ -16,12 +16,23 @@
     background: #33333080;
   }
 
+  .border {
+    width: 7rem;
+    height: 4px;
+    border-radius: 10px;
+    position: absolute;
+    top: 2.4rem;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--border-clr);
+  }
+
   .content {
     position: absolute;
     bottom: 0;
     left: 0;
     width: 100%;
-    min-height: 60rem;
+    min-height: 55rem;
     background-image: url("/Frame/inputFrameSave1.svg");
     background-repeat: no-repeat;
     background-size: 100% 100%;
@@ -35,8 +46,7 @@
 
     .title {
       font-size: 1.4rem;
-      padding: 0 2rem;
-      margin: 0 auto 2rem auto;
+      padding: 1rem 2rem;
       color: var(--text-sub);
     }
 
@@ -56,6 +66,7 @@
       flex-direction: column;
       gap: 2rem;
       padding: 2rem 0;
+      margin-top: 3rem;
 
       .save {
         @include Box.btnStyle($w: 40%, $fontS: 1.8rem);

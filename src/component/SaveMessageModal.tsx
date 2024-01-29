@@ -39,6 +39,7 @@ const SaveMessageModal: React.FC<SaveMessageModalProps> = ({
             animate={{ y: 0, opacity: 1 }}
             exit={{ y: 50, opacity: 0 }}
           >
+            <div className={style.border}></div>
             <p className={style.title}>
               テキストをタップすると、編集ができるよ！
               冒険の記録を完成させよう！
