@@ -1,4 +1,3 @@
-import { useToast } from "@chakra-ui/react";
 import style from "@/styles/form.module.scss";
 import { useState, FormEvent, useEffect } from "react";
 import { useRouter } from "next/router";
@@ -11,7 +10,6 @@ import {
   Firestore,
   getDoc,
 } from "firebase/firestore/lite";
-import { FirebaseError } from "@firebase/util";
 import Select from "react-select";
 import makeAnimated from "react-select/animated";
 import LayoutPage from "@/component/LayoutPage";
@@ -24,7 +22,6 @@ export default function ProfileSetup() {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [languages, setLanguages] = useState<OptionType[]>([]);
 
-  const toast = useToast();
   const router = useRouter();
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
@@ -64,22 +61,9 @@ export default function ProfileSetup() {
         router.push("/");
       } else {
         // Handle the case when there's no authenticated user
-        toast({
-          title: "Profile Setup Error",
-          description: "No authenticated user found.",
-          status: "error",
-          position: "top",
-        });
       }
     } catch (error) {
       console.error(error);
-
-      toast({
-        title: "Profile Setup Error",
-        description: (error as FirebaseError).message,
-        status: "error",
-        position: "top",
-      });
     } finally {
       setIsLoading(false);
     }
@@ -128,12 +112,6 @@ export default function ProfileSetup() {
         }
       } catch (error) {
         console.error("Error fetching user data:", error);
-        toast({
-          title: "Error",
-          description: "Error fetching user data.",
-          status: "error",
-          position: "top",
-        });
       }
     };
 

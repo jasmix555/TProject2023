@@ -4,9 +4,8 @@ import type { AppProps } from "next/app";
 import { initializeFirebaseApp } from "@/lib/firebase/firebase";
 import { AuthProvider } from "@/feature/provider/AuthProvider";
 import { useEffect, useState } from "react";
-import { AnimatePresence, motion } from "framer-motion";
+import { motion } from "framer-motion";
 import { useRouter } from "next/router";
-import Image from "next/image";
 import Head from "next/head";
 
 function App({ Component, pageProps }: AppProps) {
@@ -27,7 +26,6 @@ function App({ Component, pageProps }: AppProps) {
   }, []);
 
   if (!isFirebaseInitialized) {
-    // You can render a loading spinner or other UI while Firebase is initializing
     return <div>Loading...</div>;
   }
 

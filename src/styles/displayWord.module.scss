@@ -1,0 +1,53 @@
+.wrapper {
+  background-image: url("/Frame/displayWord.svg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  width: 100%;
+  height: 22rem;
+  position: absolute;
+  top: 12rem;
+  left: 0;
+  padding: 0 4rem;
+
+  .planet {
+    background-image: url("/planets/3.svg");
+    width: 12rem;
+    height: 12rem;
+    position: absolute;
+    top: 5rem;
+    right: 0;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    z-index: -1;
+  }
+
+  .wordWrap {
+    height: 100%;
+    width: 100%;
+    padding: 2rem 0;
+    color: var(--text-sub);
+    font-family: "Play", sans-serif;
+    font-size: 1.4rem;
+    text-align: left;
+
+    .word {
+      font-weight: 700;
+      padding-bottom: 0.4rem;
+    }
+    .meaning {
+      width: 80%;
+
+      p {
+        height: clamp(3rem, 10rem, 100%);
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        white-space: normal;
+        text-overflow: ellipsis;
+        -webkit-line-clamp: 5;
+      }
+    }
+  }
+}

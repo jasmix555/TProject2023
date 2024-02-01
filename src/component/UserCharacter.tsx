@@ -1,6 +1,5 @@
 // UserCharacter.tsx
 import { useEffect, useState } from "react";
-import { useToast } from "@chakra-ui/react";
 import { getAuth, User } from "firebase/auth";
 import { getFirestore, collection, doc, getDoc } from "firebase/firestore/lite";
 import Image from "next/image";
@@ -10,7 +9,6 @@ import Link from "next/link";
 export default function UserCharacter() {
   const [character, setCharacter] = useState(null);
   const [loading, setLoading] = useState(true);
-  const toast = useToast();
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -27,29 +25,18 @@ export default function UserCharacter() {
           if (userData && userData.character) {
             setCharacter(userData.character);
           } else {
-            toast({
-              title: "Info",
-              description: "You haven't selected a character yet.",
-              status: "info",
-              position: "top",
-            });
+            console.error("User data not found");
           }
         }
       } catch (error) {
         console.error(error);
-        toast({
-          title: "Error",
-          description: "Failed to fetch user character data.",
-          status: "error",
-          position: "top",
-        });
       } finally {
         setLoading(false);
       }
     };
 
     fetchUserData();
-  }, [toast]);
+  }, []);
 
   if (loading) {
     return <div>Loading...</div>;

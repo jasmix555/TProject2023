@@ -23,6 +23,7 @@ import Layout from "@/component/Layout";
 import MenuBar from "@/component/MenuBar";
 import UserName from "@/component/UserName";
 import UserCharacter from "@/component/UserCharacter";
+import DisplayWord from "@/component/DisplayWord";
 
 const menus = {
   icon: <RiMenu3Line />,
@@ -51,13 +52,11 @@ export default function Home() {
           const userData = (await getDoc(userDocRef))?.data();
 
           if (!userData) {
-            // If user data is not found, navigate to the Welcome page
             router.push("/welcome");
           }
         }
       } catch (error) {
         console.error(error);
-        // Handle error as needed
       }
     };
 
@@ -70,6 +69,7 @@ export default function Home() {
         {user ? (
           <>
             <UserName />
+            <DisplayWord />
             <UserCharacter />
             <MenuBar contents={menus} />
           </>

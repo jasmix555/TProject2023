@@ -1,7 +1,6 @@
 import { useAuthContext } from "@/feature/provider/AuthProvider";
 import { FirebaseError } from "@firebase/util";
 import { getAuth, signOut } from "firebase/auth";
-import { useState } from "react";
 import { RiMenu3Line } from "react-icons/ri";
 import {
   FaRegCircleXmark,

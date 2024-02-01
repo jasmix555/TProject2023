@@ -2,7 +2,6 @@ import { useState } from "react";
 import LayoutPage from "@/component/LayoutPage";
 import style from "@/styles/charSelect.module.scss";
 import { useRouter } from "next/router";
-import { useToast } from "@chakra-ui/react";
 import { getAuth, User } from "firebase/auth";
 import {
   doc,
@@ -12,7 +11,6 @@ import {
   Firestore,
   getDoc,
 } from "firebase/firestore/lite";
-import { FirebaseError } from "@firebase/util";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/navigation";
@@ -27,7 +25,6 @@ const characters = ["1", "2", "3", "4", "5"];
 export default function CharSelect() {
   const [currentChar, setCurrentChar] = useState(0);
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const toast = useToast();
   const router = useRouter();
 
   const handleSubmit = async () => {
@@ -63,22 +60,9 @@ export default function CharSelect() {
           router.push("/profile-setup");
         }
       } else {
-        toast({
-          title: "Error",
-          description: "No authenticated user found.",
-          status: "error",
-          position: "top",
-        });
       }
     } catch (error) {
       console.error(error);
-
-      toast({
-        title: "Error",
-        description: (error as FirebaseError).message,
-        status: "error",
-        position: "top",
-      });
     } finally {
       setIsLoading(false);
     }
