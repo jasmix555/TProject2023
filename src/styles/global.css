@@ -35,6 +35,8 @@ body {
   height: 100vh;
   color: var(--white);
   background-image: url(/25.svg);
+  background-color: var(--background-color);
+  background-image: no-repeat;
 }
 
 a {
