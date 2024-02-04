@@ -1,7 +1,7 @@
 // WordDetails.tsx
 import React, { useEffect, useState } from "react";
 import { DictionaryEntry } from "./SavedWords";
-import style from "./wordDetails.module.scss";
+import style from "@/styles/wordDetails.module.scss";
 import {
   FaChevronLeft,
   FaEllipsisH,
@@ -188,18 +188,21 @@ const WordDetails: React.FC<WordDetailsProps> = ({
                 <input
                   type="text"
                   name="word"
+                  placeholder="単語"
                   value={editedDetails.word}
                   onChange={handleInputChange}
                 />
                 <input
                   type="text"
                   name="pronunciation"
+                  placeholder="発音"
                   value={editedDetails.pronunciation}
                   onChange={handleInputChange}
                 />
                 <input
                   type="text"
                   name="genre"
+                  placeholder="ジャンル"
                   value={editedDetails.genre}
                   onChange={handleInputChange}
                 />
@@ -252,7 +255,15 @@ const WordDetails: React.FC<WordDetailsProps> = ({
         )}
         <div className={style.content}>
           <h3>使い方</h3>
-          <p>Word Usage</p>
+          {editing ? (
+            <textarea
+              name="usage"
+              value={editedDetails.usage}
+              onChange={handleInputChange}
+            />
+          ) : (
+            <li>{wordInfo.usage}</li>
+          )}
         </div>
         {wordInfo.timestamp && (
           <div className={style.content}>

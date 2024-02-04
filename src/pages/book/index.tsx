@@ -8,14 +8,14 @@ import {
   FaGear,
   FaUsers,
 } from "react-icons/fa6";
-import { FaEdit } from "react-icons/fa";
+import { FaEdit, FaPlus } from "react-icons/fa";
 import { useAuthContext } from "@/feature/provider/AuthProvider";
 import styled from "styled-components";
 import { useState } from "react";
 import style from "@/styles/book.module.scss";
 import Calendar from "./component/Calendar";
 import SavedWords from "./component/SavedWords";
-import BookHeader from "./component/BookHeader";
+import AddNewWord from "./component/AddNewWord";
 
 const menus = {
   icon: <RiMenu3Line />,
@@ -51,10 +51,33 @@ export function BookContent() {
     );
   };
 
+  const Third = () => {
+    return (
+      <>
+        <AddNewWord
+          onAddNewWord={(newWord) => {
+            // Handle adding the new word to the list of saved words
+            console.log("New Word Added:", newWord);
+          }}
+          onClose={() => setTab(1)} // You can customize the behavior when closing the AddNewWord tab
+        />
+      </>
+    );
+  };
+
   return (
     <div className={style.wrapper}>
       <div className={style.header}>
-        <BookHeader />
+        <select className={style.filterLang}>
+          <option value="">All</option>
+        </select>
+
+        <button
+          className={style.addWord}
+          onClick={() => setTab(3)} // Switch to the Third tab when the button is clicked
+        >
+          <FaPlus />
+        </button>
       </div>
       <div className={style.tabWrapper}>
         <div className={style.tabBtns}>
@@ -75,8 +98,14 @@ export function BookContent() {
           <div className={style.tabContent}>
             <First />
           </div>
+        ) : tab === 2 ? (
+          <div className={style.tabContent}>
+            <Second />
+          </div>
         ) : (
-          <Second />
+          <div className={style.tabContent}>
+            <Third />
+          </div>
         )}
       </div>
     </div>
