@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import style from "@/styles/learning.module.scss";
 import { RiMenu3Line } from "react-icons/ri";
 import {
   FaRegCircleXmark,
@@ -55,37 +54,33 @@ export default function Learning() {
           const userData = (await getDoc(userDocRef))?.data();
 
           if (!userData) {
-            // If user data is not found, navigate to the Welcome page
             router.push("/welcome");
           } else {
-            // Retrieve fetched words from user data
             const userDictionary = userData.dictionary || [];
 
-            // Check if there are words for today's date
             const todayTimestamp = new Date().setHours(0, 0, 0, 0);
             const wordsForToday = userDictionary.filter(
-              (entry: { timestamp: number }) => {
+              (entry: { timestamp: number; saved?: boolean }) => {
                 const entryTimestamp = new Date(entry.timestamp).setHours(
                   0,
                   0,
                   0,
                   0
                 );
-                return entryTimestamp === todayTimestamp;
+                return (
+                  entryTimestamp === todayTimestamp && entry.saved !== true
+                );
               }
             );
 
             if (wordsForToday.length > 0) {
-              // If there are words for today's date, switch to Fetched component
               setFetchedWords(wordsForToday);
             }
           }
         }
       } catch (error) {
         console.error(error);
-        // Handle error as needed
       } finally {
-        // Introduce a 5-second delay using setTimeout
         setTimeout(() => {
           setIsLoading(false);
         }, 5000);

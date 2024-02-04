@@ -11,7 +11,6 @@ import {
 import { FaChevronRight } from "react-icons/fa";
 
 export interface DictionaryEntry {
-  message?: string;
   saved?: boolean;
   timestamp: number;
   languages?: string[];
@@ -77,7 +76,7 @@ export default function SavedWords({ date, userId }: Props) {
 
             return (
               <div key={`SavedMessage_${index}`} className={messageClass}>
-                <p className={style.text}>{entry.message || entry.word}</p>
+                <p className={style.text}>{entry.word}</p>
                 {updatedIsNew && <div className={style.newLabel}>New!</div>}
                 <button
                   className={style.more}
@@ -150,7 +149,7 @@ export default function SavedWords({ date, userId }: Props) {
         const dictionary: DictionaryEntry[] = userData?.dictionary || [];
 
         // Find the index of the word/message to be deleted
-        const wordToDelete = selectedWord?.word || selectedWord?.message;
+        const wordToDelete = selectedWord?.word;
         const updatedDictionary = dictionary.filter(
           (entry) =>
             entry.word !== wordToDelete && entry.messageKey !== wordToDelete

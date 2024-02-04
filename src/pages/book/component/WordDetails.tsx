@@ -22,7 +22,6 @@ import Motion from "@/component/Motion";
 
 type WordDetails = {
   word: string;
-  message: string;
   pronunciation: string;
   genre: string;
   meaning: string;
@@ -48,7 +47,6 @@ const WordDetails: React.FC<WordDetailsProps> = ({
   const [editing, setEditing] = useState(false);
   const [editedDetails, setEditedDetails] = useState({
     word: wordInfo.word || "",
-    message: wordInfo.message || "",
     pronunciation: wordInfo.pronunciation || "",
     genre: wordInfo.genre || "",
     meaning: wordInfo.meaning || "",
@@ -157,7 +155,6 @@ const WordDetails: React.FC<WordDetailsProps> = ({
     setEditedDetails((prevDetails) => ({
       ...prevDetails,
       word: wordInfo.word || "",
-      message: wordInfo.message || "",
       pronunciation: wordInfo.pronunciation || "",
       genre: wordInfo.genre || "",
       meaning: wordInfo.meaning || "",
