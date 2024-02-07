@@ -1,4 +1,3 @@
-// Assuming initializeFirebaseApp returns a Promise
 import "../styles/global.css";
 import type { AppProps } from "next/app";
 import { initializeFirebaseApp } from "@/lib/firebase/firebase";
@@ -7,7 +6,6 @@ import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { useRouter } from "next/router";
 import Head from "next/head";
-import Header from "@/component/Header";
 
 function App({ Component, pageProps }: AppProps) {
   const [isFirebaseInitialized, setFirebaseInitialized] = useState(false);
