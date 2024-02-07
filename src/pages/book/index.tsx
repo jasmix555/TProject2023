@@ -117,8 +117,9 @@ const CurrentDate = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  margin-top: 2rem;
+  padding-top: 2rem;
   padding-bottom: 1rem;
+  font-family: "Poppins", sans-serif;
 
   .format {
     font-weight: 900;

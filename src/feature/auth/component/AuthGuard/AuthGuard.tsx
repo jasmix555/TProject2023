@@ -14,6 +14,7 @@ export const AuthGuard = ({ children }: Props) => {
   if (typeof user === "undefined") {
     return (
       <div
+        className="authGuard"
         style={{
           fontSize: "5rem",
           textAlign: "center",
@@ -24,7 +25,7 @@ export const AuthGuard = ({ children }: Props) => {
           alignItems: "center",
         }}
       >
-        <Spinner />
+        <Spinner size={"xl"} />
       </div>
     );
   }

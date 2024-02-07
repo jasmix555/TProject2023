@@ -1,18 +1,11 @@
-.characterWrap {
-  position: re;
-  width: 100%;
-  height: 100%;
-  z-index: 0;
-
-  .character {
-    position: absolute;
-    bottom: 10rem;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 28rem;
-    img {
-      width: 100%;
-      height: 100%;
-    }
+.character {
+  position: absolute;
+  bottom: 10rem;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 28rem;
+  img {
+    width: 100%;
+    height: 100%;
   }
 }
