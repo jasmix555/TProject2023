@@ -19,6 +19,7 @@ import {
 } from "firebase/firestore";
 import { getAuth } from "firebase/auth";
 import Motion from "@/component/Motion";
+import { genreMap, languageMap } from "@/utils/words";
 
 type WordDetails = {
   word: string;
@@ -27,6 +28,8 @@ type WordDetails = {
   meaning: string;
   timestamp: number;
   usage?: string;
+  messageKey: string;
+  language?: string;
 };
 
 interface WordDetailsProps {
@@ -45,7 +48,7 @@ const WordDetails: React.FC<WordDetailsProps> = ({
   onSave,
 }) => {
   const [editing, setEditing] = useState(false);
-  const [editedDetails, setEditedDetails] = useState({
+  const [editedDetails, setEditedDetails] = useState<WordDetails>({
     word: wordInfo.word || "",
     pronunciation: wordInfo.pronunciation || "",
     genre: wordInfo.genre || "",
@@ -53,16 +56,17 @@ const WordDetails: React.FC<WordDetailsProps> = ({
     timestamp: wordInfo.timestamp || 0,
     messageKey: wordInfo.messageKey || "",
     usage: wordInfo.usage || "",
+    language: wordInfo.language || "",
   });
   const [showConfirmation, setShowConfirmation] = useState(false);
   const auth = getAuth();
   const user = auth.currentUser;
-  const [saveClicked, setSaveClicked] = useState(false); // Add a state for save button click
+  const [saveClicked, setSaveClicked] = useState(false);
 
   const formatDate = (timestamp: number): string => {
     const date = new Date(timestamp);
     const year = date.getFullYear();
-    const month = String(date.getMonth() + 1).padStart(2, "0"); // Month is zero-based
+    const month = String(date.getMonth() + 1).padStart(2, "0");
     const day = String(date.getDate()).padStart(2, "0");
     return `${year}/${month}/${day}`;
   };
@@ -73,7 +77,6 @@ const WordDetails: React.FC<WordDetailsProps> = ({
 
   const handleSaveClick = async () => {
     try {
-      // Check if any of the details have changed
       const detailsChanged = Object.keys(editedDetails).some((key) => {
         const detailKey = key as keyof WordDetails;
         return (
@@ -84,27 +87,23 @@ const WordDetails: React.FC<WordDetailsProps> = ({
       });
 
       if (detailsChanged) {
-        // Update the document in Firebase Firestore
         const db = getFirestore();
         const usersCollection = collection(db, "users");
         const userDocRef = doc(usersCollection, user?.uid);
 
-        // Fetch the current dictionary data
         const userDocSnapshot = await getDoc(userDocRef);
         const currentDictionary = userDocSnapshot.data()?.dictionary || [];
 
-        // Create a new array with the updated word and other unchanged words
         const updatedDictionary = currentDictionary.map(
           (entry: DictionaryEntry) =>
             entry.messageKey === wordInfo.messageKey ? editedDetails : entry
         );
 
-        // Update the Firestore document with the modified dictionary
         await updateDoc(userDocRef, {
           dictionary: updatedDictionary,
         });
 
-        onUpdate(editedDetails); // Pass the updated details to the parent component
+        onUpdate(editedDetails);
       }
 
       setEditing(false);
@@ -117,7 +116,6 @@ const WordDetails: React.FC<WordDetailsProps> = ({
 
   const handleCancelClick = () => {
     setEditing(false);
-    // Optionally, you can reset editedDetails to the original details here
   };
 
   const handleEllipsisClick = () => {
@@ -139,9 +137,7 @@ const WordDetails: React.FC<WordDetailsProps> = ({
   };
 
   const handleInputChange = (
-    e:
-      | React.ChangeEvent<HTMLInputElement>
-      | React.ChangeEvent<HTMLTextAreaElement>
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
     const { name, value } = e.target;
     setEditedDetails((prevDetails) => ({
@@ -150,8 +146,15 @@ const WordDetails: React.FC<WordDetailsProps> = ({
     }));
   };
 
+  const handleGenreChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const { name, value } = e.target;
+    setEditedDetails((prevDetails) => ({
+      ...prevDetails,
+      [name]: value,
+    }));
+  };
+
   useEffect(() => {
-    // Update editedDetails when wordInfo changes
     setEditedDetails((prevDetails) => ({
       ...prevDetails,
       word: wordInfo.word || "",
@@ -159,10 +162,11 @@ const WordDetails: React.FC<WordDetailsProps> = ({
       genre: wordInfo.genre || "",
       meaning: wordInfo.meaning || "",
       timestamp: wordInfo.timestamp || 0,
+      messageKey: wordInfo.messageKey || "",
+      usage: wordInfo.usage || "",
     }));
-  }, [wordInfo, saveClicked]); // Add saveClicked as a dependency
+  }, [wordInfo, saveClicked]);
 
-  // Reset saveClicked state after useEffect runs
   useEffect(() => {
     if (saveClicked) {
       setSaveClicked(false);
@@ -184,35 +188,50 @@ const WordDetails: React.FC<WordDetailsProps> = ({
         {wordInfo.word && (
           <div className={style.title}>
             {editing ? (
-              <>
-                <input
-                  type="text"
-                  name="word"
-                  placeholder="単語"
-                  value={editedDetails.word}
-                  onChange={handleInputChange}
-                />
-                <input
-                  type="text"
-                  name="pronunciation"
-                  placeholder="発音"
-                  value={editedDetails.pronunciation}
-                  onChange={handleInputChange}
-                />
-                <input
-                  type="text"
-                  name="genre"
-                  placeholder="ジャンル"
-                  value={editedDetails.genre}
-                  onChange={handleInputChange}
-                />
-              </>
+              <div className={style.inputWrapper}>
+                <label>
+                  単語：
+                  <input
+                    type="text"
+                    name="word"
+                    placeholder="単語"
+                    value={editedDetails.word}
+                    onChange={handleInputChange}
+                  />
+                </label>
+                <label>
+                  発音：
+                  <input
+                    type="text"
+                    name="pronunciation"
+                    placeholder="発音"
+                    value={editedDetails.pronunciation}
+                    onChange={handleInputChange}
+                  />
+                </label>
+                <label>
+                  ジャンル：
+                  <select
+                    name="genre"
+                    aria-placeholder="ジャンル"
+                    value={editedDetails.genre}
+                    onChange={handleGenreChange}
+                  >
+                    <option value="">Select Genre</option>
+                    {Object.entries(genreMap).map(([key, value]) => (
+                      <option key={key} value={key}>
+                        {value}
+                      </option>
+                    ))}
+                  </select>
+                </label>
+              </div>
             ) : (
               <>
                 <h3>{wordInfo.word}</h3>
                 <div className={style.details}>
                   {wordInfo.pronunciation && <p>{wordInfo.pronunciation}</p>}
-                  {wordInfo.genre && <p>[{wordInfo.genre}]</p>}
+                  {wordInfo.genre && <p>[{genreMap[wordInfo.genre]}]</p>}
                 </div>
               </>
             )}
@@ -225,44 +244,32 @@ const WordDetails: React.FC<WordDetailsProps> = ({
         </button>
       </div>
       <div className={style.contentWrapper}>
-        {!wordInfo.meaning && !wordInfo.usage && (
-          <div className={style.content}>
-            <h3>意味</h3>
-            {editing ? (
-              <textarea
-                name="meaning"
-                value={"No Data Found."}
-                onChange={handleInputChange}
-              />
-            ) : (
-              <li>No Data Found.</li>
-            )}
-          </div>
-        )}
-        {wordInfo.meaning && (
-          <div className={style.content}>
-            <h3>意味</h3>
-            {editing ? (
-              <textarea
-                name="meaning"
-                value={editedDetails.meaning}
-                onChange={handleInputChange}
-              />
-            ) : (
-              <li>{wordInfo.meaning}</li>
-            )}
-          </div>
-        )}
+        <div className={style.content}>
+          <h3>意味</h3>
+          {!wordInfo.meaning}
+          {editing ? (
+            <textarea
+              name="meaning"
+              placeholder="意味入力してください。。。"
+              value={editedDetails.meaning}
+              onChange={handleInputChange}
+            />
+          ) : (
+            <li>{wordInfo.meaning || "No Data Found."}</li>
+          )}
+        </div>
         <div className={style.content}>
           <h3>使い方</h3>
+          {!wordInfo.usage}
           {editing ? (
             <textarea
               name="usage"
+              placeholder="使い方入力してください。。。"
               value={editedDetails.usage}
               onChange={handleInputChange}
             />
           ) : (
-            <li>{wordInfo.usage}</li>
+            <li>{wordInfo.usage || "No Data Found."}</li>
           )}
         </div>
         {wordInfo.timestamp && (
@@ -277,23 +284,23 @@ const WordDetails: React.FC<WordDetailsProps> = ({
             </div>
           </div>
         )}
+        {editing && (
+          <Motion classname={style.editButtons}>
+            <button onClick={handleSaveClick}>
+              <span>
+                <FaSave />
+              </span>
+              Save
+            </button>
+            <button onClick={handleCancelClick}>
+              <span>
+                <FaTimes />
+              </span>
+              Cancel
+            </button>
+          </Motion>
+        )}
       </div>
-      {editing && (
-        <Motion classname={style.editButtons}>
-          <button onClick={handleSaveClick}>
-            <span>
-              <FaSave />
-            </span>
-            Save
-          </button>
-          <button onClick={handleCancelClick}>
-            <span>
-              <FaTimes />
-            </span>
-            Cancel
-          </button>
-        </Motion>
-      )}
       {showConfirmation && (
         <Motion
           classname={style.confirmationDialog}

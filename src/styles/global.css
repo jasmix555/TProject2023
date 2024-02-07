@@ -36,6 +36,8 @@ body {
   color: var(--white);
   background-image: url(/25.svg);
   background-color: var(--background-color);
+  background-size: cover;
+  background-position: center;
   background-image: no-repeat;
 }
 

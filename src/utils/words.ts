@@ -5,6 +5,7 @@ export interface WordType {
   genre: "daily" | "slang" | "business" | "formal" | "etc" | "dialect";
   language: "JP" | "EN" | "CH" | "FR" | "ID" | "KR";
   pronunciation?: string;
+  usage?: string;
 }
 
 export const languageMap: { [key: string]: string } = {

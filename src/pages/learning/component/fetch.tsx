@@ -107,6 +107,7 @@ export const Fetch: FC<FetchProps> = ({
         genre: word.genre || "",
         pronunciation: word.pronunciation || "",
         timestamp: Date.now(),
+        usage: word.usage || "",
         messageKey: Math.random().toString(36), // Generate a random key for React
       }));
 

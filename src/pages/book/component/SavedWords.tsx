@@ -13,7 +13,7 @@ import { FaChevronRight } from "react-icons/fa";
 export interface DictionaryEntry {
   saved?: boolean;
   timestamp: number;
-  languages?: string[];
+  language?: string;
   word?: string;
   meaning?: string;
   pronunciation?: string;
