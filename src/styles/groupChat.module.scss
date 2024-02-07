@@ -4,7 +4,7 @@
   height: 10rem;
   position: relative;
   z-index: 2;
-  background: linear-gradient(180deg, #0f254f 70%, #ffffff00 100%);
+  background: linear-gradient(180deg, #0f254f 90%, transparent 100%);
   .title {
     text-align: center;
     background: var(--glass-background);
@@ -73,7 +73,7 @@
   bottom: 8rem;
   width: 100%;
   z-index: 1000;
-  height: 78%;
+  height: 90%;
   overflow-y: scroll;
   z-index: 1;
 
