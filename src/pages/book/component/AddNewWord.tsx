@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { FaChevronLeft, FaSave, FaTimes } from "react-icons/fa";
+import { FaSave, FaTimes } from "react-icons/fa";
 import {
   collection,
   doc,
@@ -100,8 +100,8 @@ const AddNewWord: React.FC<AddNewWordProps> = ({ onAddNewWord, onClose }) => {
 
   return (
     <div className={style.wrapper}>
-      <button onClick={onClose}>
-        <FaChevronLeft />
+      <button onClick={onClose} className={style.close}>
+        <FaTimes />
       </button>
       <div className={style.contentWrapper}>
         <label>
@@ -109,6 +109,7 @@ const AddNewWord: React.FC<AddNewWordProps> = ({ onAddNewWord, onClose }) => {
           <input
             type="text"
             name="word"
+            placeholder="単語を入力してください"
             value={newWord.word}
             onChange={handleInputChange}
           />
@@ -116,7 +117,9 @@ const AddNewWord: React.FC<AddNewWordProps> = ({ onAddNewWord, onClose }) => {
         <label>
           意味:
           <input
+            type="text"
             name="meaning"
+            placeholder="意味を入力してください"
             value={newWord.meaning}
             onChange={handleInputChange}
           />
@@ -126,6 +129,7 @@ const AddNewWord: React.FC<AddNewWordProps> = ({ onAddNewWord, onClose }) => {
           <input
             type="text"
             name="pronunciation"
+            placeholder="発音を入力してください"
             value={newWord.pronunciation}
             onChange={handleInputChange}
           />
@@ -164,6 +168,8 @@ const AddNewWord: React.FC<AddNewWordProps> = ({ onAddNewWord, onClose }) => {
           使い方:
           <input
             name="usage"
+            type="text"
+            placeholder="使い方を入力してください"
             value={newWord.usage}
             onChange={handleInputChange}
           />

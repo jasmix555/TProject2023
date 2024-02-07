@@ -243,6 +243,7 @@ const WordDetails: React.FC<WordDetailsProps> = ({
           {showConfirmation ? <FaTimes /> : <FaEllipsisH />}
         </button>
       </div>
+
       <div className={style.contentWrapper}>
         <div className={style.content}>
           <h3>意味</h3>
@@ -301,6 +302,7 @@ const WordDetails: React.FC<WordDetailsProps> = ({
           </Motion>
         )}
       </div>
+
       {showConfirmation && (
         <Motion
           classname={style.confirmationDialog}

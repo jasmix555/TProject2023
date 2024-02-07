@@ -1,8 +1,6 @@
 @use "@/styles/Box.module" as Box;
 
 .wrapper {
-  width: 100%;
-  height: 100%;
   position: relative;
 }
 
@@ -13,7 +11,6 @@
   padding: 0 2rem 1rem 2rem;
   border-bottom: 1px solid #cfcfcf;
   width: 100%;
-  position: relative;
   .title {
     display: flex;
     flex-direction: column;
@@ -25,22 +22,27 @@
     }
     .details {
       display: flex;
-      gap: 0.6rem;
+      gap: 2rem;
       font-size: 1.2rem;
       font-weight: 500;
+      align-items: center;
     }
   }
   .inputWrapper {
-    border: solid 1px tomato;
     display: flex;
     flex-direction: column;
+    gap: 0.5rem;
+
+    label {
+      border-bottom: 1px solid #cfcfcf;
+    }
   }
 }
 
 .contentWrapper {
   height: 300px;
   width: 100%;
-  position: relative;
+  position: absolute;
 
   .content {
     padding: 0.4rem 2rem 3rem 2rem;
@@ -59,27 +61,6 @@
       word-wrap: break-word;
       max-height: 300px;
       width: 100%;
-    }
-  }
-
-  .editButtons {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    border: solid 1px tomato;
-    width: 100%;
-    display: flex;
-    justify-content: space-around;
-
-    button {
-      @include Box.glassBox($fS: 1.6rem, $p: 0.4rem 1.2rem);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 0.6rem;
-      span {
-        line-height: 0;
-      }
     }
   }
 }
@@ -110,6 +91,28 @@
     justify-content: space-between;
     span {
       display: block;
+    }
+  }
+}
+
+.editButtons {
+  // position: fixed;
+  // top: 80vh;
+  // left: 0;
+  position: relative;
+  padding: 2rem;
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+
+  button {
+    @include Box.glassBox($fS: 1.6rem, $p: 0.4rem 1.2rem);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
+    span {
+      line-height: 0;
     }
   }
 }

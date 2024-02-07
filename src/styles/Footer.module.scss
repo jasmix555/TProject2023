@@ -1,7 +1,7 @@
 .footerWrap {
-  position: absolute;
+  position: fixed;
   left: 50%;
-  top: 83vh;
+  bottom: 6rem;
   transform: translate(-50%, 50%);
   display: grid;
   grid-template-columns: repeat(3, 1fr);

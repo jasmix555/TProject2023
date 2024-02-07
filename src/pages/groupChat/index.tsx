@@ -158,7 +158,7 @@ const Message = ({
                 priority
               />
             </div>
-            <p>{userNickname}</p>
+            <p className={style.username}>{userNickname}</p>
           </div>
           <div className={style.wrapper}>
             <div className={style.messageContentWrap}>
@@ -378,28 +378,31 @@ const GroupChat = () => {
   return (
     <LayoutPage>
       <AuthGuard>
-        <LinkBox link={"../"} icon={<AiFillHome />} />
+        <div className={style.header}>
+          <LinkBox link={"../"} icon={<AiFillHome />} />
 
-        <div className={style.title}>
-          <h1>{groupInfo.title || "ロード中..."}</h1>
-          {countdown !== null ? (
-            <p className={style.number}>
-              {countdown !== null ? formatRemainingTime(countdown) : "00:00:00"}
-            </p>
-          ) : (
-            <p className={style.number}>時間終了です！</p>
-          )}
-        </div>
+          <div className={style.title}>
+            <h1>{groupInfo.title || "ロード中..."}</h1>
+            {countdown !== null ? (
+              <p className={style.number}>
+                {countdown !== null
+                  ? formatRemainingTime(countdown)
+                  : "00:00:00"}
+              </p>
+            ) : (
+              <p className={style.number}>時間終了です！</p>
+            )}
+          </div>
 
-        <div className={style.avatarGrid}></div>
+          <div className={style.avatarGrid}></div>
 
-        <div className={style.capacity}>
-          <div className={style.currentUsers}>
-            <FaUsers />
-            <p>{userCount}/5</p>
+          <div className={style.capacity}>
+            <div className={style.currentUsers}>
+              <FaUsers />
+              <p>{userCount}/5</p>
+            </div>
           </div>
         </div>
-
         <div className={`${style.groupChatWrap}`} ref={chatBottomRef}>
           <div className={style.chatBottom}>
             <div className={style.showMessage} ref={messagesElementRef}>

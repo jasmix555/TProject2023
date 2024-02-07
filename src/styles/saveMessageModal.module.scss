@@ -6,6 +6,7 @@
   height: 100vh;
   top: 0;
   left: 0;
+  z-index: 10;
 
   .background {
     position: absolute;
@@ -32,11 +33,11 @@
     bottom: 0;
     left: 0;
     width: 100%;
-    min-height: 55rem;
+    min-height: 66vh;
     background-image: url("/Frame/inputFrameSave1.svg");
     background-repeat: no-repeat;
     background-size: 100% 100%;
-    background-position: center;
+    background-position: cover;
     padding-top: 5rem;
     display: flex;
     flex-direction: column;
