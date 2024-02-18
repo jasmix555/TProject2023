@@ -49,39 +49,40 @@ export default function DisplayWord() {
   }, [user]);
 
   return (
-    <div className={style.wrapper}>
+    <>
       <div className={style.planet}></div>
-
-      {loading ? (
-        <p>Loading...</p>
-      ) : (
-        <Carousel
-          swipeable={true}
-          infiniteLoop={true}
-          emulateTouch={true}
-          stopOnHover={true}
-          showStatus={false}
-          showThumbs={false}
-          autoPlay={true}
-          showIndicators={false}
-          showArrows={false}
-          interval={6000}
-        >
-          {learnedWords.map((wordData, index) => (
-            <div key={index} className={style.wordWrap}>
-              <div className={style.number}>
-                <h1>{(index + 1).toString().padStart(2, "0")}</h1>
+      <div className={style.wrapper}>
+        {loading ? (
+          <p>Loading...</p>
+        ) : (
+          <Carousel
+            swipeable={true}
+            infiniteLoop={true}
+            emulateTouch={true}
+            stopOnHover={true}
+            showStatus={false}
+            showThumbs={false}
+            autoPlay={true}
+            showIndicators={false}
+            showArrows={false}
+            interval={6000}
+          >
+            {learnedWords.map((wordData, index) => (
+              <div key={index} className={style.wordWrap}>
+                <div className={style.number}>
+                  <h1>{(index + 1).toString().padStart(2, "0")}</h1>
+                </div>
+                <div className={style.word}>
+                  <h1>{wordData.word}</h1>
+                </div>
+                <div className={style.meaning}>
+                  <p>{wordData.meaning || "-------"}</p>
+                </div>
               </div>
-              <div className={style.word}>
-                <h1>{wordData.word}</h1>
-              </div>
-              <div className={style.meaning}>
-                <p>{wordData.meaning || "-------"}</p>
-              </div>
-            </div>
-          ))}
-        </Carousel>
-      )}
-    </div>
+            ))}
+          </Carousel>
+        )}
+      </div>
+    </>
   );
 }

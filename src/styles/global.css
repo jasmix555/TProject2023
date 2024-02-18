@@ -31,7 +31,7 @@ body {
   -webkit-text-size-adjust: 100%;
   font-size: 62.5%;
   width: 100%;
-  height: 100%;
+  height: 100svh;
   color: var(--white);
   background-image: url(/25.svg);
   background-color: var(--background-color);

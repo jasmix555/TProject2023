@@ -1,3 +1,17 @@
+.planet {
+  background-image: url("/planets/3.svg");
+  width: 12rem;
+  height: 12rem;
+  position: absolute;
+  top: 18rem;
+  right: 0;
+  opacity: 0.5;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  z-index: 0;
+}
+
 .wrapper {
   background-image: url("/Frame/displayWord.svg");
   background-repeat: no-repeat;
@@ -9,21 +23,10 @@
   top: 12rem;
   left: 0;
   padding: 0 4rem;
-
-  .planet {
-    background-image: url("/planets/3.svg");
-    width: 12rem;
-    height: 12rem;
-    position: absolute;
-    top: 5rem;
-    right: 0;
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-position: center;
-    z-index: -1;
-  }
+  z-index: 10;
 
   .wordWrap {
+    z-index: 2;
     height: 100%;
     width: 100%;
     padding: 2rem 0;

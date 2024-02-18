@@ -77,34 +77,23 @@ const WordDetails: React.FC<WordDetailsProps> = ({
 
   const handleSaveClick = async () => {
     try {
-      const detailsChanged = Object.keys(editedDetails).some((key) => {
-        const detailKey = key as keyof WordDetails;
-        return (
-          detailKey in editedDetails &&
-          detailKey in wordInfo &&
-          editedDetails[detailKey] !== wordInfo[detailKey]
-        );
+      const db = getFirestore();
+      const usersCollection = collection(db, "users");
+      const userDocRef = doc(usersCollection, user?.uid);
+
+      const userDocSnapshot = await getDoc(userDocRef);
+      const currentDictionary = userDocSnapshot.data()?.dictionary || [];
+
+      const updatedDictionary = currentDictionary.map(
+        (entry: DictionaryEntry) =>
+          entry.messageKey === wordInfo.messageKey ? editedDetails : entry
+      );
+
+      await updateDoc(userDocRef, {
+        dictionary: updatedDictionary,
       });
 
-      if (detailsChanged) {
-        const db = getFirestore();
-        const usersCollection = collection(db, "users");
-        const userDocRef = doc(usersCollection, user?.uid);
-
-        const userDocSnapshot = await getDoc(userDocRef);
-        const currentDictionary = userDocSnapshot.data()?.dictionary || [];
-
-        const updatedDictionary = currentDictionary.map(
-          (entry: DictionaryEntry) =>
-            entry.messageKey === wordInfo.messageKey ? editedDetails : entry
-        );
-
-        await updateDoc(userDocRef, {
-          dictionary: updatedDictionary,
-        });
-
-        onUpdate(editedDetails);
-      }
+      onUpdate(editedDetails);
 
       setEditing(false);
       setSaveClicked(true);

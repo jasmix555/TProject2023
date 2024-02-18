@@ -15,6 +15,9 @@ const StyledCalendarContainer = styled.div`
     line-height: 2.6;
     margin-top: 2rem;
     overflow-y: scroll;
+    width: 34rem;
+    left: 50%;
+    transform: translateX(-50%);
   }
 
   .react-calendar button {

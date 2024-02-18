@@ -56,7 +56,6 @@ export function BookContent() {
       <>
         <AddNewWord
           onAddNewWord={(newWord) => {
-            // Handle adding the new word to the list of saved words
             console.log("New Word Added:", newWord);
           }}
           onClose={() => setTab(1)} // You can customize the behavior when closing the AddNewWord tab
