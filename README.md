@@ -1,3 +1,6 @@
+A team project made in 2023 November ~ 2024 January
+
+
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Node -v
