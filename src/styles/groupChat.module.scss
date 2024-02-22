@@ -73,7 +73,8 @@
   bottom: 8rem;
   width: 100%;
   z-index: 1000;
-  height: 90%;
+  min-height: 20%; /* Set minimum height */
+  max-height: 80%;
   overflow-y: scroll;
   z-index: 1;
 

@@ -249,6 +249,14 @@ const GroupChat = () => {
   }, [groupId, user]);
 
   useEffect(() => {
+    // Scroll to the bottom when chats change
+    if (messagesElementRef.current) {
+      messagesElementRef.current.scrollTop =
+        messagesElementRef.current.scrollHeight;
+    }
+  }, [chats]);
+
+  useEffect(() => {
     try {
       const db = getDatabase();
       const dbRef = ref(db, `groupChatMessages/${groupId}`);
