@@ -248,13 +248,6 @@ export const words: WordType[] = [
     pronunciation: "wa-ku-wa-ku",
   },
   {
-    word: "なんでやねん",
-    meaning: "What's the matter? (Kansai dialect)",
-    genre: "dialect",
-    language: "JP",
-    pronunciation: "nan-de-ya-nen",
-  },
-  {
     word: "やばいことになる",
     meaning: "It's going to be a problem",
     genre: "slang",
@@ -527,13 +520,7 @@ export const words: WordType[] = [
     language: "JP",
     pronunciation: "ee-nen",
   },
-  {
-    word: "なんでやねん",
-    meaning: "What's the matter? (Kansai dialect)",
-    genre: "dialect",
-    language: "JP",
-    pronunciation: "nan-de-ya-nen",
-  },
+
   {
     word: "なんぼ",
     meaning: "How much? / How many? (Osaka dialect)",
