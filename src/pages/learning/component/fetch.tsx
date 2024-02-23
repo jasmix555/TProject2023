@@ -66,10 +66,13 @@ export const Fetch: FC<FetchProps> = ({
       const userDocSnapshot = await getDoc(userDocRef);
       const userDictionary = userDocSnapshot.data()?.dictionary || [];
 
+      // Generate a random number of words to fetch between 1 and the specified count
+      const fetchCount = Math.floor(Math.random() * count) + 1;
+
       const fetchedWords: WordType[] = [];
 
-      // Iterate until count number of unique words are fetched
-      while (fetchedWords.length < count) {
+      // Iterate until fetchCount number of unique words are fetched
+      while (fetchedWords.length < fetchCount && filteredWords.length > 0) {
         const randomIndex = Math.floor(Math.random() * filteredWords.length);
         const randomWord = filteredWords[randomIndex];
 
